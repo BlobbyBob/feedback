@@ -14,6 +14,26 @@ class Feedback
     }
 
     /**
+     * @var int $id The ID of this feedback
+     */
+    public $id;
+
+    /**
+     * @var Route $route The route for this feedback
+     */
+    public $route;
+
+    /**
+     * @var int $date Date of feedback in unix epoch
+     */
+    public $date;
+
+    /**
+     * @var string $author The md5 hash of the IP address of the submitter
+     */
+    public $author;
+
+    /**
      * @var int[] $ratings The ratings in the configurated order
      */
     public $ratings;

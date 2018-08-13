@@ -32,7 +32,7 @@ class Route
     public $color;
 
     /**
-     * @var string $setter The setter of route (optional)
+     * @var Setter $setter The setter of route (optional)
      */
     public $setter;
 
@@ -40,5 +40,10 @@ class Route
      * @var int $wall Number of the rope, where the route is set, special value -1 for lead climbing
      */
     public $wall;
+
+    /**
+     * @var int $image The ID of the associated image
+     */
+    public $image;
 
 }

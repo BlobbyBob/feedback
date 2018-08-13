@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = ['orm/checkbox', 'orm/color', 'orm/colors', 'orm/feedback', 'orm/formelement', 'orm/numeric', 'orm/pagebreak', 'orm/radio', 'orm/route', 'orm/select', 'orm/setter', 'orm/text', 'orm/textarea'];

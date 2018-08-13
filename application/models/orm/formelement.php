@@ -4,38 +4,78 @@ namespace Models;
 
 abstract class FormElement {
 
-    private $type;
-
-    public $name;
-
+    /**
+     * @var int $id The numeric ID for this element
+     */
     public $id;
 
+    /**
+     * @var string $name The label for this element
+     */
+    public $name;
+
+    /**
+     * @var int $page The number on which page this element gets shown
+     */
     public $page;
 
+    /**
+     * @var int $index The index of the custom order
+     */
+    public $index;
+
+    /**
+     * Get the html of this form element
+     * @return string
+     */
     abstract public function get_html();
 
+    /**
+     * True if this form element is a text element, false otherwise
+     * @return bool
+     */
     public function is_text() {
-        return $this->type == 'text';
+        return $this instanceof Text;
     }
 
+    /**
+     * True if this form element is a textarea element, false otherwise
+     * @return bool
+     */
     public function is_textarea() {
-        return $this->type == 'textarea';
+        return $this instanceof Textarea;
     }
 
+    /**
+     * True if this form element is a select element, false otherwise
+     * @return bool
+     */
     public function is_select() {
-        return $this->type == 'select';
+        return $this instanceof Select;
     }
 
+    /**
+     * True if this form element is a checkbox element, false otherwise
+     * @return bool
+     */
     public function is_checkbox() {
-        return $this->type == 'checkbox';
+        return $this instanceof Checkbox;
     }
 
+    /**
+     * True if this form element is a radio element, false otherwise
+     * @return bool
+     */
     public function is_radio() {
-        return $this->type == 'radio';
+        return $this instanceof Radio;
     }
 
-    public function is_num() {
-        return $this->type == 'text';
+    /**
+     * True if this form element is a numeric element, false otherwise
+     * @return bool
+     */
+    public function is_numeric() {
+        return $this instanceof Numeric;
     }
 
     /**
@@ -44,7 +84,8 @@ abstract class FormElement {
      */
     public static function create($data)
     {
-
+        // TODO implement create($data)
+        return null;
     }
 
 }
