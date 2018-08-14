@@ -3,7 +3,7 @@
 namespace Models;
 
 
-class Pagebreak extends FormElement
+class Pagebreak extends Formelement
 {
 
     /**

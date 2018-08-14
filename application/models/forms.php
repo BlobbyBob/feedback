@@ -1,6 +1,6 @@
 <?php
 
-use Models\FormElement;
+use Models\Formelement;
 
 class Form extends CI_Model
 {
@@ -11,7 +11,7 @@ class Form extends CI_Model
     }
 
     /**
-     * @return FormElement[]
+     * @return Formelement[]
      */
     public function get_form()
     {

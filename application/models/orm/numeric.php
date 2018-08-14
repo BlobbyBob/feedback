@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Numeric extends FormElement
+class Numeric extends Formelement
 {
 
     public function get_html()

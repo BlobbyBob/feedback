@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Checkbox extends FormElement
+class Checkbox extends Formelement
 {
 
     public function get_html()

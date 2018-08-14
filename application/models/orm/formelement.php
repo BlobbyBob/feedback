@@ -2,7 +2,8 @@
 
 namespace Models;
 
-abstract class FormElement {
+abstract class Formelement
+{
 
     /**
      * @var int $id The numeric ID for this element
@@ -80,7 +81,7 @@ abstract class FormElement {
 
     /**
      * @param array $data Data of the form element
-     * @return FormElement The instantiated subclass
+     * @return Formelement The instantiated subclass
      */
     public static function create($data)
     {

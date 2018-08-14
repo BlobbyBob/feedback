@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Text extends FormElement
+class Text extends Formelement
 {
 
     public function get_html()

@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Textarea extends FormElement
+class Textarea extends Formelement
 {
 
     public function get_html()
