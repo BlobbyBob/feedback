@@ -11,5 +11,5 @@
     </div>
 </div>
 <div class="button">
-    <button type="button">Sag uns deine Meinung &rarr;</button>
+    <button type="button">Sag uns deine Meinung <i class="fa fa-arrow-right"></i></button>
 </div>
