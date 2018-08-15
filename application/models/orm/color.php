@@ -11,9 +11,9 @@ class Color
     public function __construct($color)
     {
 
-        if (Colors::getColorByName($color) !== false) {
-            $this->name = Colors::getDislayName($color);
-            $this->code = Colors::getColorByName($color);
+        if (Colors::get_color_by_name($color) !== false) {
+            $this->name = Colors::get_display_name($color);
+            $this->code = Colors::get_color_by_name($color);
         }
 
     }

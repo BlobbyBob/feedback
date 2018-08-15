@@ -44,6 +44,9 @@ class Pages extends CI_Controller
             $data['script'] .= "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.2.0/bootstrap-slider.min.js\" integrity=\"sha256-tDcb6zRMjjdonaeNQujdwW5FQdABco7S2Z60J4cbH9s=\" crossorigin=\"anonymous\"></script>\n";
             $data['script'] .= "<script src='" . base_url('resources/js/select.js') . "'></script>\n";
         }
+        if ($page == 'survey') {
+            $data['script'] .= "<script src='" . base_url('resources/js/survey.js') . "'></script>\n";
+        }
 
         $this->load->view('templates/header', $data);
         $this->load->view('pages/'.$page, $data);

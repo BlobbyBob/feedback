@@ -21,7 +21,8 @@ class Colors
      * @param string $name The name of the color
      * @return string|bool The color-code if it is found, otherwise false
      */
-    static function getColorByName($name) {
+    static function get_color_by_name($name)
+    {
 
         $class = new ReflectionClass(get_called_class());
         return ($class->getConstant(strtoupper($name)) !== false) ? ($class->getConstant(strtoupper($name)))[0] : false;
@@ -33,7 +34,8 @@ class Colors
      * @param string $name The name of the color
      * @return string|bool The name to display of the color if it is available, false otherwise
      */
-    static function getDislayName($name) {
+    static function get_display_name($name)
+    {
 
         $class = new ReflectionClass(get_called_class());
         return ($class->getConstant(strtoupper($name)) !== false) ? ($class->getConstant(strtoupper($name)))[1] : false;
@@ -44,7 +46,8 @@ class Colors
      * Get all available colors
      * @return array Available colors
      */
-    static function getColors() {
+    static function get_colors()
+    {
         $class = new ReflectionClass(get_called_class());
         return $class->getConstants();
     }

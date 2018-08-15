@@ -168,96 +168,99 @@
 
         </div>
     </div>
-</div>
 
-<!-- Page Content  -->
-<div id="content">
+    <!-- Page Content  -->
+    <div id="content">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light d-md-none">
-        <div class="container-fluid justify-content-between">
-            <h2 class="d-md-none">Wähle eine Route aus</h2>
-            <button type="button" id="sidebarCollapse" class="btn btn-info d-md-none">
-                <i class="fas fa-align-left"></i>
-                <span>Filter</span>
-            </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light d-md-none">
+            <div class="container-fluid justify-content-between">
+                <h2 class="d-md-none">Wähle eine Route aus</h2>
+                <button type="button" id="sidebarCollapse" class="btn btn-info d-md-none">
+                    <i class="fas fa-align-left"></i>
+                    <span>Filter</span>
+                </button>
 
-        </div>
-    </nav>
+            </div>
+        </nav>
 
-    <h2 class="d-xs-none d-sm-none d-md-block">Wähle eine Route aus</h2>
-    <p class="line"></p>
-    <div class="container d-flex flex-wrap justify-content-center align-items-center">
-        <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
-            <div class="bg-img"
-                 style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
-            <div class="content">
-                <div class="color d-flex flex-row align-items-center justify-content-between">
-                    <div>Farbe:</div>
-                    <div class="circle circle-yellow"></div>
-                    <br>
+        <h2 class="d-xs-none d-sm-none d-md-block">Wähle eine Route aus</h2>
+        <p class="line"></p>
+        <div class="container d-flex flex-wrap justify-content-center align-items-center">
+            <a href="">
+                <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
+                    <div class="bg-img"
+                         style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
+                    <div class="content">
+                        <div class="color d-flex flex-row align-items-center justify-content-between">
+                            <div>Farbe:</div>
+                            <div class="circle circle-yellow"></div>
+                            <br>
+                        </div>
+                        Grad: <span class="info">VIII+</span><br>
+                        Seil: <span class="info">7</span>
+                    </div>
+                    <div class="name">
+                        Die Qualle
+                    </div>
                 </div>
-                Grad: <span class="info">VIII+</span><br>
-                Seil: <span class="info">7</span>
+            </a>
+            <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
+                <div class="bg-img"
+                     style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
+                <div class="content">
+                    <div class="color d-flex flex-row align-items-center justify-content-between">
+                        <div>Farbe:</div>
+                        <div class="circle circle-yellow"></div>
+                        <br>
+                    </div>
+                    Grad: <span class="info">VIII+</span><br>
+                    Seil: <span class="info">7</span>
+                </div>
+            </div>
+
+            <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
+                <div class="bg-img"
+                     style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
+                <div class="content">
+                    <div class="color d-flex flex-row align-items-center justify-content-between">
+                        <div>Farbe:</div>
+                        <div class="circle circle-yellow"></div>
+                        <br>
+                    </div>
+                    Grad: <span class="info">VIII+</span><br>
+                    Seil: <span class="info">Vorstieg</span>
+                </div>
+            </div>
+
+            <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
+                <div class="bg-img"
+                     style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
+                <div class="content">
+                    <div class="color d-flex flex-row align-items-center justify-content-between">
+                        <div>Farbe:</div>
+                        <div class="circle circle-yellow"></div>
+                        <br>
+                    </div>
+                    Grad: <span class="info">VIII+</span><br>
+                    Seil: <span class="info">7</span>
+                </div>
+            </div>
+
+            <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
+                <div class="bg-img"
+                     style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
+                <div class="content">
+                    <div class="color d-flex flex-row align-items-center justify-content-between">
+                        <div>Farbe:</div>
+                        <div class="circle circle-yellow"></div>
+                        <br>
+                    </div>
+                    Grad: <span class="info">VIII+</span><br>
+                    Seil: <span class="info">7</span>
+                </div>
             </div>
         </div>
 
-        <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
-            <div class="bg-img"
-                 style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
-            <div class="content">
-                <div class="color d-flex flex-row align-items-center justify-content-between">
-                    <div>Farbe:</div>
-                    <div class="circle circle-yellow"></div>
-                    <br>
-                </div>
-                Grad: <span class="info">VIII+</span><br>
-                Seil: <span class="info">7</span>
-            </div>
-        </div>
-
-        <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
-            <div class="bg-img"
-                 style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
-            <div class="content">
-                <div class="color d-flex flex-row align-items-center justify-content-between">
-                    <div>Farbe:</div>
-                    <div class="circle circle-yellow"></div>
-                    <br>
-                </div>
-                Grad: <span class="info">VIII+</span><br>
-                Seil: <span class="info">Vorstieg</span>
-            </div>
-        </div>
-
-        <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
-            <div class="bg-img"
-                 style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
-            <div class="content">
-                <div class="color d-flex flex-row align-items-center justify-content-between">
-                    <div>Farbe:</div>
-                    <div class="circle circle-yellow"></div>
-                    <br>
-                </div>
-                Grad: <span class="info">VIII+</span><br>
-                Seil: <span class="info">7</span>
-            </div>
-        </div>
-
-        <div class="route" data-sort='{"color":"yellow","grade":7,"rope":7}'>
-            <div class="bg-img"
-                 style="background-image:url('https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg')"></div>
-            <div class="content">
-                <div class="color d-flex flex-row align-items-center justify-content-between">
-                    <div>Farbe:</div>
-                    <div class="circle circle-yellow"></div>
-                    <br>
-                </div>
-                Grad: <span class="info">VIII+</span><br>
-                Seil: <span class="info">7</span>
-            </div>
-        </div>
     </div>
-
-</div>
 
 </div>
