@@ -80,7 +80,7 @@ $db['default'] = array(
 	'password' => '',
 	'database' => 'feedback',
 	'dbdriver' => 'pdo',
-	'dbprefix' => 'fdb_',
+    'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,

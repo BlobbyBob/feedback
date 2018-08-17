@@ -5,42 +5,28 @@ namespace Models;
 class Feedback
 {
 
-    public function __construct($data)
+    public function __construct()
     {
-        if ( is_array($data) ) {
-            // TODO: Implement constructor
-        }
-
     }
 
     /**
      * @var int $id The ID of this feedback
      */
-    public $id;
+    public $id = NULL;
 
     /**
-     * @var Route $route The route for this feedback
+     * @var int $route The id of the route for this feedback
      */
     public $route;
 
     /**
-     * @var int $date Date of feedback in unix epoch
+     * @var string $author_id The md5 hash of the IP address and the date of the submission
      */
-    public $date;
+    public $author_id;
 
     /**
-     * @var string $author The md5 hash of the IP address of the submitter
+     * @var array $data The actual feedback
      */
-    public $author;
-
-    /**
-     * @var int[] $ratings The ratings in the configurated order
-     */
-    public $ratings;
-
-    /**
-     * @var string[] $text The texts in the configurated order
-     */
-    public $text;
+    public $data;
 
 }

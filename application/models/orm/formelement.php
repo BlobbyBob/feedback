@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use function strtolower;
+
 abstract class Formelement
 {
 
@@ -9,11 +11,6 @@ abstract class Formelement
      * @var int $id The numeric ID for this element
      */
     public $id;
-
-    /**
-     * @var string $name The label for this element
-     */
-    public $name;
 
     /**
      * @var int $page The number on which page this element gets shown
@@ -35,58 +32,119 @@ abstract class Formelement
      * True if this form element is a text element, false otherwise
      * @return bool
      */
-    public function is_text() {
-        return $this instanceof Text;
+    public function is_text()
+    {
+        return false;
     }
 
     /**
      * True if this form element is a textarea element, false otherwise
      * @return bool
      */
-    public function is_textarea() {
-        return $this instanceof Textarea;
+    public function is_textarea()
+    {
+        return false;
     }
 
     /**
      * True if this form element is a select element, false otherwise
      * @return bool
      */
-    public function is_select() {
-        return $this instanceof Select;
+    public function is_select()
+    {
+        return false;
     }
 
     /**
      * True if this form element is a checkbox element, false otherwise
      * @return bool
      */
-    public function is_checkbox() {
-        return $this instanceof Checkbox;
+    public function is_checkbox()
+    {
+        return false;
     }
 
     /**
      * True if this form element is a radio element, false otherwise
      * @return bool
      */
-    public function is_radio() {
-        return $this instanceof Radio;
+    public function is_radio()
+    {
+        return false;
     }
 
     /**
      * True if this form element is a numeric element, false otherwise
      * @return bool
      */
-    public function is_numeric() {
-        return $this instanceof Numeric;
+    public function is_numeric()
+    {
+        return false;
     }
 
     /**
-     * @param array $data Data of the form element
+     * Create a form element, doesn't set the page property
+     * @param object $object Data of the form element
      * @return Formelement The instantiated subclass
      */
-    public static function create($data)
+    public static function create($object)
     {
-        // TODO implement create($data)
-        return null;
+        $class = '';
+        switch (strtolower($object->type)) {
+            case 'check':
+            case 'checkbox':
+                $class = '\Models\Checkbox';
+                break;
+            case 'num':
+            case 'numeric':
+                $class = '\Models\Numeric';
+                break;
+            case 'page':
+            case 'pagebreak':
+                $class = '\Models\Pagebreak';
+                break;
+            case 'radio':
+            case 'radiobutton':
+                $class = '\Models\Radio';
+                break;
+            case 'select':
+                $class = '\Models\Select';
+                break;
+            case 'text':
+                $class = '\Models\Text';
+                break;
+            case 'textarea':
+                $class = '\Models\Textarea';
+                break;
+            default:
+                return null;
+                break;
+        }
+        /** @var Formelement $formelement */
+        $formelement = new $class(json_decode($object->data));
+        $formelement->id = $object->id;
+        $formelement->index = $object->index;
+        return $formelement;
+    }
+
+    /**
+     * Remove page breaks and generate a new array with page numbers set
+     * @param Formelement[] $formelements The form elements to set the page number on
+     * @return Formelement[] An updated array
+     */
+    public static function set_pages($formelements)
+    {
+        $new = [];
+        $page = 1;
+        foreach ($formelements as $element) {
+            if ($element instanceof Pagebreak)
+                $page++;
+            else {
+                $element->page = $page;
+                $new[] = $element;
+            }
+        }
+        return $new;
     }
 
 }

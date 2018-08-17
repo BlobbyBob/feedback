@@ -4,11 +4,8 @@ namespace Models;
 
 class Route
 {
-    public function __construct($data)
+    public function __construct()
     {
-        if ( is_array($data) ) {
-            // TODO: Implement constructor
-        }
     }
 
     /**
