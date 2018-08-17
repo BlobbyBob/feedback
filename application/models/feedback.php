@@ -4,14 +4,16 @@
  * Class Feedback
  * Database interface for Feedback
  * @package Feedback
- * @subpackage models
- * @category database
+ * @subpackage Models
+ * @category Database
  * @author Ben Swierzy
- *
  */
 class Feedback extends CI_Model
 {
 
+    /**
+     * Feedback constructor.
+     */
     public function __construct()
     {
         $this->load->database();

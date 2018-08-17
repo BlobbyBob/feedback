@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'mysql:host=localhost',
+    'hostname' => 'mysql:dbname=feedback;host=localhost',
 	'username' => 'root',
 	'password' => '',
 	'database' => 'feedback',

@@ -49,9 +49,15 @@ class Textarea extends Formelement
     }
 
 
+    /**
+     * Get the HTML representation of this element. Needs the matching CSS
+     * @return string The HTML for this element
+     */
     public function get_html()
     {
-        // TODO: Implement get_html() method.
+        $html = "<label for='field-{$this->id}'>{$this->label}</label>
+                 <textarea id='field-{$this->id}' class='form-control' name='{$this->id}' placeholder='{$this->placeholder}'></textarea>";
+        return $html;
     }
 
 }

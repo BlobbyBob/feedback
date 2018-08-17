@@ -83,6 +83,15 @@ abstract class Formelement
     }
 
     /**
+     * True if this form element is a rating, false otherwise
+     * @return bool
+     */
+    public function is_rating()
+    {
+        return false;
+    }
+
+    /**
      * Create a form element, doesn't set the page property
      * @param object $object Data of the form element
      * @return Formelement The instantiated subclass
@@ -106,6 +115,10 @@ abstract class Formelement
             case 'radio':
             case 'radiobutton':
                 $class = '\Models\Radio';
+                break;
+            case 'rating':
+            case 'starrating':
+                $class = '\Models\Rating';
                 break;
             case 'select':
                 $class = '\Models\Select';

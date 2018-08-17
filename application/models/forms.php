@@ -2,9 +2,19 @@
 
 use Models\Formelement;
 
-class Form extends CI_Model
+/**
+ * Class Forms
+ * Database interface for fetching the survey form
+ * @package Feedback
+ * @subpackage Models
+ * @category Database
+ * @author Ben Swierzy
+ */
+class Forms extends CI_Model
 {
-
+    /**
+     * Form constructor.
+     */
     public function __construct()
     {
         $this->load->database();
