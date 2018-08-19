@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class Image
+ * Controller for displaying images
+ * @package Feedback
+ * @subpackage Controller
+ * @category Frontend
+ * @author Ben Swierzy
+ */
 class Image extends CI_Controller
 {
 
@@ -20,10 +28,9 @@ class Image extends CI_Controller
 
         }
 
-        $data['mime'] = $image->mime;
-        $data['data'] = $image->data;
-
-        $this->load->view('misc/image', $data);
+        $this->output
+            ->set_content_type($image->mime)
+            ->set_output($image->data);
 
     }
 

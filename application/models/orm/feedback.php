@@ -25,7 +25,7 @@ class Feedback
     public $author_id;
 
     /**
-     * @var array $data The actual feedback
+     * @var object $data The actual feedback
      */
     public $data;
 

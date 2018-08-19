@@ -24,6 +24,7 @@ abstract class Formelement
 
     /**
      * Get the html of this form element
+     * todo: This should be moved to views
      * @return string
      */
     abstract public function get_html();

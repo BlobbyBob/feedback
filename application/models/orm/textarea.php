@@ -56,7 +56,7 @@ class Textarea extends Formelement
     public function get_html()
     {
         $html = "<label for='field-{$this->id}'>{$this->label}</label>
-                 <textarea id='field-{$this->id}' class='form-control' name='{$this->id}' placeholder='{$this->placeholder}'></textarea>";
+                 <textarea id='field-{$this->id}' class='form-control' name='field-{$this->id}' placeholder='{$this->placeholder}'></textarea>";
         return $html;
     }
 

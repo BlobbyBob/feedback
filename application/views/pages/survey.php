@@ -15,6 +15,7 @@
     <!-- Page Content  -->
     <div id="content" class="narrow">
         <div class="container">
+            <!-- todo: Fix sidebar collapse-->
             <h1>Feedback <span class="badge badge-success d-md-none" id="sidebarCollapse"><i class="fa fa-align-left"></i>Route anzeigen</span></h1>
             <p class="line"></p>
             <div class="progress">

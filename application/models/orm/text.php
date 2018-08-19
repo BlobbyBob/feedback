@@ -50,7 +50,7 @@ class Text extends Formelement
         }
 
         if (isset($data->maxlength) && is_int($data->maxlength)) {
-            $this->maxlength = min(self::MAXLENGTH, max(1, $data->placeholder));
+            $this->maxlength = min(self::MAXLENGTH, max(1, $data->maxlength));
         }
 
     }

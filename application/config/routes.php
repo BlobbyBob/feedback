@@ -50,5 +50,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['survey/(:num)'] = 'survey/view/(:num)';
-$route['(:any)'] = 'pages/view/$1';
+$route['select'] = 'select/view';
 $route['default_controller'] = 'pages/view';

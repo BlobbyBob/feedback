@@ -32,11 +32,8 @@ class Feedback extends CI_Model
     public function store($feedback)
     {
         $feedback = $this->encode_feedback($feedback);
-        if (!$this->db->insert('feedback', $feedback)) {
-            $this->db->where('route', $feedback->route);
-            $this->db->where('author_id', $feedback->author_id);
-            $this->db->update('feedback', ['data' => $feedback->data]);
-        }
+        $sql = $this->db->insert_string('feedback', $feedback).' ON DUPLICATE KEY UPDATE `data` = ' . $this->db->escape($feedback->data);
+        $this->db->query($sql);
     }
 
     /**

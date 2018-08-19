@@ -10,8 +10,8 @@
             Du hast weitere Anliegen? Sprich einfach jemanden aus dem Übungsleiterteam an. Wir freuen uns jederzeit weiterhelfen zu können.
         </p>
         <p class="lead">
-            <a class="btn btn-outline-primary" href="" role="button">Zur Routenübersicht</a>&nbsp;&nbsp;
-            <a class="btn btn-outline-dark" href="" role="button">Zufällige Route</a>
+            <a class="btn btn-outline-primary" href="<?php echo $select; ?>" role="button">Zur Routenübersicht</a>&nbsp;&nbsp;
+            <!--<a class="btn btn-outline-dark" href="<?php /*echo $random; */?>" role="button">Zufällige Route</a>-->
         </p>
     </div>
 </div>

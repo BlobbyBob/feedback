@@ -13,6 +13,7 @@ class Survey extends CI_Controller
     {
         parent::__construct();
         $this->load->model('routes');
+        $this->load->helper('url');
     }
 
     /**
@@ -22,11 +23,12 @@ class Survey extends CI_Controller
     {
 
         $this->load->helper('form');
-        $this->load->helper('url');
         $this->load->model('forms');
 
         if (count($this->routes->get_routes($id)) == 0) {
+
             show_404('Diese Route existiert nicht.', true);
+
         }
 
         $formelements = Formelement::set_pages($this->forms->get_form());
@@ -77,10 +79,50 @@ class Survey extends CI_Controller
 
     }
 
+    /**
+     * Process the submitted survey
+     * @param int $id Id of the route
+     */
     public function finished($id = -1)
     {
 
         $this->load->model('feedback');
+
+        if (count($this->routes->get_routes($id)) == 0) {
+
+            show_404('Diese Route existiert nicht.', true);
+
+        }
+
+        $feedback = new \Models\Feedback();
+        $feedback->id = NULL;
+        $feedback->route = $id;
+        $feedback->author_id = md5($this->input->ip_address().date('d-m-Y'));
+        $feedback->data = new stdClass();
+
+        foreach ($this->input->post() as $key => $post) {
+            if (strpos($key, 'field-') === 0 && strspn($key, '0123456789', 6) == strlen($key) - 6) {
+
+                $key = substr($key, 6);
+                $feedback->data->$key = $post;
+
+            }
+        }
+
+        $this->feedback->store($feedback);
+
+        $data['style'] = '';
+        $data['script'] = '';
+
+        $data['style'] .= '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n";
+        $data['script'] = "<script src='" . base_url('resources/js/design.js') . "'></script>\n";
+
+        $data['select'] = base_url('index.php/select/route');
+        // $data['random'] = '#';
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pages/finished', $data);
+        $this->load->view('templates/footer', $data);
 
     }
 

@@ -11,5 +11,5 @@
     </div>
 </div>
 <div class="button">
-    <button type="button">Sag uns deine Meinung <i class="fa fa-arrow-right"></i></button>
+    <a href="<?php echo $url; ?>"><button type="button">Sag uns deine Meinung <i class="fa fa-arrow-right"></i></button></a>
 </div>

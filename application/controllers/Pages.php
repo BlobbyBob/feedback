@@ -23,7 +23,7 @@ class Pages extends CI_Controller
      */
     public function view($page = 'start') {
 
-        if ( !file_exists(APPPATH.'views/pages/'.$page.'.php')) {
+        if ( !file_exists(APPPATH.'views/static/'.$page.'.php')) {
 
             show_404();
 
@@ -34,23 +34,20 @@ class Pages extends CI_Controller
         $data['script'] = '';
 
         // Specific styles
-        if ($page == 'select') {
-            $data['style'] .= "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css\">\n";
-            $data['style'] .= "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.2.0/css/bootstrap-slider.min.css\" integrity=\"sha256-NGswHEy6gjXxyLL+vBBHigA1kGliPHt+7BBPBzntzAw=\" crossorigin=\"anonymous\" />\n";
-        }
-        $data['style'] .= "<link rel=\"stylesheet\" href=\"" . base_url('resources/css/style.css') . "\">\n";
+        $data['style'] .= '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n";
         if ($page == 'start')
-            $data['style'] .= "<link rel=\"stylesheet\" href=\"" . base_url('resources/css/start.css') . "\">\n";
+            $data['style'] .= '<link rel="stylesheet" href="' . base_url('resources/css/start.css') . "\">\n";
 
         // Specific scripts
         $data['script'] = "<script src='" . base_url('resources/js/design.js') . "'></script>\n";
-        if ($page == 'select') {
-            $data['script'] .= "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.2.0/bootstrap-slider.min.js\" integrity=\"sha256-tDcb6zRMjjdonaeNQujdwW5FQdABco7S2Z60J4cbH9s=\" crossorigin=\"anonymous\"></script>\n";
-            $data['script'] .= "<script src='" . base_url('resources/js/select.js') . "'></script>\n";
+
+        // Specific data
+        if ($page == 'start') {
+            $data['url'] = base_url('index.php/select/route');
         }
 
         $this->load->view('templates/header', $data);
-        $this->load->view('pages/'.$page, $data);
+        $this->load->view('static/'.$page, $data);
         $this->load->view('templates/footer', $data);
 
     }

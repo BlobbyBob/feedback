@@ -92,8 +92,8 @@ function applyFilter() {
     $(".route").each(function () {
         var info = $(this).data('sort');
         if (info.grade >= grade[0] && info.grade <= grade[1] &&
-            colors.indexOf(info.color) != -1 &&
-            ropes.indexOf(formatNumber(info.rope, 2)) != -1) {
+            (colors.indexOf(info.color) !== -1 || colors.length <= 1) &&
+            ropes.indexOf(formatNumber(info.rope, 2)) !== -1) {
             $(this).show();
         } else {
             $(this).hide();

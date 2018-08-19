@@ -24,12 +24,12 @@ class Route
     public $grade;
 
     /**
-     * @var Color $color Color of the route
+     * @var string $color Color of the route
      */
     public $color;
 
     /**
-     * @var Setter $setter The setter of route (optional)
+     * @var string $setter The name of the setter of the route (optional)
      */
     public $setter;
 
