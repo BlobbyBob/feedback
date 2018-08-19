@@ -16,6 +16,25 @@ class Backend extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
+        $this->load->helper('url');
+    }
+
+    public function login()
+    {
+        $data = [
+            'style' => [
+                base_url('resources/css/backend.css'),
+                base_url('resources/css/login.css')
+            ],
+            'script' => [
+                base_url('resources/js/login.js')
+            ]
+        ];
+
+        $this->load->view('backend/header', $data);
+        $this->load->view('backend/login', $data);
+        $this->load->view('backend/footer', $data);
+
     }
 
 }
