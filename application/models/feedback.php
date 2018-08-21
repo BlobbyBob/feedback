@@ -47,6 +47,9 @@ class Feedback extends CI_Model
         $enc->id = $feedback->id;
         $enc->route = $feedback->route;
         $enc->author_id = $feedback->author_id;
+        $enc->date = $feedback->date;
+        $enc->questions = $feedback->questions;
+        $enc->total = $feedback->total;
         $enc->data = json_encode($feedback->data);
         return $enc;
     }

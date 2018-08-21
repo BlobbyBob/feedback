@@ -25,6 +25,21 @@ class Feedback
     public $author_id;
 
     /**
+     * @var
+     */
+    public $date;
+
+    /**
+     * @var int $questions Answered questions
+     */
+    public $questions;
+
+    /**
+     * @var int $total Total asked questions
+     */
+    public $total;
+
+    /**
      * @var object $data The actual feedback
      */
     public $data;

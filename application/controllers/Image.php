@@ -14,17 +14,25 @@ class Image extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->driver('cache', ['key_prefix' => 'image-']);
     }
 
     public function get($id = -1)
     {
 
-        $this->load->model('dbimage');
-        $image = $this->dbimage->get_image($id);
+        if ( ! $image = $this->cache->get($id)) {
 
-        if ($image == NULL) {
+            $this->load->model('dbimage');
+            $image = $this->dbimage->get_image($id);
 
-            show_404();
+            if ($image == NULL) {
+
+                show_404();
+
+            }
+
+            // Cache for 1 week
+            $this->cache->save($id, $image, 86400 * 7);
 
         }
 

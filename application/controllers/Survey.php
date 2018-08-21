@@ -99,12 +99,20 @@ class Survey extends CI_Controller
         $feedback->route = $id;
         $feedback->author_id = md5($this->input->ip_address().date('d-m-Y'));
         $feedback->data = new stdClass();
+        $feedback->date = NULL;
+        $feedback->questions = 0;
+        $feedback->total = 0;
 
         foreach ($this->input->post() as $key => $post) {
             if (strpos($key, 'field-') === 0 && strspn($key, '0123456789', 6) == strlen($key) - 6) {
 
                 $key = substr($key, 6);
-                $feedback->data->$key = $post;
+                $feedback->total++;
+
+                if ( ! empty($post)) {
+                    $feedback->data->$key = $post;
+                    $feedback->questions++;
+                }
 
             }
         }
