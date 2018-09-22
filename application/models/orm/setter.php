@@ -14,7 +14,13 @@ namespace Models;
 class Setter
 {
     /**
+     * @var int $id ID of the setter
+     */
+    public $id;
+
+    /**
      * @var string $name the name of the setter
      */
     public $name;
+
 }

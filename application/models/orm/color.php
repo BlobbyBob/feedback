@@ -5,17 +5,19 @@ namespace Models;
 class Color
 {
 
+    /**
+     * @var int $id ID of the color
+     */
+    public $id;
+
+    /**
+     * @var string $name Internal name of the color
+     */
     public $name;
-    public $code;
 
-    public function __construct($color)
-    {
-
-        if (Colors::get_color_by_name($color) !== false) {
-            $this->name = Colors::get_display_name($color);
-            $this->code = Colors::get_color_by_name($color);
-        }
-
-    }
+    /**
+     * @var string $german Displayed german name of the color
+     */
+    public $german;
 
 }

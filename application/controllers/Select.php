@@ -59,9 +59,9 @@ class Select extends CI_Controller
     /**
      * Converts a roman UIAA grade to int
      * @param string $roman Grade as roman literal
-     * @return int Grade
+     * @return int Grade; 0 if grade not valid
      */
-    private static function get_numeric_grade($roman)
+    public static function get_numeric_grade($roman)
     {
         $roman = substr(strtoupper($roman), 0, strspn(strtoupper($roman), 'IVX'));
         switch ($roman) {

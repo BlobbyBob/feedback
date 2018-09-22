@@ -14,7 +14,7 @@
                     <label for="upload">Datei:</label>
                     <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
                     <input id="upload" class="form-control" type="file" name="image" aria-describedby="upload_desc" required>
-                    <small id="upload_desc" class="form-text text-muted">Maximale Uploadgröße: 2MB. Optimales Bild: Höhe 1000px und im JPG-Format</small>
+                    <small id="upload_desc" class="form-text text-muted">Maximale Uploadgröße: 2MB. Ein optimales Bild hat eine Höhe von 1000px und ist im JPG-Format.</small>
                 </div>
             </div>
             <div class="card-footer">
