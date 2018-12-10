@@ -324,7 +324,7 @@ class Backend extends CI_Controller
                     base_url('resources/js/backend.js')
                 ],
                 'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
-                'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'images', 'urls' => $urls], TRUE),
+                'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/add', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/routes_add', [
                     'urls' => $urls,
                     'form' => form_open('backend/routes_add'),
@@ -368,7 +368,7 @@ class Backend extends CI_Controller
                         base_url('resources/js/backend.js')
                     ],
                     'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
-                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'images', 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/manage', 'urls' => $urls], TRUE),
                     'page' => $this->load->view('backend/bootadmin/routes_manage', [
                         'urls' => $urls,
                         'form' => form_open('backend/routes_manage'),
@@ -382,6 +382,37 @@ class Backend extends CI_Controller
 
         }
 
+    }
+
+    public function survey()
+    {
+        if ($this->check_login()) {
+
+            $this->load->model(['colors', 'setters', 'dbimage', 'routes']);
+            $urls = $this->get_urls();
+
+            $data = [
+                'styles' => [
+                    base_url('resources/css/bootadmin.min.css'),
+                    base_url('resources/css/backend.css')
+                ],
+                'scripts' => [
+                    base_url('resources/js/bootadmin.min.js'),
+                    base_url('resources/js/backend.js'),
+                    base_url('resources/js/html5sortable.min.js')
+                ],
+                'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'survey', 'urls' => $urls], TRUE),
+                'page' => $this->load->view('backend/bootadmin/survey', [
+                    'urls' => $urls,
+                    'form' => form_open('backend/survey'),
+                    'alert' => isset($alert) ? $alert : ''
+                ], TRUE)
+            ];
+
+            $this->load->view('backend/bootadmin', $data);
+
+        }
     }
 
     private function check_login()

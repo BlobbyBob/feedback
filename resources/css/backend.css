@@ -63,3 +63,48 @@
         max-width: 33.3%;
     }
 }
+.sortable div {
+    width: 100%;
+    margin: 1em;
+    padding: 1em;
+    border: 3px solid #2e8ece;
+}
+.sortable div.hover {
+    background-color: #2e8ece;
+}
+.sortable-placeholder {
+    border: 3px dashed #2e8ece !important;
+}
+.typebutton {
+    border: 1px solid black;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #fafafa;
+    margin: 1em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    padding: 1em;
+}
+.typebutton.pagebreak {
+    width: 10em;
+}
+.typebutton img {
+    max-width: 200px;
+    padding-bottom: 1em;
+}
+.typebutton .typename {
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    margin-left: -1em;
+}
+#type_select .buttons {
+    position: relative;
+    width: 100%;
+}
+#add_new {
+    cursor: pointer;
+}

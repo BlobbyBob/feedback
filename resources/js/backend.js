@@ -5,6 +5,7 @@ $(function () {
         $(this).addClass('selected');
         $('input[name=image]').val($(this).data('id'));
     });
+    if (typeof $().DataTable === "function")
     $('.data-table').DataTable({
         'language': {
             "sEmptyTable":      "Keine Daten in der Tabelle vorhanden",
@@ -48,5 +49,11 @@ $(function () {
                 }
             }
         }
+    });
+    if (typeof sortable === "function") sortable('.sortable', {
+        items: ':not(.disabled)',
+        forcePlaceholderSize: true,
+        placeholderClass: 'sortable-placeholder',
+        hoverClass: 'hover'
     });
 });
