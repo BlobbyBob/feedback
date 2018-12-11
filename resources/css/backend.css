@@ -63,17 +63,44 @@
         max-width: 33.3%;
     }
 }
-.sortable div {
-    width: 100%;
+.sortable > div {
+    width: calc(100% - 1.5em);
     margin: 1em;
     padding: 1em;
+    margin-right: 2em;
     border: 3px solid #2e8ece;
+    display: flex;
+    justify-content: space-between;
 }
 .sortable div.hover {
     background-color: #2e8ece;
 }
 .sortable-placeholder {
     border: 3px dashed #2e8ece !important;
+}
+.element-type {
+    font-size: larger;
+    padding-right: 2em;
+}
+.element-settings-title {
+    font-size: larger;
+    font-weight: bold;
+    padding-bottom: 1em;
+}
+.element-settings {
+    flex-grow: 1;
+    max-width: 800px;
+    width: 100%;
+}
+.element-setting input {
+    width: 100%;
+}
+.element-setting {
+    padding-bottom: .5em;
+    padding-left: .3em;
+}
+.element-setting-key {
+    padding-bottom: .2em;
 }
 .typebutton {
     border: 1px solid black;

@@ -100,21 +100,22 @@ class Rating extends Formelement
             <input type="hidden" name="index" value="{$this->index}">
             <div class="element-type"><strong>Typ:</strong> Bewertung</div> 
             <div class="element-settings">
-                <div class="element-setting">
+                <div class="element-settings-title">Einstellungen:</div>
                 <div class="element-setting">
                     <div class="element-setting-key">Beschriftung: </div>
-                    <div class="element-setting-value"><input type="text" name="label" value="{$this->label}"></div>
+                    <div class="element-setting-value"><input class="form-control" type="text" name="label" value="{$this->label}"></div>
                 </div>
+                <div class="element-setting">
                     <div class="element-setting-key">Anzahl: </div>
-                    <div class="element-setting-value"><input type="number" min="3" max="12" name="count" value="{$this->count}"></div>
+                    <div class="element-setting-value"><input class="form-control" type="number" min="3" max="12" name="count" value="{$this->count}"></div>
                 </div>
                 <div class="element-setting">
                     <div class="element-setting-key">Beschriftung links: </div>
-                    <div class="element-setting-value"><input type="text" name="label_before" value="{$this->label_before}"></div>
+                    <div class="element-setting-value"><input class="form-control" type="text" name="label_before" value="{$this->label_before}"></div>
                 </div>
                 <div class="element-setting">
                     <div class="element-setting-key">Beschriftung rechts: </div>
-                    <div class="element-setting-value"><input type="text" name="label_after" value="{$this->label_after}"></div>
+                    <div class="element-setting-value"><input class="form-control" type="text" name="label_after" value="{$this->label_after}"></div>
                 </div>
             </div>
 HTML;
