@@ -74,6 +74,7 @@
 }
 .sortable div.hover {
     background-color: #2e8ece;
+    cursor: move;
 }
 .sortable-placeholder {
     border: 3px dashed #2e8ece !important;

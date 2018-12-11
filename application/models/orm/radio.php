@@ -62,4 +62,37 @@ class Radio extends Formelement
     }
 
 
+    /**
+     * Get the html of the settings of this form element
+     * todo: This should be moved to views
+     * @return string
+     */
+    public function get_settings()
+    {
+        $labelsettings = '';
+        foreach ($this->labels as $label) {
+            $labelsettings .= '<div class="element-setting">
+                    <div class="element-setting-key">Radio Button: </div>
+                    <div class="element-setting-value"><input class="form-control" type="text" name="labels[]" value="'.$label.'" placeholder="Beschriftung"></div>
+                    <a class="remove-radio"><small class="form-text">Radio Button löschen</small></a>
+                </div>';
+        }
+        $html = <<<HTML
+            <input type="hidden" name="id" value="{$this->id}">
+            <input type="hidden" name="index" value="{$this->index}">
+            <div class="element-type"><strong>Typ:</strong> Radio Buttons</div> 
+            <div class="element-settings">
+                <div class="element-settings-title">Einstellungen:</div>
+                <div class="element-setting">
+                    <div class="element-setting-key">Beschriftung: </div>
+                    <div class="element-setting-value"><input class="form-control" type="text" name="main_label" value="{$this->main_label}"></div>
+                </div>
+                $labelsettings
+                <div class="element-setting">
+                    <div class="element-setting-value"><button type="button" class="btn btn-info add-radio">Radio Button hinzufügen</button></div>
+                </div>
+            </div>
+HTML;
+        return $html;
+    }
 }
