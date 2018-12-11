@@ -32,20 +32,19 @@ class Pagebreak extends Formelement
     }
 
     /**
-     * Get the html of the settings of this form element
-     * todo: This should be moved to views
-     * @return string
+     * Get the settings of this form element
+     * Should be parsed by a view
+     *
+     * @return array
      */
     public function get_settings()
     {
-        $html = <<<HTML
-            <input type="hidden" name="id" value="{$this->id}">
-            <input type="hidden" name="index" value="{$this->index}">
-            <div class="element-type"><strong>Typ:</strong> Seitenumbruch</div> 
-            <div class="element-settings">
-                <div class="element-settings-title">Einstellungen:</div>
-            </div>
-HTML;
-        return $html;
+        $settings = [
+            'id' => $this->id,
+            'index' => $this->index,
+            'type' => "Seitenumbruch",
+            'settings' => []
+        ];
+        return $settings;
     }
 }

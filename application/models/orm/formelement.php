@@ -30,9 +30,10 @@ abstract class Formelement
     abstract public function get_html();
 
     /**
-     * Get the html of the settings of this form element
-     * todo: This should be moved to views
-     * @return string
+     * Get the settings of this form element
+     * Should be parsed by a view
+     *
+     * @return array
      */
     abstract public function get_settings();
 

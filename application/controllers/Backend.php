@@ -391,6 +391,9 @@ class Backend extends CI_Controller
             $this->load->model(['colors', 'setters', 'dbimage', 'routes', 'forms']); // todo: do we need all of those?
 
             $formelements = $this->forms->get_form();
+            $formelements = array_map(function ($formelement){
+                    return $this->load->view('formelements/settings', $formelement->get_settings(), TRUE);
+                }, $formelements);
 
             $urls = $this->get_urls();
 

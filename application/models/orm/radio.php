@@ -63,36 +63,42 @@ class Radio extends Formelement
 
 
     /**
-     * Get the html of the settings of this form element
-     * todo: This should be moved to views
-     * @return string
+     * Get the settings of this form element
+     * Should be parsed by a view
+     *
+     * @return array
      */
     public function get_settings()
     {
-        $labelsettings = '';
+        $subsettings = [
+            [
+                'key' => "Beschriftung",
+                'type' => "text",
+                'name' => "main_label",
+                'value' => $this->main_label
+            ]
+        ];
         foreach ($this->labels as $label) {
-            $labelsettings .= '<div class="element-setting">
-                    <div class="element-setting-key">Radio Button: </div>
-                    <div class="element-setting-value"><input class="form-control" type="text" name="labels[]" value="'.$label.'" placeholder="Beschriftung"></div>
-                    <a class="remove-radio"><small class="form-text">Radio Button löschen</small></a>
-                </div>';
+            $subsettings[] = [
+                'key' => "Radio Button",
+                'type' => "text",
+                'name' => "labels[]",
+                'value' => $label,
+                'attr' => 'placeholder="Beschriftung"',
+                'small' => '<a class="remove-radio">Radio Button löschen</a>'
+            ];
         }
-        $html = <<<HTML
-            <input type="hidden" name="id" value="{$this->id}">
-            <input type="hidden" name="index" value="{$this->index}">
-            <div class="element-type"><strong>Typ:</strong> Radio Buttons</div> 
-            <div class="element-settings">
-                <div class="element-settings-title">Einstellungen:</div>
-                <div class="element-setting">
-                    <div class="element-setting-key">Beschriftung: </div>
-                    <div class="element-setting-value"><input class="form-control" type="text" name="main_label" value="{$this->main_label}"></div>
-                </div>
-                $labelsettings
-                <div class="element-setting">
-                    <div class="element-setting-value"><button type="button" class="btn btn-info add-radio">Radio Button hinzufügen</button></div>
-                </div>
-            </div>
-HTML;
-        return $html;
+        $subsettings[] = [
+            'type' => "button",
+            'title' => "Radio Button hinzufügen",
+            'class' => "add-radio"
+        ];
+        $settings = [
+            'id' => $this->id,
+            'index' => $this->index,
+            'type' => "Radio Buttons",
+            'settings' => $subsettings
+        ];
+        return $settings;
     }
 }

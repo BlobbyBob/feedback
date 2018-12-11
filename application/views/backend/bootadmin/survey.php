@@ -7,7 +7,7 @@
         <div class="sortable" id="form">
             <?php
                 if (isset($formelements)) foreach ($formelements as $element) {
-                    echo '<div class="sortable-item">'.$element->get_settings().'</div>';
+                    echo '<div class="sortable-item">'.$element.'</div>';
                 }
             ?>
         </div>
