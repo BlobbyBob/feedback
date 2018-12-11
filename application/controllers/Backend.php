@@ -388,7 +388,10 @@ class Backend extends CI_Controller
     {
         if ($this->check_login()) {
 
-            $this->load->model(['colors', 'setters', 'dbimage', 'routes']);
+            $this->load->model(['colors', 'setters', 'dbimage', 'routes', 'forms']); // todo: do we need all of those?
+
+            $formelements = $this->forms->get_form();
+
             $urls = $this->get_urls();
 
             $data = [
@@ -406,7 +409,8 @@ class Backend extends CI_Controller
                 'page' => $this->load->view('backend/bootadmin/survey', [
                     'urls' => $urls,
                     'form' => form_open('backend/survey'),
-                    'alert' => isset($alert) ? $alert : ''
+                    'alert' => isset($alert) ? $alert : '',
+                    'formelements' => $formelements
                 ], TRUE)
             ];
 

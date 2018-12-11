@@ -30,6 +30,13 @@ abstract class Formelement
     abstract public function get_html();
 
     /**
+     * Get the html of the settings of this form element
+     * todo: This should be moved to views
+     * @return string
+     */
+    abstract public function get_settings();
+
+    /**
      * True if this form element is a text element, false otherwise
      * @return bool
      */
@@ -99,7 +106,6 @@ abstract class Formelement
      */
     public static function create($object)
     {
-        $class = '';
         switch (strtolower($object->type)) {
             case 'check':
             case 'checkbox':

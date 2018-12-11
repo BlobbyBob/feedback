@@ -4,9 +4,14 @@
 
     <div class="card mb-4 col-12">
 
+        <div class="sortable" id="form">
+            <?php
+                if (isset($formelements)) foreach ($formelements as $element) {
+                    echo '<div class="sortable-item">'.$element->get_settings().'</div>';
+                }
+            ?>
+        </div>
         <div class="sortable">
-            <div class="sortable-item">Item 1</div>
-            <div class="sortable-item">Item 2</div>
             <div id="add_new" class="sortable-placeholder disabled" data-toggle="modal" data-target="#type_select">Neues Element hinzufügen</div>
         </div>
 
@@ -42,8 +47,8 @@
                         <div class="typename">Checkbox</div>
                     </div>
                     <div class="typebutton">
-                        <img class="typeicon" src="<?= base_url('resources/img/radio.jpg') ?>">
-                        <div class="typename">Radio buttons</div>
+                        <img class="typeicon" src="<?= base_url('resources/img/select.jpg') ?>">
+                        <div class="typename">Auswahlbox</div>
                     </div>
                     <div class="typebutton">
                         <img class="typeicon" src="<?= base_url('resources/img/numeric.jpg') ?>">
@@ -52,7 +57,7 @@
                     <div class="typebutton pagebreak">
                         <hr>
                         <div class="typename">Seitenumbruch</div>
-                    </div>
+                    </div><!-- todo: add radio buttons -->
                 </div>
             </div>
             <!--<div class="modal-footer">

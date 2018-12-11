@@ -49,7 +49,7 @@ class Checkbox extends Formelement
     {
         // TODO: Implement get_html() method.
     }
-
+    
     /**
      * Returns true, since this element is a checkbox
      * @return bool
@@ -59,5 +59,13 @@ class Checkbox extends Formelement
         return true;
     }
 
-
+    /**
+     * Get the html of the settings of this form element
+     * todo: This should be moved to views
+     * @return string
+     */
+    public function get_settings()
+    {
+        // TODO: Implement get_settings() method.
+    }
 }
