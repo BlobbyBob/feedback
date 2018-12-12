@@ -422,7 +422,11 @@ class Backend extends CI_Controller
         }
     }
 
-    private function check_login()
+    /**
+     * @param bool $return_only Default false. If true, the method won't redirect on to the login page
+     * @return bool Is logged in?
+     */
+    private function check_login($return_only = false)
     {
 
         // todo change it in production
@@ -439,6 +443,15 @@ class Backend extends CI_Controller
 //
 //        return true;
 
+    }
+
+    /**
+     * Is user logged in?
+     *
+     * @return bool Log in status
+     */
+    public static function isLogin() {
+        return (new Backend())->check_login(true);
     }
 
     public function get_urls()
