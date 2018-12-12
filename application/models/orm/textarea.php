@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use stdClass;
+
 /**
  * Class Textarea
  * Represents a <textarea> element
@@ -88,5 +90,24 @@ class Textarea extends Formelement
             ]
         ];
         return $settings;
+    }
+
+    /**
+     * Return the data of this formelement as object similar to the object by Formelement::create
+     *
+     * @return object
+     */
+    public function export()
+    {
+        $o = new stdClass();
+        $o->id = $this->id;
+        $o->index = $this->index;
+
+        $j = new stdClass();
+        $j->label = $this->label;
+        $j->placeholder = $this->placeholder;
+        $o->data = json_encode($j);
+
+        return $o;
     }
 }

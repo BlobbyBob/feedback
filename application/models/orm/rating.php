@@ -4,6 +4,7 @@ namespace Models;
 
 use function is_int;
 use function is_string;
+use stdClass;
 
 /**
  * Class Rating
@@ -129,5 +130,26 @@ class Rating extends Formelement
             ]
         ];
         return $settings;
+    }
+
+    /**
+     * Return the data of this formelement as object similar to the object by Formelement::create
+     *
+     * @return object
+     */
+    public function export()
+    {
+        $o = new stdClass();
+        $o->id = $this->id;
+        $o->index = $this->index;
+
+        $j = new stdClass();
+        $j->label = $this->label;
+        $j->label_before = $this->label_before;
+        $j->label_after = $this->label_after;
+        $j->count = $this->count;
+        $o->data = json_encode($j);
+
+        return $o;
     }
 }

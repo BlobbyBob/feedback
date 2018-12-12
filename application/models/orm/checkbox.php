@@ -4,6 +4,8 @@ namespace Models;
 
 use function in_array;
 use function is_string;
+use function json_encode;
+use stdClass;
 
 /**
  * Class Checkbox
@@ -98,5 +100,24 @@ class Checkbox extends Formelement
             ]
         ];
         return $settings;
+    }
+
+    /**
+     * Return the data of this formelement as object similar to the object by Formelement::create
+     *
+     * @return object
+     */
+    public function export()
+    {
+        $o = new stdClass();
+        $o->id = $this->id;
+        $o->index = $this->index;
+
+        $j = new stdClass();
+        $j->label = $this->label;
+        $j->label_position = $this->label_position;
+        $o->data = json_encode($j);
+
+        return $o;
     }
 }

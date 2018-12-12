@@ -107,7 +107,49 @@ abstract class Formelement
      */
     public static function create($object)
     {
-        switch (strtolower($object->type)) {
+        $class = self::getFormelementClassName($object->type);
+        /** @var Formelement $formelement */
+        $formelement = new $class(json_decode($object->data));
+        $formelement->id = $object->id;
+        $formelement->index = $object->index;
+        return $formelement;
+    }
+
+    /**
+     * Return the data of this formelement as object similar to the object by Formelement::create
+     *
+     * @return object
+     */
+    abstract public function export();
+
+    /**
+     * Remove page breaks and generate a new array with page numbers set
+     * @param Formelement[] $formelements The form elements to set the page number on
+     * @return Formelement[] An updated array
+     */
+    public static function set_pages($formelements)
+    {
+        $new = [];
+        $page = 1;
+        foreach ($formelements as $element) {
+            if ($element instanceof Pagebreak)
+                $page++;
+            else {
+                $element->page = $page;
+                $new[] = $element;
+            }
+        }
+        return $new;
+    }
+
+    /**
+     * Get the class name of a form element by its type
+     *
+     * @param string $type Type of Formelement
+     * @return string|null Return the class name or null in case of a wrong type
+     */
+    public static function getFormelementClassName($type) {
+        switch (strtolower($type)) {
             case 'check':
             case 'checkbox':
                 $class = '\Models\Checkbox';
@@ -141,31 +183,7 @@ abstract class Formelement
                 return null;
                 break;
         }
-        /** @var Formelement $formelement */
-        $formelement = new $class(json_decode($object->data));
-        $formelement->id = $object->id;
-        $formelement->index = $object->index;
-        return $formelement;
-    }
-
-    /**
-     * Remove page breaks and generate a new array with page numbers set
-     * @param Formelement[] $formelements The form elements to set the page number on
-     * @return Formelement[] An updated array
-     */
-    public static function set_pages($formelements)
-    {
-        $new = [];
-        $page = 1;
-        foreach ($formelements as $element) {
-            if ($element instanceof Pagebreak)
-                $page++;
-            else {
-                $element->page = $page;
-                $new[] = $element;
-            }
-        }
-        return $new;
+        return $class;
     }
 
 }

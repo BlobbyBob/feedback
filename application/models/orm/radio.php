@@ -5,6 +5,7 @@ namespace Models;
 use function is_array;
 use function is_object;
 use function is_string;
+use stdClass;
 
 /**
  * Class Radiobutton
@@ -100,5 +101,24 @@ class Radio extends Formelement
             'settings' => $subsettings
         ];
         return $settings;
+    }
+
+    /**
+     * Return the data of this formelement as object similar to the object by Formelement::create
+     *
+     * @return object
+     */
+    public function export()
+    {
+        $o = new stdClass();
+        $o->id = $this->id;
+        $o->index = $this->index;
+
+        $j = new stdClass();
+        $j->main_label = $this->main_label;
+        $j->labels = $this->labels;
+        $o->data = json_encode($j);
+
+        return $o;
     }
 }
