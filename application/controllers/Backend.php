@@ -412,13 +412,16 @@ class Backend extends CI_Controller
                             $elem->$key = $value;
                         }
 
+                        $elem->setData();
+
                         if ($elem->isDeleted()) {
 
-                            $count += $this->forms->delete($elem);
+                            $update[] = [
+                                'id' => $elem->id,
+                                'version' => -1
+                            ];
 
                         } else {
-
-                            $elem->setData();
 
                             $update[] = [
                                 'id' => $elem->id,
@@ -426,6 +429,7 @@ class Backend extends CI_Controller
                                 'data' => $elem->data,
                                 'version' => $max_version
                             ];
+
                         }
                     }
 
