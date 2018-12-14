@@ -32,7 +32,7 @@ class Feedback extends CI_Model
     public function store($feedback)
     {
         $feedback = $this->encode_feedback($feedback);
-        $sql = $this->db->insert_string('feedback', $feedback).' ON DUPLICATE KEY UPDATE `data` = ' . $this->db->escape($feedback->data);
+        $sql = $this->db->set($feedback)->get_compiled_insert('feedback') . ' ON DUPLICATE KEY UPDATE `data` = ' . $this->db->escape($feedback->data);
         $this->db->query($sql);
     }
 
@@ -47,7 +47,8 @@ class Feedback extends CI_Model
         $enc->id = $feedback->id;
         $enc->route = $feedback->route;
         $enc->author_id = $feedback->author_id;
-        $enc->date = $feedback->date;
+        if ($feedback->date)
+            $enc->date = $feedback->date;
         $enc->questions = $feedback->questions;
         $enc->total = $feedback->total;
         $enc->data = json_encode($feedback->data);
