@@ -3,6 +3,7 @@
 use Models\AnonymousElement;
 use Models\Route;
 use Models\Setter;
+use phpDocumentor\Reflection\Types\Null_;
 
 
 /**
@@ -475,6 +476,48 @@ class Backend extends CI_Controller
         }
     }
 
+    public function evaluation($route = null)
+    {
+        if ($this->check_login()) {
+
+            $this->load->model(['feedback']);
+            $urls = $this->get_urls();
+
+            if (is_null($route)) {
+                // Show overview
+                $overview = $this->feedback->overview();
+
+                if (count($overview) == 0)
+                    $alert = $this->alert('Es wurde noch keine Umfrage ausgefüllt.', 'warning');
+
+                $data = [
+                    'styles' => [
+                        base_url('resources/css/datatables.min.css'),
+                        base_url('resources/css/bootadmin.min.css'),
+                        base_url('resources/css/backend.css')
+                    ],
+                    'scripts' => [
+                        base_url('resources/js/datatables.min.js'),
+                        base_url('resources/js/bootadmin.min.js'),
+                        base_url('resources/js/backend.js')
+                    ],
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/manage', 'urls' => $urls], TRUE),
+                    'page' => $this->load->view('backend/bootadmin/evaluation', [
+                        'urls' => $urls,
+                        'alert' => isset($alert) ? $alert : '',
+                        'routes' => $overview
+                    ], TRUE)
+                ];
+
+                $this->load->view('backend/bootadmin', $data);
+
+            } else {
+                // Show route details
+            }
+        }
+    }
+    
     /**
      * @param bool $return_only Default false. If true, the method won't redirect on to the login page
      * @return bool Is logged in?
@@ -515,7 +558,7 @@ class Backend extends CI_Controller
             'logout' => $base . 'logout',
             'main' => $base . 'dashboard',
             'survey' => $base . '',
-            'results' => $base . '',
+            'evaluation' => $base . 'evaluation',
             'routes/add' => $base . 'routen/hinzufuegen',
             'routes/manage' => $base . 'routen/verwalten',
             'images' => $base . 'bilder',
