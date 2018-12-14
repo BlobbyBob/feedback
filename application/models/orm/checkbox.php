@@ -81,7 +81,7 @@ class Checkbox extends Formelement
                     'value' => $this->label
                 ],
                 [
-                    'key' => "Anzahl",
+                    'key' => "Beschriftungsposition",
                     'type' => "select",
                     'name' => "label_position",
                     'options' => [

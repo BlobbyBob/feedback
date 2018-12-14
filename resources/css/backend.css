@@ -1,3 +1,5 @@
+/** IMAGE GRID **/
+
 .image-grid-column {
     flex: 100%;
     max-width: 100%;
@@ -63,7 +65,10 @@
         max-width: 33.3%;
     }
 }
-.sortable > div {
+
+/** SORTABLE **/
+
+.sortable > * {
     width: calc(100% - 1.5em);
     margin: 1em;
     padding: 1em;
@@ -72,7 +77,7 @@
     display: flex;
     justify-content: space-between;
 }
-.sortable div.hover {
+.sortable .hover {
     background-color: #2e8ece;
     cursor: move;
 }
@@ -103,6 +108,9 @@
 .element-setting-key {
     padding-bottom: .2em;
 }
+
+/** TYPE MODAL **/
+
 .typebutton {
     border: 1px solid black;
     -webkit-border-radius: 6px;

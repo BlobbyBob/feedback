@@ -56,4 +56,42 @@ $(function () {
         placeholderClass: 'sortable-placeholder',
         hoverClass: 'hover'
     });
+
+    $('#save_survey').click(function(){
+        let form = $("#form");
+        var i = 1;
+        // Set correct index values
+        form.children().each(function(index, elem){
+            $(elem).find("input[name=index]").val(i++);
+        });
+        var data = [];
+        form.find("form").each(function(index, elem){
+            let d = $(elem).serializeArray();
+            let e = {};
+            for (let i = 0; i < d.length; i++) {
+                e[decodeURIComponent(d[i]["name"])] = decodeURIComponent(d[i]["value"]);
+            }
+            data[data.length] = e;
+        });
+        $('#hidden_form_data').val(JSON.stringify(data));
+        $('#hidden_form').submit();
+    });
+
+    $('.typebutton').click(function () {
+        $.get({
+            url: "../ajax/formelements/" + $(this).data('type') + "/settings",
+            success: function (data) {
+                $('<form class="sortable-item">' + data + '</form>').appendTo('#form');
+            }
+        });
+    });
+
+    $('.delete-element').click(function () {
+        $('<input type="hidden" name="deleted" value="1">').appendTo($(this).parent());
+        $(this).closest(".sortable-item").hide();
+    });
+
+    $('#drop_changes').click(function () {
+        location = location.href;
+    });
 });

@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use stdClass;
+
 /**
  * Class Pagebreak
  * Represents a new div / page
@@ -46,5 +48,23 @@ class Pagebreak extends Formelement
             'settings' => []
         ];
         return $settings;
+    }
+
+    /**
+     * Return the data of this formelement as object similar to the object by Formelement::create
+     *
+     * @return object
+     */
+    public function export()
+    {
+        $o = new stdClass();
+        $o->id = $this->id;
+        $o->index = $this->index;
+        $o->type = 'pagebreak';
+
+        $j = new stdClass();
+        $o->data = json_encode($j);
+
+        return $o;
     }
 }

@@ -49,7 +49,6 @@ class Forms extends CI_Model
         $obj = $formelement->export();
         $obj->id = null;
         $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM formelements WHERE version=(SELECT MAX(version) FROM formelements)");
-        $obj->type = $type;
         $result = $query->result()[0];
         $obj->index = $result->index + 1;
         $obj->version = 0;
@@ -59,6 +58,51 @@ class Forms extends CI_Model
         $formelement->index = $obj->index;
 
         return $formelement;
+    }
+
+    /**
+     * Save updated form elements in persisten storage
+     *
+     * @param array|object $data The updates to perform
+     * @return int Number of updates performed
+     */
+    public function update($data)
+    {
+        return $this->db->update_batch('formelements', $data, 'id');
+    }
+
+    /**
+     * Delete an element from the database
+     *
+     * @param Formelement $elem Delete this formelement
+     * @return int Number of deleted elements
+     */
+    public function delete($elem)
+    {
+        $this->db->where('id', $elem->id);
+        $this->db->delete('formelements');
+        return $this->db->affected_rows();
+    }
+
+    /**
+     * Delete all formelements, that were added, but not saved
+     *
+     * @return void
+     */
+    public function remove_old_elements()
+    {
+        $this->db->where('version', '0');
+        $this->db->delete('formelements');
+    }
+
+    /**
+     * Get the maximum (=latest) version number
+     *
+     * @return int
+     */
+    public function max_version()
+    {
+        return $this->db->query("SELECT MAX(version) as version FROM formelements")->result()[0]->version;
     }
 
 }

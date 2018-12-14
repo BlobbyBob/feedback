@@ -1,5 +1,6 @@
 <?php
 
+use Models\AnonymousElement;
 use Models\Route;
 use Models\Setter;
 
@@ -390,6 +391,58 @@ class Backend extends CI_Controller
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes', 'forms']); // todo: do we need all of those?
 
+            // Did something get submitted?
+            if ($this->input->post('data') != NULL) {
+
+                $data = json_decode($this->input->post('data'));
+
+                if ($data == NULL) {
+                    $alert = $this->alert('Die gesendeten Daten sind ungültig.', 'danger');
+                } else {
+
+                    $max_version = $this->forms->max_version();
+
+                    $update = [];
+
+                    $count = 0;
+
+                    foreach ($data as $element) {
+                        $elem = new AnonymousElement();
+                        foreach ($element as $key => $value) {
+                            $elem->$key = $value;
+                        }
+
+                        if ($elem->isDeleted()) {
+
+                            $count += $this->forms->delete($elem);
+
+                        } else {
+
+                            $elem->setData();
+
+                            $update[] = [
+                                'id' => $elem->id,
+                                'index' => $elem->index,
+                                'data' => $elem->data,
+                                'version' => $max_version
+                            ];
+                        }
+                    }
+
+                    $count += $this->forms->update($update);
+                    switch ($count) {
+                        case 0:
+                            $c = 'Keine'; break;
+                        case 1:
+                            $c = 'Eine'; break;
+                        default: $c = $count;
+                    }
+                    $alert = $this->alert($c . " Änderung" . ($count > 1 ? "en" : "") . " gespeichert.", 'success');
+
+                }
+            }
+
+            $this->forms->remove_old_elements();
             $formelements = $this->forms->get_form();
             $formelements = array_map(function ($formelement){
                     return $this->load->view('formelements/settings', $formelement->get_settings(), TRUE);
@@ -411,7 +464,7 @@ class Backend extends CI_Controller
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'survey', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/survey', [
                     'urls' => $urls,
-                    'form' => form_open('backend/survey'),
+                    'hidden_form' => form_open('backend/survey', ['class' => 'hidden', 'id' => 'hidden_form']),
                     'alert' => isset($alert) ? $alert : '',
                     'formelements' => $formelements
                 ], TRUE)
@@ -450,7 +503,7 @@ class Backend extends CI_Controller
      *
      * @return bool Log in status
      */
-    public static function isLogin() {
+    public static function isLogin() { // todo: put this in a helper
         return (new Backend())->check_login(true);
     }
 

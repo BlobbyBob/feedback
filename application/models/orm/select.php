@@ -108,6 +108,7 @@ class Select extends Formelement
         $o = new stdClass();
         $o->id = $this->id;
         $o->index = $this->index;
+        $o->type = 'select';
 
         $j = new stdClass();
         $j->label = $this->label;

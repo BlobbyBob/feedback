@@ -102,6 +102,7 @@ class Textarea extends Formelement
         $o = new stdClass();
         $o->id = $this->id;
         $o->index = $this->index;
+        $o->type = 'textarea';
 
         $j = new stdClass();
         $j->label = $this->label;

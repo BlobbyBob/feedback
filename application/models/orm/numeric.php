@@ -79,6 +79,7 @@ class Numeric extends Formelement
         $o = new stdClass();
         $o->id = $this->id;
         $o->index = $this->index;
+        $o->type = 'numeric';
 
         $j = new stdClass();
         $j->label = $this->label;

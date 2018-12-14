@@ -1,6 +1,9 @@
 <input type="hidden" name="id" value="<?php if (isset($id)) echo $id; ?>">
 <input type="hidden" name="index" value="<?php if (isset($index)) echo $index; ?>">
-<div class="element-type"><strong>Typ:</strong> <?php if (isset($type)) echo $type; ?></div>
+<div class="element-type">
+    <strong>Typ:</strong> <?php if (isset($type)) echo $type; ?><br>
+    <small class="btn btn-danger delete-element mt-3">Element löschen</small>
+</div>
 <div class="element-settings">
 
     <div class="element-settings-title">Einstellungen:</div>

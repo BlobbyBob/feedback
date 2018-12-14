@@ -113,6 +113,7 @@ class Radio extends Formelement
         $o = new stdClass();
         $o->id = $this->id;
         $o->index = $this->index;
+        $o->type = 'radio';
 
         $j = new stdClass();
         $j->main_label = $this->main_label;

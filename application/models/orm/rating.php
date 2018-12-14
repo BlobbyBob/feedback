@@ -142,6 +142,7 @@ class Rating extends Formelement
         $o = new stdClass();
         $o->id = $this->id;
         $o->index = $this->index;
+        $o->type = 'rating';
 
         $j = new stdClass();
         $j->label = $this->label;

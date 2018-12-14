@@ -5,7 +5,7 @@ include_once "Backend.php";
 
 /**
  * Class Ajax
- * Controller for delivering code snippets via ajax
+ * Controller for fetching code snippets via ajax
  *
  * @package Feedback
  * @subpackage Controller
@@ -18,7 +18,6 @@ class Ajax extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->helper('url');
     }
 
     /**
