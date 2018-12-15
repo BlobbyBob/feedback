@@ -1,5 +1,5 @@
 <div class="content p-4">
-    
+
     <div class="mb-4 col-12">
         <h2>Ergebnisse</h2>
     </div>
@@ -17,8 +17,8 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Letzte Umfrage</th>
-                    <th>Anzahl Umfragen</th>
+                    <th>Zuletzt ausgefüllt</th>
+                    <th>Umfragen abgeschickt</th>
                     <th>Beantwortete Fragen</th>
                 </tr>
                 </thead>
@@ -29,7 +29,7 @@
                     <td><?php echo $route->name; ?></td>
                     <td><?php echo $route->latest; ?></td>
                     <td><?php echo $route->count; ?></td>
-                    <td data-order="<?php echo $percent ?>"><?php echo $route->q_answered . "/" . $route->q_total . " ("; printf("%.2f%%", $percent); ?>)</td>
+                    <td data-order="<?php echo $percent ?>"><?php echo $route->q_answered . "/" . $route->q_total . " ("; printf("%.2f%%", $percent*100); ?>)</td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -38,9 +38,11 @@
     </div>
 
     <div class="card mb-4">
-        <div class="card-header">Ergebnisübersicht</div>
+        <div class="card-header font-weight-bold">Einzelübersicht</div>
         <div class="card-body">
+            <div class="col-sm-12 col-md-6 col-lg-4 single-view">
 
+            </div>
         </div>
     </div>
 </div>
