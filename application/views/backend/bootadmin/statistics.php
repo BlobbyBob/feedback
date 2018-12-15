@@ -35,12 +35,12 @@
         usort($text, function ($a, $b) {return strlen($a['value']) <=> strlen($b['value']);}); ?>
         <?php if (count($text) < 3): ?>
             <?php foreach ($text as $t): ?>
-                <em><?= htmlspecialchars($t) ?></em><br>
+                <p><em><?= htmlspecialchars($t) ?></em></p><br>
             <?php endforeach; ?>
         <?php else: ?>
-            <em><?= htmlspecialchars($text[0]) ?></em><br>
-            <em><?= htmlspecialchars($text[count($text)/2]) ?></em><br>
-            <em><?= htmlspecialchars($text[count($text)-1]) ?></em><br>
+            <p><em><?= htmlspecialchars($text[0]) ?></em></p><br>
+            <p><em><?= htmlspecialchars($text[count($text) / 2]) ?></em></p><br>
+            <p><em><?= htmlspecialchars($text[count($text) - 1]) ?></em></p><br>
         <?php endif; ?>
     <?php break; ?>
 
