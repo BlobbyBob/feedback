@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use RuntimeException;
 use function strtolower;
 
 /**
@@ -150,6 +151,7 @@ abstract class Formelement
     /**
      * Get the class name of a form element by its type
      *
+     * @throws RuntimeException
      * @param string $type Type of Formelement
      * @return string|null Return the class name or null in case of a wrong type
      */
@@ -185,7 +187,7 @@ abstract class Formelement
                 $class = '\Models\Textarea';
                 break;
             default:
-                return null;
+                throw new RuntimeException("'$type' is not a valid formelement.");
                 break;
         }
         return $class;

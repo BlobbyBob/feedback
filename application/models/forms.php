@@ -52,6 +52,7 @@ class Forms extends CI_Model
         $result = $query->result()[0];
         $obj->index = $result->index + 1;
         $obj->version = 0;
+        $obj->type = $type;
 
         $this->db->insert('formelements', $obj);
         $formelement->id = $this->db->insert_id();
