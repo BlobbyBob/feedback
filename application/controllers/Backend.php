@@ -491,7 +491,7 @@ class Backend extends CI_Controller
                     $alert = $this->alert('Es wurde noch keine Umfrage ausgefüllt.', 'warning');
 
                 $stats = [];
-
+                $names = [];
                 // todo: more efficient database request
                 foreach ($overview as $route) {
                     $feedback = $this->feedback->get_feedback($route->id);
@@ -499,6 +499,7 @@ class Backend extends CI_Controller
                     $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
                     $this->statistics->run();
                     $stats[] = $this->statistics->get();
+                    $names[] = $route->name;
                 }
 
                 $data = [
@@ -518,7 +519,8 @@ class Backend extends CI_Controller
                         'urls' => $urls,
                         'alert' => isset($alert) ? $alert : '',
                         'routes' => $overview,
-                        'statistics' => $stats
+                        'statistics' => $stats,
+                        'names' => $names
                     ], TRUE)
                 ];
 

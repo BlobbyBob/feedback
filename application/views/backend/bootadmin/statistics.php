@@ -1,13 +1,14 @@
 <?php
 if ( ! function_exists('statistics_get_total')) {
     function statistics_get_total($options) {
-    $t = 0;
-    foreach ($options as $o) $t += $o['value'];
-    return $t;
+        $t = 0;
+        foreach ($options as $o)
+            $t += $o['value'];
+        return $t;
     }
 }
 ?>
-<h6><?php if (isset($label)) echo $label; ?></h6>
+<h5><?php if (isset($label)) echo $label; ?></h5>
 <?php if (isset($type)) switch($type):
 
 
@@ -30,12 +31,12 @@ if ( ! function_exists('statistics_get_total')) {
 
     <?php case 'numbers':
         usort($numbers, function ($a, $b) {
-            $v=['min','max','median','mean','avg'];
+            $v=['min','max','mean','median'];
             return array_search($a, $v) <=> array_search($b, $v);
         }); ?>
 
         <strong>Minimum/Maximum:</strong> <?= $numbers[0]['value']; ?> / <?= $numbers[1]['value']; ?><br>
-        <strong>Median/Mittelwert:</strong> <?= $numbers[2]['value']; ?> / <?= $numbers[3]['value']; ?><br>
+        <strong>Mittelwert/Median:</strong> <?= $numbers[2]['value']; ?> / <?= $numbers[3]['value']; ?><br>
     <?php break; ?>
 
 
@@ -56,6 +57,6 @@ if ( ! function_exists('statistics_get_total')) {
 
 
     <?php default: ?>
-    <h6 class="warning">Unbekannter Statistik-Typ</h6>
+    <h5 class="warning">Unbekannter Statistik-Typ</h5>
 <?php endswitch; ?>
 <hr>
