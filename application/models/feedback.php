@@ -20,7 +20,7 @@ class Feedback extends CI_Model
         $this->load->database();
     }
 
-    public function get_feedback()
+    public function get_feedback($id = null)
     {
         
     }
@@ -28,7 +28,7 @@ class Feedback extends CI_Model
     public function overview()
     {
 
-        $sql = "SELECT r.name as name, r.wall as wall, c.german as color, MAX(`date`) AS latest, COUNT(*) as `count`, SUM(questions) as answered, SUM(total) as total 
+        $sql = "SELECT r.id as id, r.name as name, r.wall as wall, c.german as color, MAX(`date`) AS latest, COUNT(*) as `count`, SUM(questions) as answered, SUM(total) as total 
                 FROM feedback f 
                 LEFT JOIN routes r ON f.route = r.id 
                 LEFT JOIN color c on r.color = c.id
@@ -39,6 +39,7 @@ class Feedback extends CI_Model
         $data = [];
         foreach ($query->result() as $row) {
             $route = new stdClass();
+            $route->id = $row->id;
             $route->name = empty($row->name) ? $row->color . $this->getRopeName($row->wall) : $row->name;
             $route->latest = $row->latest;
             $route->count = $row->count;

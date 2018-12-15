@@ -40,9 +40,13 @@
     <div class="card mb-4">
         <div class="card-header font-weight-bold">Einzelübersicht</div>
         <div class="card-body">
-            <div class="col-sm-12 col-md-6 col-lg-4 single-view">
-
-            </div>
+            <?php if (isset($statistics)) foreach ($statistics as $statistic): ?>
+                <div class="col-sm-12 col-md-6 col-lg-4 single-view">
+                    <?php foreach ($statistic as $stat): ?>
+                    <?= $stat ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

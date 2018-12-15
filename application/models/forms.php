@@ -61,6 +61,24 @@ class Forms extends CI_Model
     }
 
     /**
+     * Get all Formelements with specific ids
+     *
+     * @param array $ids An array of Formelement ids
+     * @return Formelement[]
+     */
+    public function get_form_elements($ids)
+    {
+        $this->db->select('data');
+        $this->db->where_in('id', $ids);
+        $query = $this->db->get('formelements');
+        $elements = [];
+        foreach ($query->result() as $row) {
+            $elements[] = Formelement::create($row);
+        }
+        return $elements;
+    }
+
+    /**
      * Save updated form elements in persisten storage
      *
      * @param array|object $data The updates to perform

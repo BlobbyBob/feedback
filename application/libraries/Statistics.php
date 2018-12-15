@@ -155,7 +155,7 @@ class Statistics
      * @see Statistics::get_ids()
      * @return void
      */
-    public function setFormElements($elements)
+    public function set_form_elements($elements)
     {
         $this->elements = $elements;
     }

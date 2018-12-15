@@ -479,7 +479,8 @@ class Backend extends CI_Controller
     {
         if ($this->check_login()) {
 
-            $this->load->model(['feedback']);
+            $this->load->model(['feedback', 'forms']);
+            $this->load->library('statistics');
             $urls = $this->get_urls();
 
             if (is_null($route)) {
@@ -488,6 +489,19 @@ class Backend extends CI_Controller
 
                 if (count($overview) == 0)
                     $alert = $this->alert('Es wurde noch keine Umfrage ausgefüllt.', 'warning');
+
+                $stats = [];
+
+                // todo: more efficient database request
+                foreach ($overview as $route) {
+                    $feedback = $this->feedback->get_feedback($route->id);
+                    $this->statistics->set($feedback);
+                    $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
+                    $this->statistics->run();
+                    $stats[] = $this->statistics->get();
+                }
+
+
 
                 $data = [
                     'styles' => [
@@ -505,7 +519,8 @@ class Backend extends CI_Controller
                     'page' => $this->load->view('backend/bootadmin/evaluation', [
                         'urls' => $urls,
                         'alert' => isset($alert) ? $alert : '',
-                        'routes' => $overview
+                        'routes' => $overview,
+                        'statistics' => $stats
                     ], TRUE)
                 ];
 
