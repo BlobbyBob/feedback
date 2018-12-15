@@ -2,9 +2,11 @@
 
 namespace Models;
 
+use function array_rand;
 use function is_string;
 use function max;
 use function min;
+use function shuffle;
 use stdClass;
 
 /**
@@ -132,5 +134,32 @@ class Text extends Formelement
         $o->data = json_encode($j);
 
         return $o;
+    }
+
+    /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+        $text = [];
+        $i = 0;
+        shuffle($data);
+        foreach ($data as $d) {
+            $text[] = [
+                'key' => $i++,
+                'value' => $d
+            ];
+        }
+
+        $stats = [
+            'label' => $this->label,
+            'type' => 'text',
+            'text' => $text
+        ];
+
+        return $stats;
     }
 }

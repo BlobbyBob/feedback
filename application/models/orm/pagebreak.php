@@ -67,4 +67,16 @@ class Pagebreak extends Formelement
 
         return $o;
     }
+
+    /**
+     * Calculate statistics about this object
+     * Pagebreaks have no statistics
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+        return [];
+    }
 }

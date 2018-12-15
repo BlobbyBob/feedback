@@ -111,4 +111,31 @@ class Textarea extends Formelement
 
         return $o;
     }
+
+    /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+        $text = [];
+        $i = 0;
+        shuffle($data);
+        foreach ($data as $d) {
+            $text[] = [
+                'key' => $i++,
+                'value' => $d
+            ];
+        }
+
+        $stats = [
+            'label' => $this->label,
+            'type' => 'text',
+            'text' => $text
+        ];
+
+        return $stats;
+    }
 }

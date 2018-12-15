@@ -27,7 +27,7 @@ class AnonymousElement extends Formelement
      * @throws ErrorException
      */
     public function get_html(){
-        throw new ErrorException("AnonymousElement is only for a dummy object");
+        throw new ErrorException("AnonymousElement is only a dummy object");
     }
 
     /**
@@ -35,7 +35,15 @@ class AnonymousElement extends Formelement
      * @throws ErrorException
      */
     public function get_settings(){
-        throw new ErrorException("AnonymousElement is only for a dummy object");
+        throw new ErrorException("AnonymousElement is only a dummy object");
+    }
+
+    /**
+     * @return array|void
+     * @throws ErrorException
+     */
+    public function stats($data){
+        throw new ErrorException("AnonymousElement is only a dummy object");
     }
 
     /**
