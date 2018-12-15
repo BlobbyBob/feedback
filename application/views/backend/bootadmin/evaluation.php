@@ -26,7 +26,7 @@
                 <?php foreach ($routes as $route): ?>
                 <?php $percent = ($route->q_total == 0) ? 0 : $route->q_answered / $route->q_total; ?>
                 <tr>
-                    <td><?php echo $route->name; ?></td>
+                    <td><a href="<?= $urls['evaluation'].'/'.$route->id ?>"><?php echo $route->name; ?></a></td>
                     <td><?php echo $route->latest; ?></td>
                     <td><?php echo $route->count; ?></td>
                     <td data-order="<?php echo $percent ?>"><?php echo $route->q_answered . "/" . $route->q_total . " ("; printf("%.2f%%", $percent*100); ?>)</td>

@@ -514,7 +514,7 @@ class Backend extends CI_Controller
                         base_url('resources/js/backend.js')
                     ],
                     'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
-                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/manage', 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'evaluation', 'urls' => $urls], TRUE),
                     'page' => $this->load->view('backend/bootadmin/evaluation', [
                         'urls' => $urls,
                         'alert' => isset($alert) ? $alert : '',
@@ -528,6 +528,34 @@ class Backend extends CI_Controller
 
             } else {
                 // Show route details
+
+                $this->load->model('routes');
+
+                /** @var Route $rt */
+                $rt = $this->routes->get_routes($route)[0];
+
+                $data = [
+                    'styles' => [
+                        base_url('resources/css/datatables.min.css'),
+                        base_url('resources/css/bootadmin.min.css'),
+                        base_url('resources/css/backend.css')
+                    ],
+                    'scripts' => [
+                        base_url('resources/js/datatables.min.js'),
+                        base_url('resources/js/bootadmin.min.js'),
+                        base_url('resources/js/backend.js')
+                    ],
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'evaluation', 'urls' => $urls], TRUE),
+                    'page' => $this->load->view('backend/bootadmin/evaluationdetails', [
+                        'urls' => $urls,
+                        'alert' => isset($alert) ? $alert : '',
+                        'name' => $rt->name
+                    ], TRUE)
+                ];
+
+                $this->load->view('backend/bootadmin', $data);
+
             }
         }
     }

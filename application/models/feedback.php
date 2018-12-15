@@ -28,9 +28,9 @@ class Feedback extends CI_Model
      */
     public function get_feedback($route = null)
     {
+
+
         $this->db->select('data');
-        if ( ! is_null($route))
-            $this->db->where('route', $route);
         $this->db->order_by('route', 'DESC');
         $data = [];
         foreach ($this->db->get('feedback')->result() as $row) {
