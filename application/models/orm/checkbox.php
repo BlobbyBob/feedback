@@ -145,11 +145,11 @@ class Checkbox extends Formelement
             'type' => 'options',
             'options' => [
                 [
-                    'key' => 'yes',
+                    'key' => 'Ja',
                     'value' => $yes
                 ],
                 [
-                    'key' => 'no',
+                    'key' => 'Nein',
                     'value' => $no
                 ]
             ]

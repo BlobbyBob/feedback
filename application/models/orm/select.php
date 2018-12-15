@@ -137,11 +137,10 @@ class Select extends Formelement
         }
 
         $options = [];
-        $total = array_sum($n);
         foreach ($n as $i => $val) {
             $options[] = [
                 'key' => $this->options[$i],
-                'value' => $val / $total
+                'value' => $val
             ];
         }
 

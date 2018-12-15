@@ -143,11 +143,10 @@ class Radio extends Formelement
         }
 
         $options = [];
-        $total = array_sum($n);
         foreach ($n as $i => $val) {
             $options[] = [
                 'key' => $this->labels[$i],
-                'value' => $val / $total
+                'value' => $val
             ];
         }
 
