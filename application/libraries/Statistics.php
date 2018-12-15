@@ -65,7 +65,7 @@ class Statistics
         $this->data = $data;
         if (is_null($this->data) || !is_array($this->data)) {
             $this->data = null;
-            throw new InvalidArgumentException('Invalid Data: Data is not an (opitonal json encoded) array.');
+            throw new InvalidArgumentException("Invalid Data: Data is not an (opitonal json encoded) array ('$data').");
         }
         $this->result = null;
         $this->elements = null;
@@ -162,7 +162,7 @@ class Statistics
 
 }
 
-class Statistics_Result extends IteratorIterator
+class Statistics_Result implements IteratorAggregate
 {
 
     /**
@@ -188,7 +188,6 @@ class Statistics_Result extends IteratorIterator
     {
         $this->CI = &get_instance();
         $this->view = $view;
-        parent::__construct(new ArrayIterator($this->result));
     }
 
     /**
@@ -197,6 +196,18 @@ class Statistics_Result extends IteratorIterator
      */
     public function add($stats)
     {
-        $result[] = $this->CI->load->view($this->view, $stats, TRUE);
+        $this->result[] = $this->CI->load->view($this->view, $stats, TRUE);
+    }
+
+    /**
+     * Retrieve an external iterator
+     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->result);
     }
 }

@@ -501,8 +501,6 @@ class Backend extends CI_Controller
                     $stats[] = $this->statistics->get();
                 }
 
-
-
                 $data = [
                     'styles' => [
                         base_url('resources/css/datatables.min.css'),

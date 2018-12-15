@@ -1,9 +1,18 @@
+<?php
+if ( ! function_exists('statistics_get_total')) {
+    function statistics_get_total($options) {
+    $t = 0;
+    foreach ($options as $o) $t += $o['value'];
+    return $t;
+    }
+}
+?>
 <h6><?php if (isset($label)) echo $label; ?></h6>
-<?php if (isset($type)) switch($type): ?>
+<?php if (isset($type)) switch($type):
 
 
 
-    <?php case 'options':
+    case 'options':
         usort($options, function ($a, $b) {return $a['value'] <=> $b['value'];});
         $total = statistics_get_total($options); ?>
         <?php if (count($options) == 2):?>
@@ -35,12 +44,12 @@
         usort($text, function ($a, $b) {return strlen($a['value']) <=> strlen($b['value']);}); ?>
         <?php if (count($text) < 3): ?>
             <?php foreach ($text as $t): ?>
-                <p><em><?= htmlspecialchars($t) ?></em></p><br>
+                <p><em><?= htmlspecialchars($t['value']) ?></em></p>
             <?php endforeach; ?>
         <?php else: ?>
-            <p><em><?= htmlspecialchars($text[0]) ?></em></p><br>
-            <p><em><?= htmlspecialchars($text[count($text) / 2]) ?></em></p><br>
-            <p><em><?= htmlspecialchars($text[count($text) - 1]) ?></em></p><br>
+            <p><em><?= htmlspecialchars($text[0]['value']) ?></em></p>
+            <p><em><?= htmlspecialchars($text[count($text) / 2]['value']) ?></em></p>
+            <p><em><?= htmlspecialchars($text[count($text) - 1]['value']) ?></em></p>
         <?php endif; ?>
     <?php break; ?>
 
@@ -50,9 +59,3 @@
     <h6 class="warning">Unbekannter Statistik-Typ</h6>
 <?php endswitch; ?>
 <hr>
-<?php
-function statistics_get_total($options) {
-$t = 0;
-foreach ($options as $o) $t += $o['value'];
-return $t;
-}

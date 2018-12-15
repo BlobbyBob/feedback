@@ -20,9 +20,23 @@ class Feedback extends CI_Model
         $this->load->database();
     }
 
-    public function get_feedback($id = null)
+    /**
+     * Get all feedback for a route
+     *
+     * @param int|null $route ID of the route to get the feedback on (optional)
+     * @return array
+     */
+    public function get_feedback($route = null)
     {
-        
+        $this->db->select('data');
+        if ( ! is_null($route))
+            $this->db->where('route', $route);
+        $this->db->order_by('route', 'DESC');
+        $data = [];
+        foreach ($this->db->get('feedback')->result() as $row) {
+            $data[] = json_decode($row->data);
+        }
+        return $data;
     }
 
     public function overview()
