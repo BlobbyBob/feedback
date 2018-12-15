@@ -35,9 +35,19 @@ class Statistics
      */
     protected $elements;
 
-    public function __construct()
+    /**
+     * @var string
+     */
+    protected $view;
+
+    /**
+     * Statistics constructor.
+     * @param string $view A view for formatting the statistics
+     */
+    public function __construct($view = 'backend/bootadmin/statistics')
     {
         $this->CI = &get_instance();
+        $this->view = $view;
     }
 
     /**
@@ -83,10 +93,10 @@ class Statistics
             foreach ($dto as $id => $value)
                 $dbe[$id][] = $value;
 
-        $this->result = new Statistics_Result();
+        $this->result = new Statistics_Result($this->view);
 
         foreach ($this->elements as $element) {
-            $this->result->add($element, $element->statistics($dbe[$element->id]));
+            $this->result->add($element->stats($dbe[$element->id]));
         }
     }
 
@@ -152,32 +162,41 @@ class Statistics
 
 }
 
-class Statistics_Result implements IteratorAggregate {
+class Statistics_Result extends IteratorIterator
+{
 
     /**
-     * @var array Results
+     * @var CI_Controller The CI Controller
      */
-    private $result;
+    private $CI;
 
     /**
-     * Retrieve an external iterator
-     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
-     * @return Traversable An instance of an object implementing <b>Iterator</b> or
-     * <b>Traversable</b>
-     * @since 5.0.0
+     * @var string[] Formatted esults
      */
-    public function getIterator()
+    private $result = [];
+
+    /**
+     * @var string
+     */
+    private $view;
+
+    /**
+     * Statistics_Result constructor.
+     * @param string $view The view for formatting the results
+     */
+    public function __construct($view)
     {
-        return new ArrayIterator($this->result);
+        $this->CI = &get_instance();
+        $this->view = $view;
+        parent::__construct(new ArrayIterator($this->result));
     }
 
     /**
-     * @param Formelement $element The Formelement, where statistics have been calculated
      * @param array $stats The calculated statistics.
      * @return void
      */
-    public function add($element, $stats)
+    public function add($stats)
     {
-
+        $result[] = $this->CI->load->view($this->view, $stats, TRUE);
     }
 }
