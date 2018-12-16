@@ -28,7 +28,6 @@ class Feedback extends CI_Model
      */
     public function get($route = null)
     {
-
         $this->db->select('*');
         $this->db->order_by('route', 'DESC');
         if ( ! is_null($route))
@@ -44,8 +43,6 @@ class Feedback extends CI_Model
      */
     public function get_feedback($route = null)
     {
-
-
         $this->db->select('data');
         if ( ! is_null($route))
             $this->db->where('route', $route);

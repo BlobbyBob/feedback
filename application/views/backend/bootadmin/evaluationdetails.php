@@ -24,7 +24,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
                 <div class="card">
                     <div class="card-header">
-                        <span class="category">Umfrageneffizienz</span>
+                        <span class="category">Umfrageeffizienz</span>
                     </div>
                     <div class="pie-container">
                         <div id="participation_graph" class="ct-chart-pie ct-square chart-binary">

@@ -482,10 +482,12 @@ class Backend extends CI_Controller
         if ($this->check_login()) {
 
             $this->load->model(['feedback', 'forms']);
-            $this->load->library('statistics');
             $urls = $this->get_urls();
 
             if (is_null($route)) {
+
+                $this->load->library('statistics');
+
                 // Show overview
                 $overview = $this->feedback->overview();
 
@@ -532,20 +534,29 @@ class Backend extends CI_Controller
                 // Show route details
 
                 $this->load->model('routes');
+                $this->load->library('statistics', 'backend/bootadmin/evaluationsingle');
 
                 /** @var Route $rt */
                 $rt = $this->routes->get_routes($route)[0];
                 $feedback = $this->feedback->get($rt->id);
 
-                // Calucalate graphs
+                // Calculate graphs
                 $questions = $total = 0;
+                $data = [];
                 foreach ($feedback as $fb) {
                     if ( ! isset($dates[strtotime($fb->date)/86400]))
                         $dates[strtotime($fb->date)/86400] = 0;
                     $dates[strtotime($fb->date)/86400] += $fb->questions;
                     $questions += $fb->questions;
                     $total += $fb->total;
+                    $data[] = json_decode($fb->data);
                 }
+
+                // Statistics
+                $this->statistics->set($data);
+                $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
+                $this->statistics->run();
+                $stats = $this->statistics->get();
 
                 $date_graph = [];
                 foreach ($dates as $date => $count) {
