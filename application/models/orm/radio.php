@@ -151,6 +151,7 @@ class Radio extends Formelement
         }
 
         $stats = [
+            'id' => $this->id,
             'label' => $this->main_label,
             'type' => 'options',
             'options' => $options

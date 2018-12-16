@@ -110,6 +110,7 @@ class Numeric extends Formelement
         }
 
         $stats = [
+            'id' => $this->id,
             'label' => $this->label,
             'type' => 'numbers',
             'numbers' => [

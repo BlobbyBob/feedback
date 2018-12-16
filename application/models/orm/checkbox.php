@@ -141,6 +141,7 @@ class Checkbox extends Formelement
         }
 
         $stats = [
+            'id' => $this->id,
             'label' => $this->label,
             'type' => 'options',
             'options' => [

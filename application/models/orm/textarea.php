@@ -131,6 +131,7 @@ class Textarea extends Formelement
         }
 
         $stats = [
+            'id' => $this->id,
             'label' => $this->label,
             'type' => 'text',
             'text' => $text

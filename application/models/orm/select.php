@@ -145,6 +145,7 @@ class Select extends Formelement
         }
 
         $stats = [
+            'id' => $this->id,
             'label' => $this->label,
             'type' => 'options',
             'options' => $options
