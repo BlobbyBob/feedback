@@ -1,5 +1,5 @@
 <?php
-if ( ! function_exists('statistics_get_total')) {
+if ( ! function_exists('statistics_get_total')) { // todo: remove this
     function statistics_get_total($options) {
         $t = 0;
         foreach ($options as $o)
