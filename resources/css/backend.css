@@ -144,3 +144,12 @@
 #add_new {
     cursor: pointer;
 }
+
+/** Evaluation Graphs **/
+#date_graph {
+    /*border: gray 1px solid;*/
+    /*-webkit-border-radius: 6px;*/
+    /*-moz-border-radius: 6px;*/
+    /*border-radius: 6px;*/
+    padding: 6px;
+}

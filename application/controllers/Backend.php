@@ -1,6 +1,7 @@
 <?php
 
 use Models\AnonymousElement;
+use Models\Formelement;
 use Models\Route;
 use Models\Setter;
 
@@ -445,6 +446,7 @@ class Backend extends CI_Controller
             $this->forms->remove_old_elements();
             $formelements = $this->forms->get_form();
             $formelements = array_map(function ($formelement){
+                    /** @var Formelement $formelement */
                     return $this->load->view('formelements/settings', $formelement->get_settings(), TRUE);
                 }, $formelements);
 
@@ -533,16 +535,32 @@ class Backend extends CI_Controller
 
                 /** @var Route $rt */
                 $rt = $this->routes->get_routes($route)[0];
+                $feedback = $this->feedback->get($rt->id);
+
+                // Calucalate participation graph
+                foreach ($feedback as $fb) {
+                    if ( ! isset($dates[strtotime($fb->date)/86400]))
+                        $dates[strtotime($fb->date)/86400] = 0;
+                    $dates[strtotime($fb->date)/86400] += $fb->questions;
+                }
+
+                $date_graph = [];
+                foreach ($dates as $date => $count) {
+                    $date_graph[] = [ 'x' => $date * 86400, 'y' => $count ];
+                }
 
                 $data = [
                     'styles' => [
                         base_url('resources/css/datatables.min.css'),
                         base_url('resources/css/bootadmin.min.css'),
+                        base_url('resources/css/chartist.min.css'),
                         base_url('resources/css/backend.css')
                     ],
                     'scripts' => [
                         base_url('resources/js/datatables.min.js'),
                         base_url('resources/js/bootadmin.min.js'),
+                        base_url('resources/js/moment.min.js'),
+                        base_url('resources/js/chartist.min.js'),
                         base_url('resources/js/backend.js')
                     ],
                     'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
@@ -550,7 +568,8 @@ class Backend extends CI_Controller
                     'page' => $this->load->view('backend/bootadmin/evaluationdetails', [
                         'urls' => $urls,
                         'alert' => isset($alert) ? $alert : '',
-                        'name' => $rt->name
+                        'name' => $rt->name,
+                        'date_graph' => json_encode($date_graph, JSON_NUMERIC_CHECK)
                     ], TRUE)
                 ];
 
