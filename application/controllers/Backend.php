@@ -558,6 +558,9 @@ class Backend extends CI_Controller
                 $this->statistics->run();
                 $stats = $this->statistics->get();
 
+                $surveyinfo = '';
+
+
                 $date_graph = [];
                 foreach ($dates as $date => $count) {
                     $date_graph[] = [ 'x' => $date * 86400, 'y' => $count ];
@@ -583,6 +586,7 @@ class Backend extends CI_Controller
                         'urls' => $urls,
                         'alert' => isset($alert) ? $alert : '',
                         'name' => $rt->name,
+                        'surveyinfo' => $surveyinfo,
                         'date_graph' => json_encode($date_graph, JSON_NUMERIC_CHECK),
                         'participation_graph' => json_encode([$total-$questions, $questions], JSON_NUMERIC_CHECK)
                     ], TRUE)

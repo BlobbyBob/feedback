@@ -1,3 +1,6 @@
+<script>
+    var graph_data = {};
+</script>
 <div class="content p-4">
 
     <div class="mb-2 col-12">

@@ -118,7 +118,6 @@ $(function(){
                 }
             ]
         }, {
-            // height: '400px',
             axisX: {
                 type: Chartist.FixedScaleAxis,
                 divisor: 5,

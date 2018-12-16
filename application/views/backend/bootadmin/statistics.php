@@ -31,7 +31,7 @@ if ( ! function_exists('statistics_get_total')) { // todo: remove this
 
     <?php case 'numbers':
         usort($numbers, function ($a, $b) {
-            $v=['min','max','mean','median'];
+            $v = ['min','max','mean','median'];
             return array_search($a, $v) <=> array_search($b, $v);
         }); ?>
 
