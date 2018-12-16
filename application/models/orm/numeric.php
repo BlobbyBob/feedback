@@ -129,7 +129,9 @@ class Numeric extends Formelement
                     'key' => 'median',
                     'value' => $median
                 ]
-            ]
+            ],
+            'datatype' => 'numeric',
+            'data' => $data
         ];
 
         return $stats;

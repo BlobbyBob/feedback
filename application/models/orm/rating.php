@@ -195,7 +195,9 @@ class Rating extends Formelement
                     'key' => 'median',
                     'value' => $median
                 ]
-            ]
+            ],
+            'datatype' => 'rating',
+            'data' => $data
         ];
 
         return $stats;
