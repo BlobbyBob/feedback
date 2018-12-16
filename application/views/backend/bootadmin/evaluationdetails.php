@@ -1,6 +1,6 @@
 <div class="content p-4">
 
-    <div class="mb-4 col-12">
+    <div class="mb-2 col-12">
         <h2>Ergebnisse</h2>
     </div>
 
@@ -13,10 +13,25 @@
     <div class="card mb-4">
         <div class="card-header font-weight-bold"><?= $name ?></div>
         <div class="card-body">
-            <div id="date_graph">
-                <h3 class="align-center mb-3">Aktivität</h3>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <span class="category">Aktivität</span>
+                </div>
+                <div id="date_graph" class="ct-chart ct-double-octave">
+                </div>
+                <small>Hinweis: XXX</small>
             </div>
-            <small>Hinweis: XXX</small>
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="category">Umfrageneffizienz</span>
+                    </div>
+                    <div class="pie-container">
+                        <div id="participation_graph" class="ct-chart-pie ct-square chart-binary">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -26,4 +41,5 @@
     for (let i = 0; i < date_graph_data.length; i++) {
         date_graph_data[i].x = new Date(1000 * date_graph_data[i].x);
     }
+    var participaton_graph = <?= $participation_graph ?>;
 </script>

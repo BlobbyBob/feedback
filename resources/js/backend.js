@@ -101,34 +101,51 @@ $(function () {
 
 $(function(){
 
-    let x = [], y = [];
+    // Date Graph
+    {
+        let x = [], y = [];
 
-    for (let i = 0; i < date_graph_data.length; i++) {
-        x[x.length] = date_graph_data[i][x];
-        y[y.length] = date_graph_data[i][y];
+        for (let i = 0; i < date_graph_data.length; i++) {
+            x[x.length] = date_graph_data[i][x];
+            y[y.length] = date_graph_data[i][y];
+        }
+
+        new Chartist.Line('#date_graph', {
+            series: [
+                {
+                    name: 'Activity',
+                    data: date_graph_data
+                }
+            ]
+        }, {
+            // height: '400px',
+            axisX: {
+                type: Chartist.FixedScaleAxis,
+                divisor: 5,
+                labelInterpolationFnc: function (value) {
+                    return moment(value).format('D.M');
+                }
+            },
+            axisY: {
+                low: 0,
+                onlyInteger: true,
+                type: Chartist.AutoScaleAxis
+            }
+        });
     }
 
-    new Chartist.Line('#date_graph', {
-        series: [
-            {
-                name: 'Activity',
-                data: date_graph_data
+    // Participation Graph
+    {
+        new Chartist.Pie('#participation_graph', {
+            labels: ['Nicht beantwortet', 'Beantwortet'],
+            series: participaton_graph
+        }, {
+            labelOffset: 0,
+            labelDirection: 'explode',
+            labelInterpolationFnc: function(val) {
+                return val;
             }
-        ]
-    }, {
-        height: '400px',
-        axisX: {
-            type: Chartist.FixedScaleAxis,
-            divisor: 5,
-            labelInterpolationFnc: function(value) {
-                return moment(value).format('D.M');
-            }
-        },
-        axisY: {
-            low: 0,
-            onlyInteger: true,
-            type: Chartist.AutoScaleAxis
-        }
-    });
+        });
+    }
 
 });

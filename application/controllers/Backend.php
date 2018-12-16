@@ -537,11 +537,14 @@ class Backend extends CI_Controller
                 $rt = $this->routes->get_routes($route)[0];
                 $feedback = $this->feedback->get($rt->id);
 
-                // Calucalate participation graph
+                // Calucalate graphs
+                $questions = $total = 0;
                 foreach ($feedback as $fb) {
                     if ( ! isset($dates[strtotime($fb->date)/86400]))
                         $dates[strtotime($fb->date)/86400] = 0;
                     $dates[strtotime($fb->date)/86400] += $fb->questions;
+                    $questions += $fb->questions;
+                    $total += $fb->total;
                 }
 
                 $date_graph = [];
@@ -569,7 +572,8 @@ class Backend extends CI_Controller
                         'urls' => $urls,
                         'alert' => isset($alert) ? $alert : '',
                         'name' => $rt->name,
-                        'date_graph' => json_encode($date_graph, JSON_NUMERIC_CHECK)
+                        'date_graph' => json_encode($date_graph, JSON_NUMERIC_CHECK),
+                        'participation_graph' => json_encode([$total-$questions, $questions], JSON_NUMERIC_CHECK)
                     ], TRUE)
                 ];
 
