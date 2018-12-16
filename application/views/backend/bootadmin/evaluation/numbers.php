@@ -10,7 +10,7 @@
     $keys = [];
     $vals = [];
     foreach ($buckets as $key => $val) {
-        $keys[] = $key.'* ('.$val.')';
+        $keys[] = $key.' Stern'.($key!=1?'e':'').' ('.$val.')';
         $vals[] = $val;
     }
     ?>
@@ -20,24 +20,21 @@
                 <span class="category"><?= $label ?></span>
             </div>
             <div class="card-body pie-container">
-                <div id="graph-<?= $id ?>" class="ct-chart-pie ct-square chart-binary">
+                <div id="graph-<?= $id ?>" class="ct-chart-pie ct-square ct-chart-gauge">
                 </div>
             </div>
         </div>
     </div>
 
-    <script>// todo: move this into a JS resource file
-        new Chartist.Pie('#graph-<?= $id ?>', {
-            labels: <?= json_encode($keys) ?>,
-            series: <?= json_encode($vals) ?>
-        }, {
-            donut: true,
-            donutWidth: 60,
-            donutSolid: true,
-            startAngle: 270,
-            total: 200,
-            showLabel: true
-        });
+    <script>
+        graph_data['#graph-<?= $id ?>'] = {
+            type: "gauge",
+            data: {
+                labels: <?= json_encode($keys) ?>,
+                series: <?= json_encode($vals) ?>
+            },
+            total: <?= array_sum($vals) ?>
+        };
     </script>
 
 <?php else: ?>
@@ -63,32 +60,20 @@
                 <span class="category"><?= $label ?></span>
             </div>
             <div class="card-body">
-                <div id="graph-<?= $id ?>" class="ct-chart-bar ct-square chart-binary">
+                <div id="graph-<?= $id ?>" class="ct-chart-line ct-octave chart-binary">
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-    new Chartist.Line('#graph-<?= $id ?>', {
-        series: [
-            {
-                name: '<?= $label ?>',
-                data: <?= json_encode($graph_data) ?>
+        graph_data['#graph-<?= $id ?>'] = {
+            type: "line",
+            data: {
+                labels: <?= json_encode($keys) ?>,
+                series: <?= json_encode($vals) ?>
             }
-        ]
-    }, {
-        lineSmooth: Chartist.Interpolation.cardinal({
-            fillHoles: true,
-        }),
-        axisX: {
-            type: Chartist.AutoScaleAxis
-        },
-        axisY: {
-            low: 0,
-            onlyInteger: true,
-            type: Chartist.AutoScaleAxis
-        }
-    });
+        };
+
     </script>
 <?php endif; ?>

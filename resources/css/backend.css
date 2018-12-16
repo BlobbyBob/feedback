@@ -167,3 +167,13 @@
 .pie-container {
     padding: 2em;
 }
+.evaluation-details > div {
+    max-height: 600px;
+    overflow-y: auto;
+}
+.evaluation-text {
+    overflow-y: auto;
+}
+.evaluation-text p {
+    max-height: 3em;
+}

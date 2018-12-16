@@ -534,7 +534,7 @@ class Backend extends CI_Controller
                 // Show route details
 
                 $this->load->model('routes');
-                $this->load->library('statistics', 'backend/bootadmin/evaluationsingle');
+                $this->load->library('statistics', ['backend/bootadmin/evaluationsingle']);
 
                 /** @var Route $rt */
                 $rt = $this->routes->get_routes($route)[0];
@@ -576,6 +576,7 @@ class Backend extends CI_Controller
                         base_url('resources/js/bootadmin.min.js'),
                         base_url('resources/js/moment.min.js'),
                         base_url('resources/js/chartist.min.js'),
+                        base_url('resources/js/chartist-plugin-axistitle.js'),
                         base_url('resources/js/backend.js')
                     ],
                     'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),

@@ -42,12 +42,12 @@ class Statistics
 
     /**
      * Statistics constructor.
-     * @param string $view A view for formatting the statistics
+     * @param array $view A view for formatting the statistics
      */
-    public function __construct($view = 'backend/bootadmin/statistics')
+    public function __construct($view = ['backend/bootadmin/statistics'])
     {
         $this->CI = &get_instance();
-        $this->view = $view;
+        $this->view = $view[0];
     }
 
     /**

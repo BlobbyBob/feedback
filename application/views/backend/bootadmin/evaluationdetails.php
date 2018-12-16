@@ -17,7 +17,7 @@
         <div class="card-header font-weight-bold"><?= $name ?></div>
 
         <div class="card-body container-fluid">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-lg-9 col-md-8 col-sm-12">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="row d-flex">
+            <div class="row d-flex evaluation-details">
                 <?php foreach ($stats as $stat): ?>
                     <?= $stat ?>
                 <?php endforeach; ?>

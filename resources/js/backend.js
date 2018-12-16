@@ -118,6 +118,7 @@ $(function(){
                 }
             ]
         }, {
+            showArea: true,
             axisX: {
                 type: Chartist.FixedScaleAxis,
                 divisor: 5,
@@ -129,7 +130,30 @@ $(function(){
                 low: 0,
                 onlyInteger: true,
                 type: Chartist.AutoScaleAxis
-            }
+            },
+            plugins: [
+                Chartist.plugins.ctAxisTitle({
+                    axisX: {
+                        axisTitle: 'Datum',
+                        axisClass: 'ct-axis-title',
+                        offset: {
+                            x: 0,
+                            y: 15
+                        },
+                        textAnchor: 'middle'
+                    },
+                    axisY: {
+                        axisTitle: 'Beantwortete Fragen',
+                        axisClass: 'ct-axis-title',
+                        offset: {
+                            x: 0,
+                            y: -10
+                        },
+                        textAnchor: 'middle',
+                        flipTitle: false
+                    }
+                })
+            ]
         });
     }
 
@@ -145,6 +169,33 @@ $(function(){
                 return val;
             }
         });
+    }
+
+    for (let p in graph_data) {
+        let info = graph_data[p];
+        if (info.type === "gauge") {
+
+            new Chartist.Pie(p, info.data, {
+                total: info.total
+            });
+
+        } else if (info.type === "line") {
+
+            new Chartist.Line(p, info.data, {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    fillHoles: true,
+                }),
+                axisX: {
+                    type: Chartist.AutoScaleAxis
+                },
+                axisY: {
+                    low: 0,
+                    onlyInteger: true,
+                    type: Chartist.AutoScaleAxis
+                }
+            });
+
+        }
     }
 
 });
