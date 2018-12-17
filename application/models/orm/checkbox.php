@@ -47,9 +47,24 @@ class Checkbox extends Formelement
 
     }
 
-    public function get_html()
+    /**
+     * Get the data to show render the HTML of this element
+     * @return array The array for the view to parse
+     */
+    public function get_data()
     {
-        // TODO: Implement get_html() method.
+        $data = [
+            'id' => $this->id,
+            'label' => $this->label,
+            'tag' => 'input',
+            'type' => 'checkbox',
+            'closing' => false,
+            'label_position' => $this->label_position,
+            'special' => '',
+            'placeholder' => '',
+            'maxlength' => ''
+        ];
+        return $data;
     }
     
     /**

@@ -25,12 +25,12 @@ class Pagebreak extends Formelement
     }
 
     /**
-     * Get the html of this form element
-     * @return string
+     * Get the data to show render the HTML of this element
+     * @return array The array for the view to parse
      */
-    public function get_html()
+    public function get_data()
     {
-        return '';
+        return [ 'none' => true ];
     }
 
     /**

@@ -59,14 +59,22 @@ class Text extends Formelement
     }
 
     /**
-     * Get the HTML representation of this element. Needs the matching CSS
-     * @return string The HTML for this element
+     * Get the data to show render the HTML of this element
+     * @return array The array for the view to parse
      */
-    public function get_html()
+    public function get_data()
     {
-        $html = "<label for='field-{$this->id}'>{$this->label}</label>
-                 <input id='field-{$this->id}' type='text' class='form-control' name='field-{$this->id}' placeholder='{$this->placeholder}' maxlength='{$this->maxlength}'>";
-        return $html;
+        $data = [
+            'id' => $this->id,
+            'label' => $this->label,
+            'placeholder' => $this->placeholder,
+            'tag' => 'input',
+            'type' => 'text',
+            'maxlength' => $this->maxlength,
+            'closing' => false,
+            'special' => ''
+        ];
+        return $data;
     }
 
     /**

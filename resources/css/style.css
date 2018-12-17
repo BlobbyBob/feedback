@@ -346,7 +346,7 @@ button[disabled] {
     transition: width 1.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);;
 }
 
-.formelement input, .formelement textarea, .formelement .starrating {
+.formelement input:not([type=radio]):not(   [type=checkbox]), .formelement textarea, .formelement .starrating {
     width: 100%;
 }
 

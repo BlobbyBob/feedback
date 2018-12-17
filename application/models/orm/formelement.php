@@ -29,11 +29,10 @@ abstract class Formelement
     public $index;
 
     /**
-     * Get the html of this form element
-     * todo: This should be moved to views
-     * @return string
+     * Get the data to show render the HTML of this element
+     * @return array The array for the view to parse
      */
-    abstract public function get_html();
+    abstract public function get_data();
 
     /**
      * Get the settings of this form element

@@ -26,7 +26,7 @@ class AnonymousElement extends Formelement
      * @return string|void
      * @throws ErrorException
      */
-    public function get_html(){
+    public function get_data(){
         throw new ErrorException("AnonymousElement is only a dummy object");
     }
 

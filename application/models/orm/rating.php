@@ -63,20 +63,20 @@ class Rating extends Formelement
     }
 
     /**
-     * Get the styled html rating stars. Needs the specific style sheets
-     * @return string The HTML for this element
+     * Get the data to show render the HTML of this element
+     * @return array The array for the view to parse
      */
-    public function get_html()
+    public function get_data()
     {
-        $html = "<label for='field-{$this->id}'>{$this->label}</label>
-                <div class='starrating risingstar d-flex justify-content-center flex-row-reverse align-items-center'>
-                    <span>{$this->label_before}</span>";
-        for ($i = 1; $i <= $this->count; $i++) {
-            $html .= "<input id='star{$this->id}-{$i}' type='radio' name='field-{$this->id}' value='{$i}'/><label for='star{$this->id}-{$i}'></label>";
-        }
-        $html .= "<span>{$this->label_after}</span>
-                </div>";
-        return $html;
+        $data = [
+            'id' => $this->id,
+            'label' => $this->label,
+            'special' => 'rating',
+            'count' => $this->count,
+            'label_before' => $this->label_before,
+            'label_after' => $this->label_after
+        ];
+        return $data;
     }
 
     /**

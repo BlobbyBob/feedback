@@ -46,7 +46,8 @@ class Survey extends CI_Controller
             if (!isset($pages[$formelement->page]))
                 $pages[$formelement->page] = '';
 
-            $pages[$formelement->page] .= $this->load->view('templates/formelement', ['element' => $formelement->get_html()], true);
+
+            $pages[$formelement->page] .= $this->load->view('formelements/html', $formelement->get_data(), true);
 
             $max = max($max, $formelement->page);
 
@@ -60,6 +61,7 @@ class Survey extends CI_Controller
             }
         }
 
+        // todo: change coding style
         // Data for header and footer
         $data['title'] = "Umfrage";
         $data['style'] = '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">\n';

@@ -20,7 +20,7 @@
             <?php endif; ?>
 
             <?php if ($setting['type'] == 'select'): ?>
-            <select name="<?= $setting['name'] ?>">
+            <select class="form-control" name="<?= $setting['name'] ?>">
                 <?php if (isset($setting['options'])) foreach ($setting['options'] as $option): ?>
                 <option value="<?= $option['value'] ?>"<?php if ($option['selected']) echo ' selected'; ?>><?= $option['title'] ?></option>
                 <?php endforeach; ?>

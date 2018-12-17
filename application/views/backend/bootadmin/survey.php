@@ -51,6 +51,10 @@
                         <img class="typeicon" src="<?= base_url('resources/img/textarea.jpg') ?>">
                         <div class="typename">Großes Textfeld</div>
                     </div>
+                    <div class="typebutton" data-type="radio" data-dismiss="modal">
+                        <img class="typeicon" src="<?= base_url('resources/img/radio.jpg') ?>">
+                        <div class="typename">Radio Buttons</div>
+                    </div>
                     <div class="typebutton" data-type="rating" data-dismiss="modal">
                         <img class="typeicon" src="<?= base_url('resources/img/stars.jpg') ?>">
                         <div class="typename">Bewertung</div>
