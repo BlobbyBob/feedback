@@ -1,6 +1,7 @@
 <?php
 
 use Models\AnonymousElement;
+use Models\Formelement;
 use Models\Route;
 use Models\Setter;
 
@@ -449,6 +450,7 @@ class Backend extends CI_Controller
             $this->forms->remove_old_elements();
             $formelements = $this->forms->get_form();
             $formelements = array_map(function ($formelement){
+                    /** @var Formelement $formelement */
                     return $this->load->view('formelements/settings', $formelement->get_settings(), TRUE);
                 }, $formelements);
 
@@ -479,6 +481,126 @@ class Backend extends CI_Controller
         }
     }
 
+    public function evaluation($route = null)
+    {
+        if ($this->check_login()) {
+
+            $this->load->model(['feedback', 'forms']);
+            $urls = $this->get_urls();
+
+            if (is_null($route)) {
+
+                $this->load->library('statistics');
+
+                // Show overview
+                $overview = $this->feedback->overview();
+
+                if (count($overview) == 0)
+                    $alert = $this->alert('Es wurde noch keine Umfrage ausgefüllt.', 'warning');
+
+                $stats = [];
+                $names = [];
+                // todo: more efficient database request
+                foreach ($overview as $route) {
+                    $feedback = $this->feedback->get_feedback($route->id);
+                    $this->statistics->set($feedback);
+                    $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
+                    $this->statistics->run();
+                    $stats[] = $this->statistics->get();
+                    $names[] = $route->name;
+                }
+
+                $data = [
+                    'styles' => [
+                        base_url('resources/css/datatables.min.css'),
+                        base_url('resources/css/bootadmin.min.css'),
+                        base_url('resources/css/backend.css')
+                    ],
+                    'scripts' => [
+                        base_url('resources/js/datatables.min.js'),
+                        base_url('resources/js/bootadmin.min.js'),
+                        base_url('resources/js/backend.js')
+                    ],
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'evaluation', 'urls' => $urls], TRUE),
+                    'page' => $this->load->view('backend/bootadmin/evaluation', [
+                        'urls' => $urls,
+                        'alert' => isset($alert) ? $alert : '',
+                        'routes' => $overview,
+                        'statistics' => $stats,
+                        'names' => $names
+                    ], TRUE)
+                ];
+
+                $this->load->view('backend/bootadmin', $data);
+
+            } else {
+                // Show route details
+
+                $this->load->model('routes');
+                $this->load->library('statistics', ['backend/bootadmin/evaluationsingle']);
+
+                /** @var Route $rt */
+                $rt = $this->routes->get_routes($route)[0];
+                $feedback = $this->feedback->get($rt->id);
+
+                // Calculate graphs
+                $questions = $total = 0;
+                $data = [];
+                foreach ($feedback as $fb) {
+                    if ( ! isset($dates[strtotime($fb->date)/86400]))
+                        $dates[strtotime($fb->date)/86400] = 0;
+                    $dates[strtotime($fb->date)/86400] += $fb->questions;
+                    $questions += $fb->questions;
+                    $total += $fb->total;
+                    $data[] = json_decode($fb->data);
+                }
+
+                // Statistics
+                $this->statistics->set($data);
+                $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
+                $this->statistics->run();
+                $stats = $this->statistics->get();
+
+
+                $date_graph = [];
+                foreach ($dates as $date => $count) {
+                    $date_graph[] = [ 'x' => $date * 86400, 'y' => $count ];
+                }
+
+                $data = [
+                    'styles' => [
+                        base_url('resources/css/datatables.min.css'),
+                        base_url('resources/css/bootadmin.min.css'),
+                        base_url('resources/css/chartist.min.css'),
+                        base_url('resources/css/backend.css')
+                    ],
+                    'scripts' => [
+                        base_url('resources/js/datatables.min.js'),
+                        base_url('resources/js/bootadmin.min.js'),
+                        base_url('resources/js/moment.min.js'),
+                        base_url('resources/js/chartist.min.js'),
+                        base_url('resources/js/chartist-plugin-axistitle.js'),
+                        base_url('resources/js/backend.js')
+                    ],
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'evaluation', 'urls' => $urls], TRUE),
+                    'page' => $this->load->view('backend/bootadmin/evaluationdetails', [
+                        'urls' => $urls,
+                        'alert' => isset($alert) ? $alert : '',
+                        'name' => $rt->name,
+                        'stats' => $stats,
+                        'date_graph' => json_encode($date_graph, JSON_NUMERIC_CHECK),
+                        'participation_graph' => json_encode([$total-$questions, $questions], JSON_NUMERIC_CHECK)
+                    ], TRUE)
+                ];
+
+                $this->load->view('backend/bootadmin', $data);
+
+            }
+        }
+    }
+    
     /**
      * @param bool $return_only Default false. If true, the method won't redirect on to the login page
      * @return bool Is logged in?
@@ -519,7 +641,7 @@ class Backend extends CI_Controller
             'logout' => $base . 'logout',
             'main' => $base . 'dashboard',
             'survey' => $base . '',
-            'results' => $base . '',
+            'evaluation' => $base . 'evaluation',
             'routes/add' => $base . 'routen/hinzufuegen',
             'routes/manage' => $base . 'routen/verwalten',
             'images' => $base . 'bilder',

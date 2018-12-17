@@ -153,4 +153,54 @@ class Rating extends Formelement
 
         return $o;
     }
+
+    /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+        $count = count($data);
+        if ($count == 0) {
+            $min = $max = $mean = $median = 0;
+        } else {
+
+            sort($data);
+            $min = $data[0];
+            $max = max($data);
+            $mean = array_sum($data) / $count;
+            $median = $data[$count/2];
+
+        }
+
+        $stats = [
+            'id' => $this->id,
+            'label' => $this->label,
+            'type' => 'numbers',
+            'numbers' => [
+                [
+                    'key' => 'min',
+                    'value' => $min
+                ],
+                [
+                    'key' => 'max',
+                    'value' => $max
+                ],
+                [
+                    'key' => 'mean',
+                    'value' => $mean
+                ],
+                [
+                    'key' => 'median',
+                    'value' => $median
+                ]
+            ],
+            'datatype' => 'rating',
+            'data' => $data
+        ];
+
+        return $stats;
+    }
 }

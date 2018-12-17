@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use function array_sum;
 use function is_array;
 use function is_object;
 use function is_string;
@@ -121,5 +122,41 @@ class Radio extends Formelement
         $o->data = json_encode($j);
 
         return $o;
+    }
+
+    /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+
+        for ($i = 0; $i < count($this->labels); $i++) {
+            $n[$i] = 0;
+        }
+
+        foreach ($data as $value) {
+            if (isset($n[$value]))
+                $n[$value]++;
+        }
+
+        $options = [];
+        foreach ($n as $i => $val) {
+            $options[] = [
+                'key' => $this->labels[$i],
+                'value' => $val
+            ];
+        }
+
+        $stats = [
+            'id' => $this->id,
+            'label' => $this->main_label,
+            'type' => 'options',
+            'options' => $options
+        ];
+
+        return $stats;
     }
 }

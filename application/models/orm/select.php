@@ -117,4 +117,40 @@ class Select extends Formelement
 
         return $o;
     }
+
+    /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+
+        for ($i = 0; $i < count($this->options); $i++) {
+            $n[$i] = 0;
+        }
+
+        foreach ($data as $value) {
+            if (isset($n[$value]))
+                $n[$value]++;
+        }
+
+        $options = [];
+        foreach ($n as $i => $val) {
+            $options[] = [
+                'key' => $this->options[$i],
+                'value' => $val
+            ];
+        }
+
+        $stats = [
+            'id' => $this->id,
+            'label' => $this->label,
+            'type' => 'options',
+            'options' => $options
+        ];
+
+        return $stats;
+    }
 }

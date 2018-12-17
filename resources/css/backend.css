@@ -1,5 +1,9 @@
-/** IMAGE GRID **/
+.category {
+    font-weight: 600;
+    font-size: 1.1em;
+}
 
+/** IMAGE GRID **/
 .image-grid-column {
     flex: 100%;
     max-width: 100%;
@@ -143,4 +147,33 @@
 }
 #add_new {
     cursor: pointer;
+}
+
+/** Evaluation Graphs **/
+#date_graph {
+    /*border: gray 1px solid;*/
+    /*-webkit-border-radius: 6px;*/
+    /*-moz-border-radius: 6px;*/
+    /*border-radius: 6px;*/
+    padding: 6px;
+}
+
+.chart-binary .ct-series-b .ct-slice-pie {
+    fill: #00CC00;
+}
+.chart-binary .ct-series-a .ct-slice-pie {
+    fill: #d33333;
+}
+.pie-container {
+    padding: 2em;
+}
+.evaluation-details > div {
+    max-height: 600px;
+    overflow-y: auto;
+}
+.evaluation-text {
+    overflow-y: auto;
+}
+.evaluation-text p {
+    max-height: 3em;
 }

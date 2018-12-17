@@ -129,6 +129,14 @@ abstract class Formelement
     abstract public function export();
 
     /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    abstract public function stats($data);
+
+    /**
      * Remove page breaks and generate a new array with page numbers set
      * @param Formelement[] $formelements The form elements to set the page number on
      * @return Formelement[] An updated array

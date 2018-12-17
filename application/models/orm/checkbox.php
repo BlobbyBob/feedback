@@ -120,4 +120,44 @@ class Checkbox extends Formelement
 
         return $o;
     }
+
+    /**
+     * Calculate statistics about this object
+     *
+     * @param array $data The data set saved for this element
+     * @return array
+     */
+    public function stats($data)
+    {
+
+        $yes = 0;
+        $no = 0;
+
+        foreach ($data as $value) {
+            if ($value)
+                $yes++;
+            else
+                $no++;
+        }
+
+        $stats = [
+            'id' => $this->id,
+            'label' => $this->label,
+            'type' => 'options',
+            'options' => [
+                [
+                    'key' => 'Ja',
+                    'value' => $yes
+                ],
+                [
+                    'key' => 'Nein',
+                    'value' => $no
+                ]
+            ]
+        ];
+
+        return $stats;
+    }
+
+
 }
