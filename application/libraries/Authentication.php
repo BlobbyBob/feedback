@@ -56,24 +56,37 @@ class Authentication
      *
      * @param string $username
      * @param string $password
-     * @return bool
+     * @return bool Login successful?
      */
     public function login($username, $password)
     {
         $user = new User($this->CI);
         if ($user->by_name($username)) {
-            $delim_pos = strrpos($user->password, '$');
-            $salt = substr($user->password, 0, $delim_pos);
-            if (hash_equals(crypt($password, $salt), $user->password)) {
-                $this->logged_in = true;
-                $this->CI->session->user_id = $user->id;
-                $this->CI->session->logged_in = true;
-            }
+            $delim_pos = strrpos($user->getPassword(), '$');
+            $salt = substr($user->getPassword(), 0, $delim_pos);
+            return hash_equals(crypt($password, $salt), $user->getPassword());
         } else
             return false;
-
     }
 
+    /**
+     * Register a new user
+     * Since this function can return false and 0 you should always compare with the Identity operator '==='
+     *
+     * @param string $username
+     * @param string $password
+     * @return int|bool ID of the new user or false, in case an error occurred.
+     */
+    public function register($username, $password)
+    {
+        $user = new User($this->CI);
+        $user->name = $username;
+        $user->setPassword($password);
+        if ($user->save())
+            return $user->id;
+        else
+            return false;
+    }
 }
 
 /**
@@ -105,7 +118,7 @@ class User {
     /**
      * @var string Hashed user password
      */
-    public $password;
+    private $password;
 
     /**
      * User constructor.
@@ -149,5 +162,58 @@ class User {
         $this->password = $user->password;
         return true;
     }
+
+    /**
+     * Save this user in persistent storage
+     * If the @see $id is null, then a new user will be added. Otherwise the existing user will be updated.
+     * When a new user is added, the ID of the new user will be written to @see $id
+     *
+     * @return bool Success of this operation
+     */
+    public function save()
+    {
+        if (is_null($this->id)) {
+
+            $data = [
+                'name' => $this->name,
+                'password' => $this->password
+            ];
+            $this->CI->db->insert('user', $data);
+            $this->id = $this->CI->db->insert_id();
+            return (bool) $this->CI->db->affected_rows();
+
+        } else {
+
+            $data = [
+                'name' => $this->name,
+                'password' => $this->password
+            ];
+            $this->CI->db->where('id', $this->id);
+            $this->CI->db->update('user', $data);
+            return (bool) $this->CI->db->affected_rows();
+
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        // Hash password
+        $salt = base64_encode(openssl_random_pseudo_bytes(12));
+        $crypt = '$6$rounds=1024$' . $salt;
+        $this->password = $password;
+    }
+
+
 
 }
