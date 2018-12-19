@@ -20,31 +20,29 @@ class Backend extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
         $this->load->helper(['url', 'form']);
     }
 
     public function login()
     {
 
-        if ( ! $this->session->userdata('login') === TRUE) {
+        if ( ! $this->auth->isLoggedIn()) {
 
             $data = [
-                'styles' => [
-                    base_url('resources/css/backend.css'),
-                    base_url('resources/css/login.css')
-                ],
-                'scripts' => [
-                    base_url('resources/js/login.js')
-                ]
+                'title' => 'Login',
+                'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n"
+                         . '<link rel="stylesheet" href="' . base_url('resources/css/login.css') . "\">\n",
+                'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>\n"
             ];
 
+            $this->load->view('templates/header', $data);
             $this->load->view('backend/login', $data);
+            $this->load->view('templates/footer', $data);
 
         } else {
 
             $this->output->set_status_header(302, 'Found');
-            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/main'));
+            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/'));
 
         }
 
@@ -66,7 +64,7 @@ class Backend extends CI_Controller
                     base_url('resources/js/datatables.min.js'),
                     base_url('resources/js/bootadmin.min.js')
                 ],
-                'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'main', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/main', ['urls' => $urls], TRUE)
             ];
@@ -180,7 +178,7 @@ class Backend extends CI_Controller
                     base_url('resources/js/datatables.min.js'),
                     base_url('resources/js/bootadmin.min.js')
                 ],
-                'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'images', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/images', [
                     'urls' => $urls,
@@ -325,7 +323,7 @@ class Backend extends CI_Controller
                     base_url('resources/js/bootadmin.min.js'),
                     base_url('resources/js/backend.js')
                 ],
-                'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/add', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/routes_add', [
                     'urls' => $urls,
@@ -369,7 +367,7 @@ class Backend extends CI_Controller
                         base_url('resources/js/bootadmin.min.js'),
                         base_url('resources/js/backend.js')
                     ],
-                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                     'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/manage', 'urls' => $urls], TRUE),
                     'page' => $this->load->view('backend/bootadmin/routes_manage', [
                         'urls' => $urls,
@@ -466,7 +464,7 @@ class Backend extends CI_Controller
                     base_url('resources/js/backend.js'),
                     base_url('resources/js/html5sortable.min.js')
                 ],
-                'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'survey', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/survey', [
                     'urls' => $urls,
@@ -521,7 +519,7 @@ class Backend extends CI_Controller
                         base_url('resources/js/bootadmin.min.js'),
                         base_url('resources/js/backend.js')
                     ],
-                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                     'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'evaluation', 'urls' => $urls], TRUE),
                     'page' => $this->load->view('backend/bootadmin/evaluation', [
                         'urls' => $urls,
@@ -583,7 +581,7 @@ class Backend extends CI_Controller
                         base_url('resources/js/chartist-plugin-axistitle.js'),
                         base_url('resources/js/backend.js')
                     ],
-                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['logout' => base_url('index.php/verwaltung/logout'), 'urls' => $urls], TRUE),
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                     'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'evaluation', 'urls' => $urls], TRUE),
                     'page' => $this->load->view('backend/bootadmin/evaluationdetails', [
                         'urls' => $urls,

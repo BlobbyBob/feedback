@@ -29,6 +29,7 @@ class Pages extends CI_Controller
 
         }
 
+        // todo: change coding style
         $data['title'] = ucfirst($page);
         $data['style'] = '';
         $data['script'] = '';
