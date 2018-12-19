@@ -30,7 +30,7 @@ class Backend extends CI_Controller
 
             $data = [
                 'title' => 'Login',
-                'sytle' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n"
+                'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n"
                          . '<link rel="stylesheet" href="' . base_url('resources/css/login.css') . "\">\n",
                 'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>\n"
             ];
