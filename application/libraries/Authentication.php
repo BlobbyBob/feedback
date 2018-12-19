@@ -67,7 +67,11 @@ class Authentication
                 $this->CI->session->logged_in = false;
             }
         }
-        
+
+        if ( ! is_null($this->CI->input->get('logout'))) {
+            $this->logout();
+        }
+
         // Check if login form got submitted
         if ( ! is_null($this->CI->input->post('login'))) {
             // Try login
@@ -107,6 +111,7 @@ class Authentication
             $salt = substr($user->getPassword(), 0, $delim_pos);
             if (hash_equals(crypt($password, $salt), $user->getPassword())) {
                 $this->logged_in = true;
+                $this->user = $user;
                 $this->CI->session->user_id = $user->id;
                 $this->CI->session->logged_in = true;
             } else {
@@ -216,6 +221,30 @@ class Authentication
         echo $this->CI->load->view('templates/footer', $data, true);
 
     }
+
+    /**
+     * Get the user, that is currently logged in
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Log out the current user
+     *
+     * @return void
+     */
+    private function logout()
+    {
+        $this->logged_in = false;
+        $this->user = false;
+        $this->CI->session->user_id = null;
+        $this->CI->session->logged_in = false;
+    }
+
 
 }
 
