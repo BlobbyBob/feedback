@@ -20,7 +20,6 @@ class Backend extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
         $this->load->helper(['url', 'form']);
     }
 
@@ -34,9 +33,7 @@ class Backend extends CI_Controller
                     base_url('resources/css/backend.css'),
                     base_url('resources/css/login.css')
                 ],
-                'scripts' => [
-                    base_url('resources/js/login.js')
-                ]
+                'scripts' => []
             ];
 
             $this->load->view('backend/login', $data);
@@ -44,7 +41,7 @@ class Backend extends CI_Controller
         } else {
 
             $this->output->set_status_header(302, 'Found');
-            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/main'));
+            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/'));
 
         }
 
