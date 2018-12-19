@@ -28,13 +28,25 @@ class Authentication
      */
     protected $user;
 
+    /**
+     * @var int Policy. Default action when no rules can be applied
+     */
+    protected $policy;
+
+    /**
+     * @var Rule[] Rules, that define an access scheme
+     */
+    protected $rules;
+
     private const DENY = 0;
     private const ACCEPT = 1;
 
     public function __construct()
     {
+
         $this->CI =& get_instance();
         $this->CI->load->database();
+        $this->CI->load->library('session');
 
         // Get Login status
         if ( ! isset($this->CI->session->logged_in) || ! isset($this->CI->session->user_id)) {
@@ -51,11 +63,19 @@ class Authentication
             }
         }
 
-        // Check if login form got submitted
+        // todo: Check if login form got submitted
 
-        // Load config
+        // todo: Load config
+        $this->loadConfig();
 
-        // Check if access to current page is granted
+        // todo: Check if access to current page is granted
+        if ( ! $this->hasAccess($this->CI->router->fetch_class(), $this->CI->router->fetch_method())) {
+
+            $this->displayLogin();
+
+            // Prevent the called controller to be executed
+            exit(0);
+        }
     }
 
     /**
@@ -103,6 +123,77 @@ class Authentication
         return $this->logged_in;
     }
 
+    private function loadConfig()
+    {
+        $this->CI->config->load('auth');
+        $this->policy = $this->CI->config->item('policy', 'auth');
+        foreach ($this->CI->config->item('rules', 'auth') as $controller => $r) {
+            foreach ($r as $method => $target)
+                $this->addRule($controller, $method, $target);
+        }
+    }
+
+    /**
+     * @param string $controller Controller name
+     * @param string $method Method name. Default: Wildcard
+     * @param string|int|null $target Either 'accept' (1) ,'deny' (0) or null for the inverse of the policy
+     */
+    public function addRule($controller, $method = '*', $target = null)
+    {
+        if (is_null($target))
+            $target = 1 - $this->policy;
+        if (is_string($target)) {
+            switch ($target) {
+                case 'accept':
+                    $target = self::ACCEPT;
+                    break;
+                case 'deny':
+                    $target = self::DENY;
+                    break;
+                default:
+                    throw new RuntimeException("Invalid target '$target' for authentication rule");
+            }
+        }
+
+        $rule = new Rule($controller, $method, $target%2);
+        $this->rules[] = $rule;
+
+    }
+
+    /**
+     * @param string $controller
+     * @param string $method
+     * @return int Either ACCEPT or DENY
+     */
+    private function hasAccess($controller, $method)
+    {
+        if ($this->isLoggedIn())
+            return true;
+        $access = $this->policy;
+        foreach ($this->rules as $rule) {
+            if ($rule->matches($controller, $method))
+                $access = $rule->target;
+        }
+        return $access == self::ACCEPT;
+    }
+
+    private function displayLogin()
+    {
+
+        $this->CI->load->helper(['url', 'form']);
+
+        $data = [
+            'title' => 'Login',
+            'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n"
+                . '<link rel="stylesheet" href="' . base_url('resources/css/login.css') . "\">\n",
+            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>\n"
+        ];
+
+        echo $this->CI->load->view('templates/header', $data, true);
+        echo $this->CI->load->view('backend/login', $data, true);
+        echo $this->CI->load->view('templates/footer', $data, true);
+
+    }
 
 }
 
@@ -232,5 +323,56 @@ class User {
     }
 
 
+
+}
+
+/**
+ * Class Rule
+ * Encapsulates an authentication rule
+ *
+ * @package Feedback
+ * @subpackage Library
+ * @category Authentication
+ * @author Ben Swierzy
+ */
+class Rule {
+
+    /**
+     * @var string
+     */
+    public $controller;
+
+    /**
+     * @var string
+     */
+    public $method;
+
+    /**
+     * @var int
+     */
+    public $target;
+
+    /**
+     * Rule constructor.
+     * @param $controller
+     * @param $method
+     * @param $target
+     */
+    public function __construct($controller, $method, $target)
+    {
+        $this->controller = $controller;
+        $this->method = $method;
+        $this->target = $target;
+    }
+
+    /**
+     * @param $controller
+     * @param $method
+     * @return bool
+     */
+    public function matches($controller, $method)
+    {
+        return $this->controller == $controller && ($this->method == '*' || $this->method == $method);
+    }
 
 }

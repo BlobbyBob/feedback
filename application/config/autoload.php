@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('session', 'authentication' => 'auth');
+$autoload['libraries'] = array('authentication');
 
 /*
 | -------------------------------------------------------------------
@@ -103,7 +103,7 @@ $autoload['helper'] = array('orm');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('auth');
+$autoload['config'] = array();
 
 /*
 | -------------------------------------------------------------------

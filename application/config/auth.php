@@ -44,3 +44,28 @@ $config['auth']['policy'] = 'accept';
 |
 */
 $config['auth']['rules']['backend']['*'] = 'deny';
+
+
+
+/*
+| -------------------------------------------------------------------
+|  Login controller
+| -------------------------------------------------------------------
+| The Login controller is responsible for displaying a login form.
+| The displayed form needs to be submitted via post and needs to
+| - have login set with any value
+| - have username set with the username
+| - have password set with the password
+| Independent what some Rules may specify, the Login controllers login
+| method will always be accessible by everyone (for obvious reasons)
+|
+| Ideally the form should be submitted to the same URL it got
+| requested from, since the Authentication library intercepts every
+| request.
+|
+| Prototype:
+|
+|   $config['auth']['login_controller'] = 'ControllerClass::Method';
+|
+*/
+// $config['auth']['login_controller'] = 'Login::login';
