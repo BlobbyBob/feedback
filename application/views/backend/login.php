@@ -6,7 +6,12 @@
         </div>
         <h1 class="display1">Kletterhalle<span>Evaluation</span></h1>
         <p class="subhead">Verwaltung</p>
-        <form action="" method="post" class="" role="form">
+        <?php if ( ! empty($error)): ?>
+            <div class="alert alert-danger" role="alert">
+                Die Anmeldedaten sind nicht gültig!
+            </div>
+        <?php endif; ?>
+        <?= form_open() ?>
             <div id="form-login-username" class="form-group">
                 <input id="username" class="form-control" name="username" type="text" size="18" alt="login" required/>
                 <span class="form-highlight"></span>
@@ -20,7 +25,7 @@
                 <label for="password" class="float-label">Passwort</label>
             </div>
             <div>
-                <button class="btn btn-block btn-info" type="submit" name="Submit" alt="sign in">Anmelden</button>
+                <input class="btn btn-block btn-info" type="submit" name="login" value="Anmelden">
             </div>
         </form>
     </div>

@@ -38,6 +38,11 @@ class Authentication
      */
     protected $rules;
 
+    /**
+     * @var bool True in case logging in wasn't successful
+     */
+    private $error = false;
+
     private const DENY = 0;
     private const ACCEPT = 1;
 
@@ -62,13 +67,22 @@ class Authentication
                 $this->CI->session->logged_in = false;
             }
         }
+        
+        // Check if login form got submitted
+        if ( ! is_null($this->CI->input->post('login'))) {
+            // Try login
+            if ( ! is_null($this->CI->input->post('username')) && ! is_null($this->CI->input->post('password'))) {
+                $username = $this->CI->input->post('username');
+                $password = $this->CI->input->post('password');
+                if ( ! $this->login($username, $password)) {
+                    $this->error = true;
+                }
+            }
+        }
 
-        // todo: Check if login form got submitted
-
-        // todo: Load config
         $this->loadConfig();
 
-        // todo: Check if access to current page is granted
+        // Check if access to current page is granted
         if ( ! $this->hasAccess($this->CI->router->fetch_class(), $this->CI->router->fetch_method())) {
 
             $this->displayLogin();
@@ -91,7 +105,13 @@ class Authentication
         if ($user->by_name($username)) {
             $delim_pos = strrpos($user->getPassword(), '$');
             $salt = substr($user->getPassword(), 0, $delim_pos);
-            return hash_equals(crypt($password, $salt), $user->getPassword());
+            if (hash_equals(crypt($password, $salt), $user->getPassword())) {
+                $this->logged_in = true;
+                $this->CI->session->user_id = $user->id;
+                $this->CI->session->logged_in = true;
+            } else {
+                return false;
+            }
         } else
             return false;
     }
@@ -186,9 +206,11 @@ class Authentication
             'title' => 'Login',
             'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n"
                 . '<link rel="stylesheet" href="' . base_url('resources/css/login.css') . "\">\n",
-            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>\n"
+            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>\n",
+            'error' => $this->error
         ];
 
+        // A little hacky
         echo $this->CI->load->view('templates/header', $data, true);
         echo $this->CI->load->view('backend/login', $data, true);
         echo $this->CI->load->view('templates/footer', $data, true);
@@ -319,7 +341,7 @@ class User {
         // Hash password
         $salt = base64_encode(openssl_random_pseudo_bytes(12));
         $crypt = '$6$rounds=1024$' . $salt;
-        $this->password = $password;
+        $this->password = crypt($password, $crypt);
     }
 
 
