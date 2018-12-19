@@ -26,17 +26,18 @@ class Backend extends CI_Controller
     public function login()
     {
 
-        if ( ! $this->session->userdata('login') === TRUE) {
+        if ( ! $this->auth->isLoggedIn()) {
 
             $data = [
-                'styles' => [
-                    base_url('resources/css/backend.css'),
-                    base_url('resources/css/login.css')
-                ],
-                'scripts' => []
+                'title' => 'Login',
+                'sytle' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n"
+                         . '<link rel="stylesheet" href="' . base_url('resources/css/login.css') . "\">\n",
+                'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>\n"
             ];
 
+            $this->load->view('templates/header', $data);
             $this->load->view('backend/login', $data);
+            $this->load->view('templates/footer', $data);
 
         } else {
 

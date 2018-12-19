@@ -28,6 +28,9 @@ class Authentication
      */
     protected $user;
 
+    private const DENY = 0;
+    private const ACCEPT = 1;
+
     public function __construct()
     {
         $this->CI =& get_instance();
@@ -49,6 +52,10 @@ class Authentication
         }
 
         // Check if login form got submitted
+
+        // Load config
+
+        // Check if access to current page is granted
     }
 
     /**
@@ -87,6 +94,16 @@ class Authentication
         else
             return false;
     }
+
+    /**
+     * @return bool
+     */
+    public function isLoggedIn(): bool
+    {
+        return $this->logged_in;
+    }
+
+
 }
 
 /**
