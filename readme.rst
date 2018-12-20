@@ -1,22 +1,29 @@
-###################
-What is CodeIgniter
-###################
+################
+What is Feedback
+################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+**Feedback** is a survey management system. It was intentionally developed for gathering feedback from participants of a climbing gym, but can be modified to serve different use cases. Since the main focus of development is **Usability** even people with limited technical knowledge should be able to use and administrate it (once it has been set up correctly).
 
-*******************
-Release Information
-*******************
+************
+Installation
+************
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+~~~~~~~~~~~~
+Requirements
+~~~~~~~~~~~~
+
+PHP
+  PHP version ``>= 7.1`` is required. While Feedback may work on lower versions, it has **not been tested** on these versions, which may result in unexpected behaviour. In addition PHP 7 offers huge advantages `especially in comparison to PHP 5.x <https://visualmodo.com/why-you-should-be-using-php-7-2/>`_. There are no reasons to be still sticking with PHP 5.x.
+PHP Extensions
+  Currently Feedback uses three PHP extensions: ``json`` should be installed on most systems, while ``fileinfo`` and ``openssl`` might have to be added seperately.
+Database
+  Feedback can use any Database Management System, where a PDO Driver exists. While the Setup-Scripts for the databases are currently only available in the MySQL dialect, it should be no problem to convert them to another dialect. For the future a dialect independent database setup script is planned.
+
+~~~~~
+Setup
+~~~~~
+
+
 
 **************************
 Changelog and New Features
