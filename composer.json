@@ -1,20 +1,14 @@
 {
-  "description": "The CodeIgniter framework",
-  "name": "codeigniter/framework",
+  "description": "Feedback",
+  "name": "BlobbyBob/feedback",
   "type": "project",
-  "homepage": "https://codeigniter.com",
-  "license": "MIT",
-  "support": {
-    "forum": "http://forum.codeigniter.com/",
-    "wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
-    "slack": "https://codeigniterchat.slack.com",
-    "source": "https://github.com/bcit-ci/CodeIgniter"
-  },
+  "homepage": "https://github.com/BlobbyBob/feedback",
+  "license": "GPL-3.0-or-later",
+  "support": {},
   "require": {
     "php": ">=7.1.0",
     "ext-json": "*",
     "ext-fileinfo": "*",
-    "ext-apc": "*",
     "ext-openssl": "*"
   },
   "suggest": {
@@ -22,6 +16,7 @@
   },
   "require-dev": {
     "mikey179/vfsStream": "1.1.*",
-    "phpunit/phpunit": "4.* || 5.*"
+    "phpunit/phpunit": "^7",
+    "kenjis/ci-phpunit-test": "^0.16.1"
   }
 }
