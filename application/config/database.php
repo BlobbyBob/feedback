@@ -73,6 +73,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+if (defined('ENVIRONMENT') && ENVIRONMENT == 'testing') {
+    $active_group = 'testing';
+}
+
 $db['default'] = array(
 	'dsn'	=> '',
     'hostname' => 'mysql:dbname=feedback;host=localhost',
@@ -94,3 +98,6 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['testing'] = $db['default'];
+$db['testing']['dbprefix'] = 'testing_';

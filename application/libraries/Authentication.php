@@ -53,6 +53,11 @@ class Authentication
         $this->CI->load->database();
         $this->CI->load->library('session');
 
+        if (is_cli() || (defined('ENVIRONMENT') && ENVIRONMENT == 'testing')) {
+            $this->logged_in = true;
+            return;
+        }
+
         // Get Login status
         if ( ! isset($this->CI->session->logged_in) || ! isset($this->CI->session->user_id)) {
             $this->CI->session->logged_in = false;
@@ -427,3 +432,5 @@ class Rule {
     }
 
 }
+
+class NotLoggedInException extends Exception {}
