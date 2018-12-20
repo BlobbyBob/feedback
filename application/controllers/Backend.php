@@ -638,7 +638,7 @@ class Backend extends CI_Controller
             'login' => $base . 'login',
             'logout' => $base . 'logout',
             'main' => $base . 'dashboard',
-            'survey' => $base . '',
+            'survey' => $base . 'umfrage',
             'evaluation' => $base . 'evaluation',
             'routes/add' => $base . 'routen/hinzufuegen',
             'routes/manage' => $base . 'routen/verwalten',
