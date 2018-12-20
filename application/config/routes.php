@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['survey/(:num)'] = 'survey/view/(:num)';
 $route['select'] = 'select/view';
+$route['verwaltung'] = 'backend/main';
 $route['verwaltung/dashboard'] = 'backend/main';
 $route['verwaltung/bilder'] = 'backend/images';
 $route['verwaltung/bilder/loesche/(:num)'] = 'backend/images/delete/$1';
@@ -60,6 +61,5 @@ $route['verwaltung/routen/verwalten'] = 'backend/routes_manage';
 $route['verwaltung/umfrage'] = 'backend/survey';
 $route['verwaltung/evaluation'] = 'backend/evaluation';
 $route['verwaltung/evaluation/(:num)'] = 'backend/evaluation/$1';
-$route['verwaltung/'] = 'backend/main';
 $route['backend/dashboard'] = 'backend/main';
 $route['default_controller'] = 'pages/view';
