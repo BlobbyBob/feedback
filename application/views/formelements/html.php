@@ -41,6 +41,7 @@ if (empty($none)): ?>
 
             <?php if (isset($type) && $type == 'checkbox'): ?>
             <div class="form-check">
+            <input type="hidden" name="field-<?= $id ?>" value="0">
             <?php endif; ?>
 
             <?php if (isset($type) && $type == 'checkbox' && 'label_position' == Checkbox::BEFORE): ?>

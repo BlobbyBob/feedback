@@ -58,9 +58,9 @@ class Feedback extends CI_Model
     {
 
         $sql = "SELECT r.id as id, r.name as name, r.wall as wall, c.german as color, MAX(`date`) AS latest, COUNT(*) as `count`, SUM(questions) as answered, SUM(total) as total 
-                FROM feedback f 
-                LEFT JOIN routes r ON f.route = r.id 
-                LEFT JOIN color c on r.color = c.id
+                FROM ".$this->db->dbprefix('feedback')." f 
+                LEFT JOIN ".$this->db->dbprefix('routes')." r ON f.route = r.id 
+                LEFT JOIN ".$this->db->dbprefix('color')." c on r.color = c.id
                 GROUP BY route";
 
         $query = $this->db->query($sql);
