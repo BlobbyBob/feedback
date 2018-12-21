@@ -4,11 +4,12 @@ class Colors extends CI_Model {
 
     public function __construct()
     {
+        parent::__construct();
         $this->load->database();
     }
 
     /**
-     * Fetch all colors ordered by there german names
+     * Fetch all colors ordered by their german names
      * @return Models\Color[] All available colors
      */
     public function get_colors()
@@ -20,7 +21,7 @@ class Colors extends CI_Model {
     /**
      * Get a color by ID
      * @param int $id ID of the color
-     * @return Models\Color The color
+     * @return Models\Color|null The color
      */
     public function get_color($id)
     {

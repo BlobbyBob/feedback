@@ -17,7 +17,7 @@ class Dbimage_model_test extends UnitTestCase
         $this->obj = $this->newModel('Dbimage');
     }
 
-    public function test_get_image()
+    public function testGetImage()
     {
 
         $this->assertNull($this->obj->get_image(), 'Dbimage::get_image() should return null');
@@ -33,7 +33,7 @@ class Dbimage_model_test extends UnitTestCase
 
     }
 
-    public function test_is_image()
+    public function testIsImage()
     {
 
         $this->assertFalse($this->obj->is_image(), 'Dbimage::is_image() should return false');
@@ -47,7 +47,7 @@ class Dbimage_model_test extends UnitTestCase
 
     }
 
-    public function test_get_ids()
+    public function testGetIds()
     {
 
         $this->assertIsArray($this->obj->get_ids(), 'Dbimage::get_ids() should be an array');
@@ -60,9 +60,9 @@ class Dbimage_model_test extends UnitTestCase
     }
 
     /**
-     * @depends test_get_image
+     * @depends testGetImage
      */
-    public function test_save_image()
+    public function testSaveImage()
     {
 
         $image = new \Models\Image();
@@ -81,10 +81,10 @@ class Dbimage_model_test extends UnitTestCase
     }
 
     /**
-     * @depends test_save_image
-     * @depends test_is_image
+     * @depends testSaveImage
+     * @depends testIsImage
      */
-    public function test_delete_image()
+    public function testDeleteImage()
     {
 
         $this->assertTrue($this->obj->is_image(10), 'Dbimage_model_test::test_save() should add image with ID 10');
