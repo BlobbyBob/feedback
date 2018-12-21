@@ -6,6 +6,7 @@ class Setters extends CI_Model {
 
     public function __construct()
     {
+        parent::__construct();
         $this->load->database();
     }
 
@@ -41,6 +42,8 @@ class Setters extends CI_Model {
      */
     public function add_setter($setter)
     {
+        if ($setter->id <= 0)
+            return false;
         $this->db->insert('setter', $setter);
         return (bool) $this->db->affected_rows();
     }

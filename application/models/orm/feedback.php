@@ -5,10 +5,6 @@ namespace Models;
 class Feedback
 {
 
-    public function __construct()
-    {
-    }
-
     /**
      * @var int $id The ID of this feedback
      */
