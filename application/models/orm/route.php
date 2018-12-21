@@ -4,9 +4,6 @@ namespace Models;
 
 class Route
 {
-    public function __construct()
-    {
-    }
 
     /**
      * @var int $id ID of the route

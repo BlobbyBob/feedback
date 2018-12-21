@@ -35,6 +35,4 @@ class DbimageSeeder extends Seeder
         return $data;
     }
 
-
-
 }

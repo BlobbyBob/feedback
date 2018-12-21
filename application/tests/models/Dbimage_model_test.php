@@ -33,4 +33,65 @@ class Dbimage_model_test extends UnitTestCase
 
     }
 
+    public function test_is_image()
+    {
+
+        $this->assertFalse($this->obj->is_image(), 'Dbimage::is_image() should return false');
+        $this->assertFalse($this->obj->is_image(0), 'Dbimage::is_image(0) should return false');
+        $this->assertFalse($this->obj->is_image(100), 'Dbimage::is_image(100) should return false');
+
+        foreach (DbimageSeeder::getData() as $data) {
+            $id = $data['id'];
+            $this->assertTrue($this->obj->is_image($id), 'Dbimage::is_image('.$id.') should return true');
+        }
+
+    }
+
+    public function test_get_ids()
+    {
+
+        $this->assertIsArray($this->obj->get_ids(), 'Dbimage::get_ids() should be an array');
+
+        foreach (DbimageSeeder::getData() as $data) {
+            $id = $data['id'];
+            $this->assertContains($id, $this->obj->get_ids(), 'Dbimage::get_ids() should contain value ' . $id);
+        }
+
+    }
+
+    /**
+     * @depends test_get_image
+     */
+    public function test_save_image()
+    {
+
+        $image = new \Models\Image();
+        $image->id = 10;
+        $image->data = hex2bin('ffe8');
+        $image->mime = 'image/jpeg';
+
+        $this->obj->save_image($image);
+        $actual = $this->obj->get_image(10);
+
+        $this->assertNotNull($actual, 'Dbimage::save() should save data in persistent storage');
+        $this->assertEquals($image->id, $actual->id, 'Dbimage::save() should not alter data before saving');
+        $this->assertEquals($image->data, $actual->data, 'Dbimage::save() should not alter data before saving');
+        $this->assertEquals($image->mime, $actual->mime, 'Dbimage::save() should not alter data before saving');
+
+    }
+
+    /**
+     * @depends test_save_image
+     * @depends test_is_image
+     */
+    public function test_delete_image()
+    {
+
+        $this->assertTrue($this->obj->is_image(10), 'Dbimage_model_test::test_save() should add image with ID 10');
+        $this->assertTrue($this->obj->delete_image(10), 'Dbimage::delete() should delete image from persistent storage');
+        $this->assertFalse($this->obj->is_image(10), 'Dbimage::delete() should delete image from persistent storage');
+        $this->assertFalse($this->obj->delete_image(10), 'Dbimage::delete() should return false, since image got removed from persistent storage');
+
+    }
+
 }
