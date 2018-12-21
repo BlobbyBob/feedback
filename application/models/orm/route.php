@@ -21,17 +21,17 @@ class Route
     public $grade;
 
     /**
-     * @var string $color Color of the route
+     * @var int|string $color Color of the route
      */
     public $color;
 
     /**
-     * @var string $setter The name of the setter of the route (optional)
+     * @var int|string $setter The name of the setter of the route (optional)
      */
     public $setter;
 
     /**
-     * @var int $wall Number of the rope, where the route is set, special value -1 for lead climbing
+     * @var int $wall Number of the rope, where the route is set, special value 0 for lead climbing
      */
     public $wall;
 

@@ -6,6 +6,7 @@ class Routes extends CI_Model
 {
     public function __construct()
     {
+        parent::__construct();
         $this->load->database();
     }
 
@@ -39,6 +40,8 @@ class Routes extends CI_Model
      */
     public function add_route($route)
     {
+        if ($route->id <= 0)
+            return false;
         $this->db->insert('routes', $route);
         return (bool) $this->db->affected_rows();
     }
