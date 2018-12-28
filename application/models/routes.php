@@ -32,6 +32,11 @@ class Routes extends CI_Model
         return $query->result('Models\Route');
     }
 
+    public function count()
+    {
+        return $this->db->count_all('routes');
+    }
+
     /**
      * Save a route to persistent memory (If it already exists this action will fail)
      * @param Route $route The Route object

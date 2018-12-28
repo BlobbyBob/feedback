@@ -54,6 +54,11 @@ class Feedback extends CI_Model
         return $data;
     }
 
+    public function count()
+    {
+        return $this->db->count_all('feedback');
+    }
+
     public function overview()
     {
 

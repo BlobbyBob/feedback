@@ -195,6 +195,14 @@ class Rating extends Formelement
                 [
                     'key' => 'median',
                     'value' => $median
+                ],
+                [
+                    'key' => 'limit_max',
+                    'value' => $this->count
+                ],
+                [
+                    'key' => 'limit_min',
+                    'value' => 1
                 ]
             ],
             'datatype' => 'rating',
