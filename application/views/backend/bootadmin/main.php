@@ -58,7 +58,7 @@
     </div>
 
     <div class="row mb-4">
-        <div class="col-md-8">
+        <div class="col-md-6 col-sm-12 mb-4">
             <div class="card">
                 <div class="card-header bg-white font-weight-bold">
                     Gesamtaktivität
@@ -69,7 +69,44 @@
             </div>
         </div>
         <?php if (isset($ratings) && count($ratings) > 0): ?>
-        <div class="col-md-4">
+        <div class="col-md-6 col-sm-12 mb-4">
+
+            <div class="card">
+                <div class="card-header bg-white font-weight-bold">
+                    Letzte Aktivität
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-hover" id="recent_activity">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Letzte Umfrage ausgefüllt</th>
+                            <th scope="col">Anzahl ausgefüllter Umfragen</th>
+                            <th scope="col">Anteil beantworteter Fragen</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($activity as $a): ?>
+                            <tr>
+                                <td><a href="<?= $urls['evaluation'] . '/' . $a->id ?>"><?= $a->name ?></a></td>
+                                <td><?= $a->date ?></td>
+                                <td><?= $a->count ?></td>
+                                <td><span class="badge <?php
+                                    if ($a->ratio < 50) echo 'badge-danger';
+                                    elseif ($a->ratio < 75) echo 'badge-warning';
+                                    elseif ($a->ratio < 90) echo 'badge-info';
+                                    else echo 'badge-success';
+                                    ?>"><?= $a->ratio ?>%</span></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-white font-weight-bold">
                     Durchschnittliche Bewertungen
@@ -78,52 +115,6 @@
                     <?php foreach ($ratings as $rating) echo $rating ?>
                 </div>
             </div>
-        </div>
-        <?php endif; ?>
-    </div>
-
-    <div class="card">
-        <div class="card-header bg-white font-weight-bold">
-            Recent Orders
-        </div>
-        <div class="card-body">
-
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Customer</th>
-                    <th scope="col">Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><a href="#">00000077</a></td>
-                    <td>Praesent eu viverra leo</td>
-                    <td>Kevin Dion</td>
-                    <td><span class="badge badge-success">Shipped</span></td>
-                </tr>
-                <tr>
-                    <td><a href="#">00000078</a></td>
-                    <td>Lorem ipsum dolor</td>
-                    <td>Mark Otto</td>
-                    <td><span class="badge badge-success">Shipped</span></td>
-                </tr>
-                <tr>
-                    <td><a href="#">00000079</a></td>
-                    <td>Etiam eleifend elit</td>
-                    <td>Jacob Thornton</td>
-                    <td><span class="badge badge-info">Packaging</span></td>
-                </tr>
-                <tr>
-                    <td><a href="#">00000080</a></td>
-                    <td>Donec vitae ante egestas</td>
-                    <td>Larry the Bird</td>
-                    <td><span class="badge badge-secondary">Back Ordered</span></td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 

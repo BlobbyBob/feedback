@@ -86,6 +86,8 @@ class Backend extends CI_Controller
                 $date_graph[] = [ 'x' => $date * 86400, 'y' => $count ];
             }
 
+            $recent = $this->feedback->recent_routes(8);
+
             $urls = $this->get_urls();
 
             $data = [
@@ -112,7 +114,8 @@ class Backend extends CI_Controller
                     'ratings' => $ratings,
                     'answered' => round(100 * $answered / $questions),
                     'surveys_avg' => round($surveys / $routes, 1),
-                    'date_graph' => json_encode($date_graph)
+                    'date_graph' => json_encode($date_graph),
+                    'activity' => $recent
                 ], TRUE)
             ];
 

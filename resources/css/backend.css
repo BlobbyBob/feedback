@@ -177,3 +177,8 @@
 .evaluation-text p {
     max-height: 3em;
 }
+
+/** Dashboard **/
+#recent_activity {
+    text-align: center;
+}

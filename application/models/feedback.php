@@ -59,6 +59,34 @@ class Feedback extends CI_Model
         return $this->db->count_all('feedback');
     }
 
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function recent_routes($limit = -1)
+    {
+        $this->db->select('r.id as id, r.name as name, r.wall as wall, c.german as color, MAX(f.date) as date, SUM(f.questions) / SUM(f.total) as ratio, COUNT(*) as `count`', false);
+        $this->db->from('feedback AS f');
+        $this->db->join('routes AS r', 'f.route = r.id', 'left');
+        $this->db->join('color AS c', 'r.color = c.id', 'left');
+        if ($limit > 0)
+            $this->db->limit($limit);
+        $this->db->group_by('f.route');
+        $this->db->order_by('date', 'DESC');
+        $query = $this->db->get();
+        $routes = [];
+        foreach ($query->result() as $row) {
+            $route = new stdClass();
+            $route->id = $row->id;
+            $route->name = $row->name ?? $row->color . $this->getRopeName($row->wall);
+            $route->count = $row->count;
+            $route->date = $row->date;
+            $route->ratio = round($row->ratio*100, 1);
+            $routes[] = $route;
+        }
+        return $routes;
+    }
+
     public function overview()
     {
 
