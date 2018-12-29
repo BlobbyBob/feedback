@@ -578,7 +578,7 @@ class Backend extends CI_Controller
                     $alert = $this->alert('Die gesendeten Daten sind ungültig.', 'danger');
                 } else {
 
-                    $max_version = $this->forms->max_version();
+                    $max_version = min($this->forms->max_version(), 1);
 
                     $update = [];
 
