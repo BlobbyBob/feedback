@@ -23,7 +23,7 @@ Database
 Setup
 ~~~~~
 
-
+Default: user - masterpass
 
 **************************
 Changelog and New Features
