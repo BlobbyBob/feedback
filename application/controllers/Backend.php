@@ -51,7 +51,7 @@ class Backend extends CI_Controller
     public function main()
     {
 
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->library('statistics', ['backend/bootadmin/stats_dashboard']);
             $this->load->model(['feedback', 'routes', 'forms']);
@@ -128,7 +128,7 @@ class Backend extends CI_Controller
     public function images($page = '', $id = -1)
     {
 
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model('dbimage');
 
@@ -260,7 +260,7 @@ class Backend extends CI_Controller
 
     public function routes_add()
     {
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes']);
             $reset = false;
@@ -395,7 +395,7 @@ class Backend extends CI_Controller
     public function routes_manage($id = -1)
     {
 
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes']);
             $urls = $this->get_urls();
@@ -562,7 +562,7 @@ class Backend extends CI_Controller
 
     public function survey()
     {
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes', 'forms']); // todo: do we need all of those?
 
@@ -657,7 +657,7 @@ class Backend extends CI_Controller
 
     public function evaluation($route = null)
     {
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['feedback', 'forms']);
             $urls = $this->get_urls();
@@ -773,38 +773,6 @@ class Backend extends CI_Controller
 
             }
         }
-    }
-
-    /**
-     * @param bool $return_only Default false. If true, the method won't redirect on to the login page
-     * @return bool Is logged in?
-     */
-    private function check_login($return_only = false)
-    {
-
-        // todo change it in production
-        return true;
-
-//        if ( ! $this->session->userdata('login' ) === TRUE) {
-//
-//            $this->output->set_status_header(302, 'Found');
-//            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/login'));
-//
-//            return false;
-//
-//        }
-//
-//        return true;
-
-    }
-
-    /**
-     * Is user logged in?
-     *
-     * @return bool Log in status
-     */
-    public static function isLogin() { // todo: put this in a helper
-        return (new Backend())->check_login(true);
     }
 
     public function get_urls()
