@@ -116,3 +116,21 @@ ALTER TABLE `routes`
   ADD CONSTRAINT `fk_routes_color` FOREIGN KEY (`color`) REFERENCES `color` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_routes_images` FOREIGN KEY (`image`) REFERENCES `images` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_routes_setter` FOREIGN KEY (`setter`) REFERENCES `setter` (`id`) ON UPDATE CASCADE;
+
+INSERT INTO `color` (`id`, `name`, `german`) VALUES
+(1, 'yellow', 'Gelb'),
+(2, 'red', 'Rot'),
+(3, 'blue', 'Blau'),
+(4, 'white', 'Weiß'),
+(5, 'green', 'Grün'),
+(6, 'turqoise', 'Türkis'),
+(7, 'black', 'Schwarz'),
+(8, 'grey', 'Grau'),
+(9, 'purple', 'Lila'),
+(10, 'orange', 'Orange'),
+(11, 'pink', 'Pink'),
+(12, 'ochre', 'Ocker'),
+(13, 'skin', 'Hautfarben'),
+(14, 'light-green', 'Hellgrün'),
+(15, 'yellow-flecked', 'Gelb meliert'),
+(16, 'green-flecked', 'Grün meliert');

@@ -283,7 +283,7 @@ class Backend extends CI_Controller
                     return preg_match('~^[IVX]+[\+\-]?$~', $value) && self::get_numeric_grade($value) != 0;
                 }]]); // Todo put get_numeric_grade into helper
                 $this->form_validation->set_rules('color', 'Farbe', 'integer|required');
-                $this->form_validation->set_rules('setter-list', 'Schrauberauswahl', 'integer|required');
+                $this->form_validation->set_rules('setter-list', 'Schrauberauswahl', 'integer');
                 $this->form_validation->set_rules('setter-name', 'Schrauber', 'trim|max_length[127]');
                 $this->form_validation->set_rules('wall', 'Seil', 'integer|greater_than_equal_to[0]|less_than_equal_to[12]|required');
                 $this->form_validation->set_rules('image', 'Bild', 'max_length[127]|required');
