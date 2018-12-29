@@ -83,6 +83,8 @@ class Forms extends CI_Model
         $this->db->where_in('id', $ids);
         $query = $this->db->get('formelements');
         $elements = [];
+        if ( ! $query instanceof CI_DB_result)
+            var_dump($this->db->error());
         foreach ($query->result() as $row) {
             $elements[] = Formelement::create($row);
         }
