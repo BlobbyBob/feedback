@@ -75,8 +75,7 @@ ALTER TABLE `feedback`
   ADD UNIQUE KEY `uk_route_author` (`route`,`author_id`);
 
 ALTER TABLE `formelements`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `index` (`index`);
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`);

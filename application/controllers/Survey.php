@@ -56,8 +56,10 @@ class Survey extends CI_Controller
         $progress = [];
         $progress[1] = 0;
         if ($total_value != 0) {
+            $valuesum = 0;
             foreach ($page_value as $page => $value) {
-                $progress[$page + 1] = ceil(100 * $value / $total_value);
+                $valuesum += $value;
+                $progress[$page + 1] = ceil(100 * $valuesum / $total_value);
             }
         }
 
@@ -143,9 +145,9 @@ class Survey extends CI_Controller
      */
     private function get_formelement_value($element)
     {
-        if ($element->is_checkbox() || $element->is_radio() || $element->is_rating() || $element->is_numeric())
+        if ($element->is_checkbox() || $element->is_rating())
             return 1;
-        if ($element->is_select())
+        if ($element->is_select() || $element->is_radio() || $element->is_numeric())
             return 2;
         if ($element->is_text())
             return 3;

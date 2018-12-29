@@ -27,7 +27,7 @@
             </select>
             <?php endif; ?>
 
-            <?php if ($setting['type'] != 'select' && $setting['type'] != 'select'): ?>
+            <?php if ($setting['type'] != 'select' && $setting['type'] != 'button'): ?>
             <input class="form-control" type="<?= $setting['type'] ?>" name="<?= $setting['name'] ?>" value="<?= $setting['value'] ?>" <?php if (isset($setting['attr'])) echo $setting['attr']; ?>>
             <?php endif; ?>
 

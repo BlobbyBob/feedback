@@ -72,7 +72,14 @@ $(function () {
             let d = $(elem).serializeArray();
             let e = {};
             for (let i = 0; i < d.length; i++) {
-                e[decodeURIComponent(d[i]["name"])] = decodeURIComponent(d[i]["value"]);
+                if (/.\[]$/.test(decodeURIComponent(d[i]["name"]))) {
+                    console.log(d[i]["name"]);
+                    let name = /(.+)\[]$/.exec(decodeURIComponent(d[i]["name"]))[1];
+                    if (!e.hasOwnProperty(name))
+                        e[name] = [];
+                    e[name][e[name].length] = decodeURIComponent(d[i]["value"]);
+                } else
+                    e[decodeURIComponent(d[i]["name"])] = decodeURIComponent(d[i]["value"]);
             }
             data[data.length] = e;
         });
@@ -85,6 +92,17 @@ $(function () {
             url: "../ajax/formelements/" + $(this).data('type') + "/settings",
             success: function (data) {
                 $('<form class="sortable-item">' + data + '</form>').appendTo('#form');
+
+                $('.add-option,.add-radio').off('click').click(function(){
+                    $(this).parent().parent().before('<div class="element-setting"><div class="element-setting-key">Optionsname:</div><div class="element-setting-value"><input class="form-control" type="text" name="' +
+                        ($(this).hasClass('add-option') ? 'options[]' : 'labels[]') + '"></div></div>');
+                });
+                sortable('.sortable', {
+                    items: ':not(.disabled)',
+                    forcePlaceholderSize: true,
+                    placeholderClass: 'sortable-placeholder',
+                    hoverClass: 'hover'
+                });
             }
         });
     });
@@ -98,6 +116,7 @@ $(function () {
         location = location.href;
     });
 });
+
 
 $(function(){
 

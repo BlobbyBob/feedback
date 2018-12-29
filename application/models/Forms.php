@@ -58,7 +58,7 @@ class Forms extends CI_Model
         $formelement = new $class(new stdClass());
         $obj = $formelement->export();
         $obj->id = null;
-        $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM formelements WHERE version=(SELECT MAX(version) FROM formelements)");
+        $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM formelements");
         $result = $query->result()[0];
         $obj->index = $result->index + 1;
         $obj->version = 0;

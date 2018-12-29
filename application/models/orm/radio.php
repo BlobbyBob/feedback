@@ -103,6 +103,7 @@ class Radio extends Formelement
         $subsettings[] = [
             'type' => "button",
             'title' => "Radio Button hinzufügen",
+            'name' => '',
             'class' => "add-radio"
         ];
         $settings = [

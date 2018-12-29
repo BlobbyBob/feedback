@@ -97,6 +97,7 @@ class Select extends Formelement
         $subsettings[] = [
             'type' => "button",
             'title' => "Option hinzufügen",
+            'name' => '',
             'class' => "add-option"
         ];
         $settings = [

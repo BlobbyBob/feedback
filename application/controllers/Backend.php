@@ -579,11 +579,8 @@ class Backend extends CI_Controller
                 } else {
 
                     $max_version = max($this->forms->max_version(), 1);
-
                     $update = [];
-
                     $count = 0;
-
                     foreach ($data as $element) {
                         $elem = new AnonymousElement();
                         foreach ($element as $key => $value) {
@@ -596,7 +593,8 @@ class Backend extends CI_Controller
 
                             $update[] = [
                                 'id' => $elem->id,
-                                'version' => -1
+                                'version' => -1,
+                                'index' => NULL
                             ];
 
                         } else {
@@ -647,7 +645,7 @@ class Backend extends CI_Controller
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'survey', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/survey', [
                     'urls' => $urls,
-                    'hidden_form' => form_open('backend/survey', ['class' => 'hidden', 'id' => 'hidden_form']),
+                    'hidden_form' => form_open('', ['class' => 'hidden', 'id' => 'hidden_form']),
                     'alert' => isset($alert) ? $alert : '',
                     'formelements' => $formelements
                 ], TRUE)
