@@ -80,6 +80,7 @@ class Forms extends CI_Model
     public function get_form_elements($ids)
     {
         $this->db->select('*');
+        $ids[] = -1;
         $this->db->where_in('id', $ids);
         $query = $this->db->get('formelements');
         $elements = [];

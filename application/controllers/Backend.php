@@ -69,6 +69,7 @@ class Backend extends CI_Controller
 
             $data = [];
             $feedback = $this->feedback->get();
+            $dates = [];
             foreach ($feedback as $fb) {
                 if ( ! isset($dates[strtotime($fb->date)/86400]))
                     $dates[strtotime($fb->date)/86400] = 0;
@@ -112,8 +113,8 @@ class Backend extends CI_Controller
                     'surveys' => $surveys,
                     'questions' => $questions,
                     'ratings' => $ratings,
-                    'answered' => round(100 * $answered / $questions),
-                    'surveys_avg' => round($surveys / $routes, 1),
+                    'answered' => $questions ? round(100 * $answered / $questions) : '-',
+                    'surveys_avg' => $routes ? round($surveys / $routes, 1) : '-',
                     'date_graph' => json_encode($date_graph),
                     'activity' => $recent
                 ], TRUE)

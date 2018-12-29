@@ -162,7 +162,7 @@ class Statistics
 
 }
 
-class Statistics_Result implements IteratorAggregate
+class Statistics_Result implements IteratorAggregate, Countable
 {
 
     /**
@@ -209,5 +209,19 @@ class Statistics_Result implements IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->result);
+    }
+
+    /**
+     * Count elements of an object
+     * @link https://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        return count($this->result);
     }
 }
