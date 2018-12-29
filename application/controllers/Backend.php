@@ -345,8 +345,10 @@ class Backend extends CI_Controller
                         if ($this->routes->add_route($route)) {
                             $reset = true;
                             $alert = $this->alert('Die Route wurde gespeichert.', 'success');
-                        } else
+                        } else {
                             $alert = $this->alert('Es gab ein Problem beim Speichern der Route.', 'warning');
+                        }
+
 
                     }
 

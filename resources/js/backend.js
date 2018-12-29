@@ -102,6 +102,7 @@ $(function () {
 $(function(){
 
     // Date Graph
+    if (typeof date_graph_data !== 'undefined')
     {
         let x = [], y = [];
 
@@ -158,6 +159,7 @@ $(function(){
     }
 
     // Participation Graph
+    if (typeof Chartist !== "undefined")
     {
         new Chartist.Pie('#participation_graph', {
             labels: ['Nicht beantwortet', 'Beantwortet'],
@@ -171,6 +173,7 @@ $(function(){
         });
     }
 
+    if (typeof graph_data !== "undefined")
     for (let p in graph_data) {
         let info = graph_data[p];
         if (info.type === "gauge") {
