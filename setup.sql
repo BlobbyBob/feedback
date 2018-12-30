@@ -8,13 +8,13 @@ CREATE TABLE `ci_sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `color` (
-                       `id` tinyint(3) UNSIGNED NOT NULL,
+                       `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT,
                        `name` varchar(31) NOT NULL,
                        `german` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `feedback` (
-                          `id` int(10) UNSIGNED NOT NULL,
+                          `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                           `route` int(10) UNSIGNED NOT NULL,
                           `author_id` varchar(32) NOT NULL,
                           `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -24,7 +24,7 @@ CREATE TABLE `feedback` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `formelements` (
-                              `id` int(10) UNSIGNED NOT NULL,
+                              `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                               `type` varchar(31) NOT NULL,
                               `data` text NOT NULL,
                               `index` smallint(5) UNSIGNED,
@@ -32,13 +32,13 @@ CREATE TABLE `formelements` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `images` (
-                        `id` int(10) UNSIGNED NOT NULL,
+                        `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                         `data` mediumblob NOT NULL,
                         `mime` varchar(31) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `routes` (
-                        `id` int(10) UNSIGNED NOT NULL,
+                        `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                         `name` varchar(127) NOT NULL,
                         `grade` varchar(5) NOT NULL,
                         `color` tinyint(3) UNSIGNED NOT NULL,
@@ -48,12 +48,12 @@ CREATE TABLE `routes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `setter` (
-                        `id` int(10) UNSIGNED NOT NULL,
+                        `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                         `name` varchar(127) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user` (
-                      `id` int(10) UNSIGNED NOT NULL,
+                      `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                       `name` varchar(32) NOT NULL,
                       `password` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
