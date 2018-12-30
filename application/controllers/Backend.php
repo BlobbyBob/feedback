@@ -76,14 +76,16 @@ class Backend extends CI_Controller
                 $dates[strtotime($fb->date)/86400] += $fb->questions;
                 $data[] = json_decode($fb->data);
             }
-            $min_date = min(array_keys($dates));
-            $max_date = max(array_keys($dates));
+            if (count($dates) > 0) {
+                $min_date = min(array_keys($dates));
+                $max_date = max(array_keys($dates));
 
-            for ($i = $min_date; $i < $max_date; $i++) {
-                if ( ! isset($dates[$i]))
-                    $dates[$i] = 0;
+                for ($i = $min_date; $i < $max_date; $i++) {
+                    if ( ! isset($dates[$i]))
+                        $dates[$i] = 0;
+                }
+                ksort($dates);
             }
-            ksort($dates);
 
             $this->statistics->set($data);
             $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
