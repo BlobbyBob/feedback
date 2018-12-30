@@ -2,6 +2,11 @@
 
     <!-- Sidebar  -->
     <div id="sidebar" class="wide">
+
+        <div id="dismiss" class="d-md-none">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+
         <div class="sidebar-header">
             <h3>Route</h3>
         </div>
@@ -17,7 +22,7 @@
         <div class="container">
             <p class="line float-none mt-5">&nbsp;</p>
             <h1 class="float-left mb-5">Feedback</h1>
-            <span class="badge badge-success d-md-none float-right" id="sidebarCollapse"><i class="far fa-image mr-2"></i> Route anzeigen</span>
+            <button type="button" class="btn btn-info d-md-none float-right" id="sidebarCollapse"><i class="far fa-image mr-2"></i> Route anzeigen</button>
             <div class="progress float-none w-100">
                 <div id="progressbar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0;"></div>
             </div>

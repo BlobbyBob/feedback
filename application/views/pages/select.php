@@ -176,7 +176,7 @@
             <div class="container-fluid justify-content-between">
                 <h2 class="d-md-none">Wähle eine Route aus</h2>
                 <button type="button" id="sidebarCollapse" class="btn btn-info d-md-none">
-                    <i class="fas fa-align-left"></i>
+                    <i class="fas fa-align-left mr-2"></i>
                     <span>Filter</span>
                 </button>
 
