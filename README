@@ -88,7 +88,7 @@ You can find a list of all changes for each release in the ``CHANGELOG`` file. V
 License
 *******
 
-Feedback is published under the terms of the `GNU Public License v3 (GPLv3) <https://github.com/BlobbyBob/feedback/blob/master/license.txt>`_.
+Feedback is published under the terms of the `GNU Public License v3 (GPLv3) <https://github.com/BlobbyBob/feedback/blob/master/LICENSE>`_.
 Compared to other licenses, the GPLv3 is a strong copyleft license and requires forked projects to be published under the same license (and thus open source).
 
 *************
