@@ -75,7 +75,7 @@ class Survey extends CI_Controller
         $survey = [
             'pages' => $pages,
             'form' => form_open('survey/finished/' . $id),
-            'img_src' => base_url('index.php/image/get/' . $route->image),
+            'img_src' => site_url('image/get/' . $route->image),
             'progress' => $progress,
             'max_page' => $max + 1
         ];
@@ -126,14 +126,12 @@ class Survey extends CI_Controller
 
         $this->feedback->store($feedback);
 
-        $data['style'] = '';
-        $data['script'] = '';
-
-        $data['style'] .= '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n";
-        $data['script'] = "<script src='" . base_url('resources/js/design.js') . "'></script>\n";
-
-        $data['select'] = base_url('index.php/select/route');
-        // $data['random'] = '#';
+        $data = [
+            'title' => 'Umfrage abgeschlossen',
+            'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">',
+            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>",
+            'select' => site_url('select/route')
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('pages/finished', $data);

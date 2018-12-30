@@ -42,7 +42,7 @@ class Backend extends CI_Controller
         } else {
 
             $this->output->set_status_header(302, 'Found');
-            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/'));
+            $this->output->set_header('Location: ' . site_url('verwaltung/'));
 
         }
 
@@ -222,7 +222,7 @@ class Backend extends CI_Controller
             $image_urls = [];
             foreach ($this->dbimage->get_ids() as $id) {
                 $image_urls[] = [
-                    'src' => base_url('index.php/image/get/' . $id),
+                    'src' => site_url('image/get/' . $id),
                     'delete' => $urls['images_delete'] . $id,
                 ];
             }
@@ -368,7 +368,7 @@ class Backend extends CI_Controller
             $image_urls = [];
             foreach ($this->dbimage->get_ids() as $id) {
                 $image_urls[] = [
-                    'src' => base_url('index.php/image/get/' . $id),
+                    'src' => site_url('image/get/' . $id),
                     'id' => $id
                 ];
             }
@@ -507,7 +507,7 @@ class Backend extends CI_Controller
                 $image_urls = [];
                 foreach ($this->dbimage->get_ids() as $id) {
                     $image_urls[] = [
-                        'src' => base_url('index.php/image/get/' . $id),
+                        'src' => site_url('image/get/' . $id),
                         'id' => $id
                     ];
                 }
@@ -741,6 +741,14 @@ class Backend extends CI_Controller
                     $total += $fb->total;
                     $data[] = json_decode($fb->data);
                 }
+                $min_date = min(array_keys($dates));
+                $max_date = max(array_keys($dates));
+
+                for ($i = $min_date; $i < $max_date; $i++) {
+                    if ( ! isset($dates[$i]))
+                        $dates[$i] = 0;
+                }
+                ksort($dates);
 
                 // Statistics
                 $this->statistics->set($data);
@@ -789,7 +797,7 @@ class Backend extends CI_Controller
 
     public function get_urls()
     {
-        $base = base_url('index.php/verwaltung/');
+        $base = site_url('verwaltung/');
         return [
             'login' => $base . 'login',
             'logout' => $base . 'logout',

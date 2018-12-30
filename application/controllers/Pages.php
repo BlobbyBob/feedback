@@ -44,7 +44,7 @@ class Pages extends CI_Controller
 
         // Specific data
         if ($page == 'start') {
-            $data['url'] = base_url('index.php/select/route');
+            $data['url'] = site_url('select/route');
         }
 
         $this->load->view('templates/header', $data);

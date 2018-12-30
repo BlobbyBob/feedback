@@ -11,7 +11,7 @@
             <strong class="mr-3">IV</strong><input id="filter-grade" type="text" class="span2" value=""
                                                    data-slider-min="4" data-slider-max="10" data-slider-step="1"
                                                    data-slider-value="[4,10]"/><strong class="ml-3">X</strong><br>
-            <p class="line"></p>
+            <p class="line my-4"></p>
             <h3>Farbe:</h3>
             <br>
             <div id="filter-colors" class="d-flex flex-wrap justify-content-center align-items-center">
@@ -34,7 +34,7 @@
             </div>
             <input type="hidden" id="colors"
                    value="yellow,red,yellow-flecked,light-green,green,turqoise,black,grey,purple,orange,pink,ochre,skin,blue,green-flecked,white,"/>
-            <p class="line"></p>
+            <p class="line my-4"></p>
             <h3>Seil</h3>
             <br>
             <div id="filter-ropes" class="d-flex flex-wrap justify-content-center align-items-center">

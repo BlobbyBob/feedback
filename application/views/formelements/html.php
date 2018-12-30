@@ -19,9 +19,9 @@ if (empty($none)): ?>
 
         <?php elseif ( ! empty($special) && $special == 'select'): ?>
 
-        <select id="field-<?= $id ?>" class="form-control">
+        <select id="field-<?= $id ?>" name="field-<?= $id ?>" class="form-control">
             <?php foreach ($options as $val => $optlabel): ?>
-            <option name="<?= $val ?>"><?= $optlabel ?></option>
+            <option value="<?= $val ?>"><?= $optlabel ?></option>
             <?php endforeach; ?>
         </select>
 
@@ -41,6 +41,7 @@ if (empty($none)): ?>
 
             <?php if (isset($type) && $type == 'checkbox'): ?>
             <div class="form-check">
+            <input type="hidden" id="field-<?= $id ?>-hid" name="field-<?= $id ?>" value="0">
             <?php endif; ?>
 
             <?php if (isset($type) && $type == 'checkbox' && 'label_position' == Checkbox::BEFORE): ?>
@@ -55,8 +56,7 @@ if (empty($none)): ?>
             name='field-<?= $id ?>'
             <?php if (isset($type)) echo 'type="'.$type.'"' ?>
             <?php if (isset($placeholder)) echo 'placeholder="'.$placeholder.'"' ?>
-            <?php if (isset($maxlength)) echo 'maxlength="'.$maxlength.'"' ?>>
-            <?php if ($closing) echo '</'.$tag.'>' ?>
+            <?php if (isset($maxlength)) echo 'maxlength="'.$maxlength.'"' ?>><?php if ($closing) echo '</'.$tag.'>' ?>
 
             <?php if (isset($type) && $type == 'checkbox' && 'label_position' == Checkbox::AFTER): ?>
                 <label class="form-check-label" for="field-<?= $id ?>">
