@@ -27,7 +27,7 @@ CREATE TABLE `formelements` (
                               `id` int(10) UNSIGNED NOT NULL,
                               `type` varchar(31) NOT NULL,
                               `data` text NOT NULL,
-                              `index` smallint(5) UNSIGNED NOT NULL,
+                              `index` smallint(5) UNSIGNED,
                               `version` smallint(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
