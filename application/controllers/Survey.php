@@ -25,7 +25,7 @@ class Survey extends CI_Controller
         $this->load->helper('form');
         $this->load->model('forms');
 
-        if (count($this->routes->get_routes($id)) == 0) {
+        if (count(list($route) = $this->routes->get_routes($id)) == 0) {
 
             show_404('Diese Route existiert nicht.', true);
 
@@ -63,19 +63,22 @@ class Survey extends CI_Controller
             }
         }
 
-        // todo: change coding style
         // Data for header and footer
-        $data['title'] = "Umfrage";
-        $data['style'] = '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">\n';
-        $data['script'] = "<script src='" . base_url('resources/js/design.js') . "'></script>\n";
-        $data['script'] .= "<script src='" . base_url('resources/js/survey.js') . "'></script>\n";
+        $data = [
+            'title' => "Umfrage",
+            'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">',
+            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>"
+                      . "<script src='" . base_url('resources/js/survey.js') . "'></script>",
+        ];
 
         // Data for survey
-        $survey['pages'] = $pages;
-        $survey['form'] = form_open('survey/finished/' . $id);
-        $survey['img_src'] = "https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg";
-        $survey['progress'] = $progress;
-        $survey['max_page'] = $max + 1;
+        $survey = [
+            'pages' => $pages,
+            'form' => form_open('survey/finished/' . $id),
+            'img_src' => base_url('index.php/image/get/' . $route->image),
+            'progress' => $progress,
+            'max_page' => $max + 1
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('pages/survey', $survey);

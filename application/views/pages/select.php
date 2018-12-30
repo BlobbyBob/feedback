@@ -193,12 +193,18 @@
                              style="background-image:url('<?php echo $route['img']; ?>')"></div>
                         <div class="content">
                             <div class="color d-flex flex-row align-items-center justify-content-between">
-                                <div>Farbe:</div>
+                                <div class="mr-2">Farbe:</div>
                                 <div class="circle circle-<?php echo $route['color']; ?>"></div>
                                 <br>
                             </div>
-                            Grad: <span class="info"><?php echo $route['grade']; ?></span><br>
-                            Seil: <span class="info"><?php echo $route['rope']; ?></span>
+                            <div class="d-flex justify-content-between">
+                                <div>Grad:</div>
+                                <div class="info"><?php echo $route['grade']; ?></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div>Seil:</div>
+                                <div class="info"><?php echo $route['rope']; ?></div>
+                            </div>
                         </div>
                         <?php if ( ! empty($route['name'])): ?>
                             <div class="name">

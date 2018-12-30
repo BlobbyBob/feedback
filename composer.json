@@ -1,14 +1,11 @@
 {
-  "description": "The CodeIgniter framework",
-  "name": "codeigniter/framework",
+  "description": "Feedback",
   "type": "project",
-  "homepage": "https://codeigniter.com",
-  "license": "MIT",
+  "homepage": "https://github.com/BlobbyBob/feedback",
+  "license": "GPL-3.0-or-later",
   "support": {
-    "forum": "http://forum.codeigniter.com/",
-    "wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
-    "slack": "https://codeigniterchat.slack.com",
-    "source": "https://github.com/bcit-ci/CodeIgniter"
+    "wiki": "https://github.com/BlobbyBob/feedback/wiki",
+    "source": "https://github.com/BlobbyBob/feedback"
   },
   "require": {
     "php": ">=7.1.0",

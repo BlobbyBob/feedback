@@ -15,13 +15,13 @@
     <!-- Page Content  -->
     <div id="content" class="narrow">
         <div class="container">
-            <!-- todo: Fix sidebar collapse-->
-            <h1>Feedback <span class="badge badge-success d-md-none" id="sidebarCollapse"><i class="fa fa-align-left"></i>Route anzeigen</span></h1>
-            <p class="line"></p>
-            <div class="progress">
+            <p class="line float-none mt-5">&nbsp;</p>
+            <h1 class="float-left mb-5">Feedback</h1>
+            <span class="badge badge-success d-md-none float-right" id="sidebarCollapse"><i class="far fa-image mr-2"></i> Route anzeigen</span>
+            <div class="progress float-none w-100">
                 <div id="progressbar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0;"></div>
             </div>
-            <p class="line"></p>
+            <p class="line mt-4 mb-5"></p>
             <?php echo $form; ?>
                 <div id="survey">
 

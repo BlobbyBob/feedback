@@ -44,7 +44,6 @@ a:focus {
     width: 100%;
     height: 1px;
     border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
 }
 
 /* ---------------------------------------------------
@@ -102,7 +101,9 @@ a[data-toggle="collapse"] {
 }
 
 #sidebarCollapse {
-    margin-left: auto;
+    font-size: 1em;
+    margin-top: 0.6rem;
+    cursor: pointer;
 }
 
 /* ---------------------------------------------------
@@ -154,6 +155,7 @@ a[data-toggle="collapse"] {
     padding: 0;
     margin: 0;
     -webkit-filter: blur(2px);
+    background-size: cover;
 }
 
 .route > .content {
@@ -170,6 +172,9 @@ a[data-toggle="collapse"] {
 .route > .content .info {
     font-weight: 700;
     color: #6d7fcc;
+    min-width: 16px;
+    width: auto;
+    text-align: center;
 }
 
 .route > .name {
@@ -229,7 +234,7 @@ a[data-toggle="collapse"] {
 }
 
 .circle-blue {
-    background-color: #3c40c6;
+    background-color: #3659c6;
 }
 
 .circle-white {

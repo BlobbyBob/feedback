@@ -1,3 +1,9 @@
+$(function(){
+    $('#sidebarCollapse').click(function(){
+        
+    });
+});
+
 ////////////////
 // Pagination //
 ////////////////
