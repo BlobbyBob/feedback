@@ -58,7 +58,7 @@
     </div>
 
     <div class="row mb-4">
-        <div class="col-md-6 col-sm-12 mb-4">
+        <div class="col-md-12 mb-4">
             <div class="card">
                 <div class="card-header bg-white font-weight-bold">
                     Gesamtaktivität

@@ -76,6 +76,14 @@ class Backend extends CI_Controller
                 $dates[strtotime($fb->date)/86400] += $fb->questions;
                 $data[] = json_decode($fb->data);
             }
+            $min_date = min(array_keys($dates));
+            $max_date = max(array_keys($dates));
+
+            for ($i = $min_date; $i < $max_date; $i++) {
+                if ( ! isset($dates[$i]))
+                    $dates[$i] = 0;
+            }
+            ksort($dates);
 
             $this->statistics->set($data);
             $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
@@ -675,6 +683,7 @@ class Backend extends CI_Controller
 
                 $stats = [];
                 $names = [];
+                $ids = [];
                 // todo: more efficient database request
                 foreach ($overview as $route) {
                     $feedback = $this->feedback->get_feedback($route->id);
@@ -683,6 +692,7 @@ class Backend extends CI_Controller
                     $this->statistics->run();
                     $stats[] = $this->statistics->get();
                     $names[] = $route->name;
+                    $ids[] = $route->id;
                 }
 
                 $data = [
@@ -703,7 +713,8 @@ class Backend extends CI_Controller
                         'alert' => isset($alert) ? $alert : '',
                         'routes' => $overview,
                         'statistics' => $stats,
-                        'names' => $names
+                        'names' => $names,
+                        'ids' => $ids
                     ], TRUE)
                 ];
 

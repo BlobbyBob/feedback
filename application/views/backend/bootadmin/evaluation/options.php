@@ -21,7 +21,7 @@ $colors = [
         <div class="card-body evaluation-options">
             <?php $total = 0; foreach ($options as $o) $total += $o['value']; ?>
             <?php foreach ($options as $i => $option): ?>
-            <?php $value = round($option['value'] / $total); ?>
+            <?php $value = round(100 * $option['value'] / $total,2); ?>
             <p class="mb-2"><?= $option['key'] ?></p>
             <div class="progress mb-3">
                 <div class="progress-bar bg-primary <?php if (!$value) echo 'text-dark'; ?>" role="progressbar" style="width: <?= $value ?>%;background-color: <?= $colors[$i%count($colors)]; ?> !important;" aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?= $value ?>"><?= $value ?>%</div>

@@ -78,7 +78,7 @@ class Feedback extends CI_Model
         foreach ($query->result() as $row) {
             $route = new stdClass();
             $route->id = $row->id;
-            $route->name = $row->name ?? $row->color . $this->getRopeName($row->wall);
+            $route->name = empty($row->name) ? $row->color . $this->getRopeName($row->wall) : $row->name;
             $route->count = $row->count;
             $route->date = $row->date;
             $route->ratio = round($row->ratio*100, 1);

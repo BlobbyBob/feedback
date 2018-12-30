@@ -50,7 +50,7 @@
                         </div>
                     </div>
 
-                    <p class="line"></p>
+                    <p class="line my-5"></p>
 
                     <div class="controls d-flex justify-content-between align-items-center">
                         <button type="button" id="prev" aria-label="Vorherige Seite" disabled class="btn btn-outline-primary">

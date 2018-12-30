@@ -151,6 +151,9 @@ $(function(){
                 onlyInteger: true,
                 type: Chartist.AutoScaleAxis
             },
+            lineSmooth: Chartist.Interpolation.simple({
+                fillHoles: true
+            }),
             plugins: [
                 Chartist.plugins.ctAxisTitle({
                     axisX: {
@@ -158,7 +161,7 @@ $(function(){
                         axisClass: 'ct-axis-title',
                         offset: {
                             x: 0,
-                            y: 15
+                            y: 25
                         },
                         textAnchor: 'middle'
                     },
@@ -178,7 +181,7 @@ $(function(){
     }
 
     // Participation Graph
-    if (typeof Chartist !== "undefined")
+    if (typeof Chartist !== "undefined" && typeof participaton_graph !== "undefined")
     {
         new Chartist.Pie('#participation_graph', {
             labels: ['Nicht beantwortet', 'Beantwortet'],
