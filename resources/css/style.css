@@ -398,6 +398,18 @@ button[disabled] {
 .starrating > input:hover ~ label {
     color: #ffca08;
 }
+.form-check-input {
+    margin-top: .35rem;
+}
+.form-check-input.check_before {
+    margin-left: .5rem;
+}
+.form-check-input.check_after {
+    margin-left: 0;
+}
+.form-check-label.check_after {
+    margin-left: 1.2rem;
+}
 
 /* ---------------------------------------------------
     FINISHED

@@ -116,7 +116,7 @@ class Survey extends CI_Controller
                 $key = substr($key, 6);
                 $feedback->total++;
 
-                if ( ! empty($post)) {
+                if ( ! empty($post) && ($post == "blank" && ! is_null($this->input->post('field-'.$key.'-sel')))) {
                     $feedback->data->$key = $post;
                     $feedback->questions++;
                 }

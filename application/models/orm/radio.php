@@ -96,8 +96,7 @@ class Radio extends Formelement
                 'type' => "text",
                 'name' => "labels[]",
                 'value' => $label,
-                'attr' => 'placeholder="Beschriftung"',
-                'small' => '<a class="remove-radio">Radio Button löschen</a>'
+                'attr' => 'placeholder="Beschriftung"'
             ];
         }
         $subsettings[] = [

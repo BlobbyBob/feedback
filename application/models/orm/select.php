@@ -90,8 +90,7 @@ class Select extends Formelement
                 'type' => "text",
                 'name' => "options[]",
                 'value' => $option,
-                'attr' => 'placeholder="Beschriftung"',
-                'small' => '<a class="remove-option">Option löschen</a>'
+                'attr' => 'placeholder="Beschriftung"'
             ];
         }
         $subsettings[] = [
