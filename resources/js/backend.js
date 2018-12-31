@@ -1,4 +1,9 @@
 $(function () {
+    $('.add-option,.add-radio').off('click').click(function(){
+        $(this).parent().parent().before('<div class="element-setting"><div class="element-setting-key">Optionsname:</div><div class="element-setting-value"><input class="form-control" type="text" name="' +
+            ($(this).hasClass('add-option') ? 'options[]' : 'labels[]') + '"></div></div>');
+    });
+    
     $('#image_select .image-grid').click(function(){
         console.log("click");
         $('.image-grid').removeClass('selected');
