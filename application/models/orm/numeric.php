@@ -119,7 +119,10 @@ class Numeric extends Formelement
             $min = $data[0];
             $max = max($data);
             $mean = array_sum($data) / $count;
-            $median = $data[$count/2];
+            if ($count & 1)
+                $median = $data[$count/2];
+            else
+                $median = ($data[$count/2] + $data[$count/2-1]) / 2;
 
         }
 
