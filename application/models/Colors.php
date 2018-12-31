@@ -27,7 +27,6 @@ class Colors extends CI_Model {
         $this->db->where('id', $id);
         /** @var CI_DB_result $query */
         $query = $this->db->get('color');
-        //var_dump($query->);
         return $query->num_rows() == 0 ? null : $query->first_row('Models\Color');
     }
 

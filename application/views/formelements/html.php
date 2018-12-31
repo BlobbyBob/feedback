@@ -3,7 +3,7 @@
 if (empty($none)): ?>
     <div class="formelement form-group">
 
-    <?php if ( ! (isset($type) && $type == 'checkbox')): ?>
+    <?php if ( ! isset($type) || ! ($type == 'checkbox')): ?>
         <label for="field-<?= $id ?>"><?= $label ?></label>
     <?php endif; ?>
 
@@ -12,7 +12,7 @@ if (empty($none)): ?>
         <div class='starrating risingstar d-flex justify-content-center flex-row-reverse align-items-center'>
             <span><?= $label_after ?></span>
             <?php for ($i = $count; $i >= 1; $i--): ?>
-            <input id='field-<?= $id ?>-<?= $i ?>' type='radio' name='field-<?= $id ?>' value='<?= $id ?>'><label for='field-<?= $id ?>-<?= $i ?>'></label>
+            <input id='field-<?= $id ?>-<?= $i ?>' type='radio' name='field-<?= $id ?>' value='<?= $i ?>'><label for='field-<?= $id ?>-<?= $i ?>'></label>
             <?php endfor; ?>
             <span><?= $label_before ?></span>
         </div>
@@ -30,7 +30,7 @@ if (empty($none)): ?>
             <?php $i = 0 ?>
             <?php foreach ($options as $val => $radiolabel): ?>
             <?php $i++; ?>
-                <div class="form-check">
+                <div class="form-check radio_input">
                     <input class="form-check-input" type="radio" name="field-<?= $id ?>" id="field-<?= $id ?>-<?= $i ?>" value="<?= $val ?>">
                     <label class="form-check-label" for="field-<?= $id ?>-<?= $i ?>">
                         <?= $radiolabel ?>

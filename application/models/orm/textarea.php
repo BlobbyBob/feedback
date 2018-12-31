@@ -64,7 +64,8 @@ class Textarea extends Formelement
             'tag' => 'textarea',
             'closing' => true,
             'special' => '',
-            'maxlength' => ''
+            'maxlength' => '',
+            'type' => ''
         ];
         return $data;
     }

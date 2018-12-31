@@ -53,7 +53,8 @@ class Select extends Formelement
             'id' => $this->id,
             'label' => $this->label,
             'special' => 'select',
-            'options' => $this->options
+            'options' => $this->options,
+            'type' => ''
         ];
         return $data;
     }

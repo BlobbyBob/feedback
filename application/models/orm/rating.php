@@ -74,7 +74,8 @@ class Rating extends Formelement
             'special' => 'rating',
             'count' => $this->count,
             'label_before' => $this->label_before,
-            'label_after' => $this->label_after
+            'label_after' => $this->label_after,
+            'type' => ''
         ];
         return $data;
     }
