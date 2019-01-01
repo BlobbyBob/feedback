@@ -1,8 +1,8 @@
 // Collapsable sidebar
 $(document).ready(function () {
-    // $("#sidebar").mCustomScrollbar({
-    //     theme: "minimal"
-    // });
+    $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+    });
 
     $('#dismiss').on('click', function () {
         $('#sidebar').removeClass('active');
