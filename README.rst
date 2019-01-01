@@ -82,7 +82,7 @@ If you should have particular interest in building and mainting the (nonexistent
 Changelog and New Features
 **************************
 
-You can find a list of all changes for each release in the ``CHANGELOG`` file. Version numbers work according to `Semantic versioning <https://semver.org/>`_.
+You can find a list of all changes for each release in the ``CHANGELOG.md`` file. Version numbers work according to `Semantic versioning <https://semver.org/>`_.
 
 *******
 License
