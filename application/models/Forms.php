@@ -36,6 +36,16 @@ class Forms extends CI_Model
         return $elements;
     }
 
+    public function get_type($type)
+    {
+        $query = $this->db->query("SELECT * FROM formelements WHERE version=(SELECT MAX(version) FROM formelements) AND type='" . $this->db->escape_str($type) . "' ORDER BY `index` ASC");
+        $elements = [];
+        foreach ($query->result() as $row) {
+            $elements[] = Formelement::create($row);
+        }
+        return $elements;
+    }
+
     /**
      * Add a formelement to the current form.
      *
@@ -48,7 +58,7 @@ class Forms extends CI_Model
         $formelement = new $class(new stdClass());
         $obj = $formelement->export();
         $obj->id = null;
-        $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM formelements WHERE version=(SELECT MAX(version) FROM formelements)");
+        $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM formelements");
         $result = $query->result()[0];
         $obj->index = $result->index + 1;
         $obj->version = 0;
@@ -70,6 +80,7 @@ class Forms extends CI_Model
     public function get_form_elements($ids)
     {
         $this->db->select('*');
+        $ids[] = -1;
         $this->db->where_in('id', $ids);
         $query = $this->db->get('formelements');
         $elements = [];

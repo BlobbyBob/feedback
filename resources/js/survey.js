@@ -1,3 +1,14 @@
+$(function(){
+    $("input[type=checkbox]").on('change', function (e) {
+        let hid = $("#"+$(this).attr('id')+"-hid");
+        if ($(this).is(":checked")) {
+            hid.removeAttr("name");
+        } else {
+            hid.attr("name", $(this).attr("name"));
+        }
+    });
+});
+
 ////////////////
 // Pagination //
 ////////////////

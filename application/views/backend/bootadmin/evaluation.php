@@ -29,7 +29,7 @@
                     <td><a href="<?= $urls['evaluation'].'/'.$route->id ?>"><?php echo $route->name; ?></a></td>
                     <td><?php echo $route->latest; ?></td>
                     <td><?php echo $route->count; ?></td>
-                    <td data-order="<?php echo $percent ?>"><?php echo $route->q_answered . "/" . $route->q_total . " ("; printf("%.2f%%", $percent*100); ?>)</td>
+                    <td data-order="<?php echo $percent ?>"><?php echo $route->q_answered . "/" . $route->q_total . " (" . round(100*$percent, 1); ?>%)</td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -40,11 +40,13 @@
     <div class="card mb-4">
         <div class="card-header font-weight-bold">Einzelübersicht</div>
         <div class="card-body">
+            <div class="container-fluid overview">
+                <div class="row">
             <?php if (isset($statistics)) foreach ($statistics as $i => $statistic): ?>
                 <div class="col-sm-12 col-md-6 col-lg-4 single-view mb-2">
                     <div class="card">
                         <div class="card-header font-weight-bold">
-                            <?= $names[$i] ?>
+                            <a href="<?= $urls['evaluation'].'/'.$ids[$i] ?>"><?= $names[$i] ?></a>
                         </div>
                         <div class="card-body">
                             <?php foreach ($statistic as $stat): ?>
@@ -54,6 +56,8 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

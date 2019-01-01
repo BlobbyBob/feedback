@@ -25,7 +25,6 @@
                         </div>
                         <div id="date_graph" class="ct-chart ct-double-octave">
                         </div>
-                        <small>Hinweis: XXX</small>
                     </div>
                 </div>
 

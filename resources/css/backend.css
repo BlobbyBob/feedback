@@ -3,6 +3,10 @@
     font-size: 1.1em;
 }
 
+.overview span {
+    font-weight: 600;
+}
+
 /** IMAGE GRID **/
 .image-grid-column {
     flex: 100%;
@@ -176,4 +180,9 @@
 }
 .evaluation-text p {
     max-height: 3em;
+}
+
+/** Dashboard **/
+#recent_activity {
+    text-align: center;
 }

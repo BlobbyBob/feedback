@@ -1,10 +1,14 @@
 {
   "description": "Feedback",
   "name": "BlobbyBob/feedback",
+  "description": "Feedback",
   "type": "project",
   "homepage": "https://github.com/BlobbyBob/feedback",
   "license": "GPL-3.0-or-later",
-  "support": {},
+  "support": {
+    "wiki": "https://github.com/BlobbyBob/feedback/wiki",
+    "source": "https://github.com/BlobbyBob/feedback"
+  },
   "require": {
     "php": ">=7.1.0",
     "ext-json": "*",

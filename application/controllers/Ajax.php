@@ -42,11 +42,12 @@ class Ajax extends CI_Controller
 
         if ($type == 'settings') {
 
-            if ( ! Backend::isLogin())
-                show_error("You have no permission to access this page.", 403, "403 Forbidden");
+            if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
-            $formelement = $this->forms->add_formelement($element);
-            $this->load->view('formelements/settings', $formelement->get_settings());
+                $formelement = $this->forms->add_formelement($element);
+                $this->load->view('formelements/settings', $formelement->get_settings());
+
+            }
 
         }
 

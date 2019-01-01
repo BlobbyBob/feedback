@@ -74,7 +74,8 @@ class Rating extends Formelement
             'special' => 'rating',
             'count' => $this->count,
             'label_before' => $this->label_before,
-            'label_after' => $this->label_after
+            'label_after' => $this->label_after,
+            'type' => ''
         ];
         return $data;
     }
@@ -171,7 +172,10 @@ class Rating extends Formelement
             $min = $data[0];
             $max = max($data);
             $mean = array_sum($data) / $count;
-            $median = $data[$count/2];
+            if ($count & 1)
+                $median = $data[$count/2];
+            else
+                $median = ($data[$count/2] + $data[$count/2-1]) / 2;
 
         }
 
@@ -195,6 +199,14 @@ class Rating extends Formelement
                 [
                     'key' => 'median',
                     'value' => $median
+                ],
+                [
+                    'key' => 'limit_max',
+                    'value' => $this->count
+                ],
+                [
+                    'key' => 'limit_min',
+                    'value' => 1
                 ]
             ],
             'datatype' => 'rating',

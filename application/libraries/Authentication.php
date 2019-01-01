@@ -91,14 +91,6 @@ class Authentication
 
         $this->loadConfig();
 
-        // Check if access to current page is granted
-        if ( ! $this->hasAccess($this->CI->router->fetch_class(), $this->CI->router->fetch_method())) {
-
-            $this->displayLogin();
-
-            // Prevent the called controller to be executed
-            exit(0);
-        }
     }
 
     /**
@@ -119,6 +111,7 @@ class Authentication
                 $this->user = $user;
                 $this->CI->session->user_id = $user->id;
                 $this->CI->session->logged_in = true;
+                return true;
             } else {
                 return false;
             }
@@ -193,18 +186,36 @@ class Authentication
     /**
      * @param string $controller
      * @param string $method
-     * @return int Either ACCEPT or DENY
+     * @return bool
      */
-    private function hasAccess($controller, $method)
+    public function canAccess($controller, $method)
     {
-        if ($this->isLoggedIn())
+        // Todo: Extend authentication and access right management. @see https://github.com/BlobbyBob/feedback/issues/11
+        return $this->isLoggedIn();
+//        if ($this->isLoggedIn())
+//            return true;
+//        $access = $this->policy;
+//        foreach ($this->rules as $rule) {
+//            if ($rule->matches($controller, $method))
+//                $access = $rule->target;
+//        }
+//        return $access == self::ACCEPT;
+    }
+
+    /**
+     * Usually called by a Controller, when the user wants to access a method
+     * @param $controller
+     * @param $method
+     * @return bool
+     */
+    public function pageAccess($controller, $method)
+    {
+        if ( ! $this->canAccess($controller, $method)) {
+            $this->displayLogin();
+            return false;
+        } else {
             return true;
-        $access = $this->policy;
-        foreach ($this->rules as $rule) {
-            if ($rule->matches($controller, $method))
-                $access = $rule->target;
         }
-        return $access == self::ACCEPT;
     }
 
     private function displayLogin()

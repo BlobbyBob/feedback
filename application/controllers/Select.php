@@ -41,8 +41,8 @@ class Select extends CI_Controller
         $data['routes'] = [];
         foreach ($routes as $route) {
             $data['routes'][] = [
-                'url' => base_url('index.php/survey/view/'.$route->id),
-                'img' => base_url('index.php/image/get/'.$route->image),
+                'url' => site_url('survey/view/'.$route->id),
+                'img' => site_url('image/get/'.$route->image),
                 'color' => $route->color,
                 'grade' => $route->grade,
                 'rope' => $route->wall == 0 ? 'Vorstieg' : $route->wall,

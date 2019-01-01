@@ -25,7 +25,7 @@ class Survey extends CI_Controller
         $this->load->helper('form');
         $this->load->model('forms');
 
-        if (count($this->routes->get_routes($id)) == 0) {
+        if (count(list($route) = $this->routes->get_routes($id)) == 0) {
 
             show_404('Diese Route existiert nicht.', true);
 
@@ -56,24 +56,29 @@ class Survey extends CI_Controller
         $progress = [];
         $progress[1] = 0;
         if ($total_value != 0) {
+            $valuesum = 0;
             foreach ($page_value as $page => $value) {
-                $progress[$page + 1] = ceil(100 * $value / $total_value);
+                $valuesum += $value;
+                $progress[$page + 1] = ceil(100 * $valuesum / $total_value);
             }
         }
 
-        // todo: change coding style
         // Data for header and footer
-        $data['title'] = "Umfrage";
-        $data['style'] = '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">\n';
-        $data['script'] = "<script src='" . base_url('resources/js/design.js') . "'></script>\n";
-        $data['script'] .= "<script src='" . base_url('resources/js/survey.js') . "'></script>\n";
+        $data = [
+            'title' => "Umfrage",
+            'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">',
+            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>"
+                      . "<script src='" . base_url('resources/js/survey.js') . "'></script>",
+        ];
 
         // Data for survey
-        $survey['pages'] = $pages;
-        $survey['form'] = form_open('survey/finished/' . $id);
-        $survey['img_src'] = "https://www.klettern.de/sixcms/media.php/6/KL-Einste-Wand-IMG_2139.jpg";
-        $survey['progress'] = $progress;
-        $survey['max_page'] = $max + 1;
+        $survey = [
+            'pages' => $pages,
+            'form' => form_open('survey/finished/' . $id),
+            'img_src' => site_url('image/get/' . $route->image),
+            'progress' => $progress,
+            'max_page' => $max + 1
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('pages/survey', $survey);
@@ -111,7 +116,7 @@ class Survey extends CI_Controller
                 $key = substr($key, 6);
                 $feedback->total++;
 
-                if ( ! empty($post)) {
+                if ( ! empty($post) && ! ($post == "blank" && ! is_null($this->input->post('field-'.$key.'-sel')))) {
                     $feedback->data->$key = $post;
                     $feedback->questions++;
                 }
@@ -121,14 +126,12 @@ class Survey extends CI_Controller
 
         $this->feedback->store($feedback);
 
-        $data['style'] = '';
-        $data['script'] = '';
-
-        $data['style'] .= '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . "\">\n";
-        $data['script'] = "<script src='" . base_url('resources/js/design.js') . "'></script>\n";
-
-        $data['select'] = base_url('index.php/select/route');
-        // $data['random'] = '#';
+        $data = [
+            'title' => 'Umfrage abgeschlossen',
+            'style' => '<link rel="stylesheet" href="' . base_url('resources/css/style.css') . '">',
+            'script' => "<script src='" . base_url('resources/js/design.js') . "'></script>",
+            'select' => site_url('select/route')
+        ];
 
         $this->load->view('templates/header', $data);
         $this->load->view('pages/finished', $data);
@@ -143,9 +146,9 @@ class Survey extends CI_Controller
      */
     private function get_formelement_value($element)
     {
-        if ($element->is_checkbox() || $element->is_radio() || $element->is_rating() || $element->is_numeric())
+        if ($element->is_checkbox() || $element->is_rating())
             return 1;
-        if ($element->is_select())
+        if ($element->is_select() || $element->is_radio() || $element->is_numeric())
             return 2;
         if ($element->is_text())
             return 3;

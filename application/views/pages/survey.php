@@ -2,6 +2,11 @@
 
     <!-- Sidebar  -->
     <div id="sidebar" class="wide">
+
+        <div id="dismiss" class="d-md-none">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+
         <div class="sidebar-header">
             <h3>Route</h3>
         </div>
@@ -15,13 +20,13 @@
     <!-- Page Content  -->
     <div id="content" class="narrow">
         <div class="container">
-            <!-- todo: Fix sidebar collapse-->
-            <h1>Feedback <span class="badge badge-success d-md-none" id="sidebarCollapse"><i class="fa fa-align-left"></i>Route anzeigen</span></h1>
-            <p class="line"></p>
-            <div class="progress">
+            <p class="line float-none mt-5">&nbsp;</p>
+            <h1 class="float-left mb-5">Feedback</h1>
+            <button type="button" class="btn btn-info d-md-none float-right" id="sidebarCollapse"><i class="far fa-image mr-2"></i> Route anzeigen</button>
+            <div class="progress float-none w-100">
                 <div id="progressbar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0;"></div>
             </div>
-            <p class="line"></p>
+            <p class="line mt-4 mb-5"></p>
             <?php echo $form; ?>
                 <div id="survey">
 
@@ -45,7 +50,7 @@
                         </div>
                     </div>
 
-                    <p class="line"></p>
+                    <p class="line my-5"></p>
 
                     <div class="controls d-flex justify-content-between align-items-center">
                         <button type="button" id="prev" aria-label="Vorherige Seite" disabled class="btn btn-outline-primary">

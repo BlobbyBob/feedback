@@ -1,4 +1,9 @@
 $(function () {
+    $('.add-option,.add-radio').off('click').click(function(){
+        $(this).parent().parent().before('<div class="element-setting"><div class="element-setting-key">Optionsname:</div><div class="element-setting-value"><input class="form-control" type="text" name="' +
+            ($(this).hasClass('add-option') ? 'options[]' : 'labels[]') + '"></div></div>');
+    });
+    
     $('#image_select .image-grid').click(function(){
         console.log("click");
         $('.image-grid').removeClass('selected');
@@ -72,7 +77,14 @@ $(function () {
             let d = $(elem).serializeArray();
             let e = {};
             for (let i = 0; i < d.length; i++) {
-                e[decodeURIComponent(d[i]["name"])] = decodeURIComponent(d[i]["value"]);
+                if (/.\[]$/.test(decodeURIComponent(d[i]["name"]))) {
+                    console.log(d[i]["name"]);
+                    let name = /(.+)\[]$/.exec(decodeURIComponent(d[i]["name"]))[1];
+                    if (!e.hasOwnProperty(name))
+                        e[name] = [];
+                    e[name][e[name].length] = decodeURIComponent(d[i]["value"]);
+                } else
+                    e[decodeURIComponent(d[i]["name"])] = decodeURIComponent(d[i]["value"]);
             }
             data[data.length] = e;
         });
@@ -85,6 +97,17 @@ $(function () {
             url: "../ajax/formelements/" + $(this).data('type') + "/settings",
             success: function (data) {
                 $('<form class="sortable-item">' + data + '</form>').appendTo('#form');
+
+                $('.add-option,.add-radio').off('click').click(function(){
+                    $(this).parent().parent().before('<div class="element-setting"><div class="element-setting-key">Optionsname:</div><div class="element-setting-value"><input class="form-control" type="text" name="' +
+                        ($(this).hasClass('add-option') ? 'options[]' : 'labels[]') + '"></div></div>');
+                });
+                sortable('.sortable', {
+                    items: ':not(.disabled)',
+                    forcePlaceholderSize: true,
+                    placeholderClass: 'sortable-placeholder',
+                    hoverClass: 'hover'
+                });
             }
         });
     });
@@ -99,9 +122,11 @@ $(function () {
     });
 });
 
+
 $(function(){
 
     // Date Graph
+    if (typeof date_graph_data !== 'undefined')
     {
         let x = [], y = [];
 
@@ -131,6 +156,9 @@ $(function(){
                 onlyInteger: true,
                 type: Chartist.AutoScaleAxis
             },
+            lineSmooth: Chartist.Interpolation.simple({
+                fillHoles: true
+            }),
             plugins: [
                 Chartist.plugins.ctAxisTitle({
                     axisX: {
@@ -138,7 +166,7 @@ $(function(){
                         axisClass: 'ct-axis-title',
                         offset: {
                             x: 0,
-                            y: 15
+                            y: 25
                         },
                         textAnchor: 'middle'
                     },
@@ -158,6 +186,7 @@ $(function(){
     }
 
     // Participation Graph
+    if (typeof Chartist !== "undefined" && typeof participaton_graph !== "undefined")
     {
         new Chartist.Pie('#participation_graph', {
             labels: ['Nicht beantwortet', 'Beantwortet'],
@@ -171,6 +200,7 @@ $(function(){
         });
     }
 
+    if (typeof graph_data !== "undefined")
     for (let p in graph_data) {
         let info = graph_data[p];
         if (info.type === "gauge") {

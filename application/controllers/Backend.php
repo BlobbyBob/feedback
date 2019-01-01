@@ -42,7 +42,7 @@ class Backend extends CI_Controller
         } else {
 
             $this->output->set_status_header(302, 'Found');
-            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/'));
+            $this->output->set_header('Location: ' . site_url('verwaltung/'));
 
         }
 
@@ -51,22 +51,83 @@ class Backend extends CI_Controller
     public function main()
     {
 
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
+
+            $this->load->library('statistics', ['backend/bootadmin/stats_dashboard']);
+            $this->load->model(['feedback', 'routes', 'forms']);
+
+            $routes = $this->routes->count();
+            $surveys = $this->feedback->count();
+            $questions = 0;
+            $answered = 0;
+
+            $overview = $this->feedback->overview();
+            foreach ($overview as $route) {
+                $questions += $route->q_total;
+                $answered += $route->q_answered;
+            }
+
+            $data = [];
+            $feedback = $this->feedback->get();
+            $dates = [];
+            foreach ($feedback as $fb) {
+                if ( ! isset($dates[strtotime($fb->date)/86400]))
+                    $dates[strtotime($fb->date)/86400] = 0;
+                $dates[strtotime($fb->date)/86400] += $fb->questions;
+                $data[] = json_decode($fb->data);
+            }
+            if (count($dates) > 0) {
+                $min_date = min(array_keys($dates));
+                $max_date = max(array_keys($dates));
+
+                for ($i = $min_date; $i < $max_date; $i++) {
+                    if ( ! isset($dates[$i]))
+                        $dates[$i] = 0;
+                }
+                ksort($dates);
+            }
+
+            $this->statistics->set($data);
+            $this->statistics->set_form_elements($this->forms->get_form_elements($this->statistics->get_ids()));
+            $this->statistics->run();
+            $ratings = $this->statistics->get();
+
+            $date_graph = [];
+            foreach ($dates as $date => $count) {
+                $date_graph[] = [ 'x' => $date * 86400, 'y' => $count ];
+            }
+
+            $recent = $this->feedback->recent_routes(8);
 
             $urls = $this->get_urls();
 
             $data = [
                 'styles' => [
                     base_url('resources/css/datatables.min.css'),
-                    base_url('resources/css/bootadmin.min.css')
+                    base_url('resources/css/bootadmin.min.css'),
+                    base_url('resources/css/chartist.min.css'),
+                    base_url('resources/css/backend.css')
                 ],
                 'scripts' => [
                     base_url('resources/js/datatables.min.js'),
-                    base_url('resources/js/bootadmin.min.js')
+                    base_url('resources/js/bootadmin.min.js'),
+                    base_url('resources/js/moment.min.js'),
+                    base_url('resources/js/chartist.min.js'),
+                    base_url('resources/js/chartist-plugin-axistitle.js'),
+                    base_url('resources/js/backend.js')
                 ],
                 'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'main', 'urls' => $urls], TRUE),
-                'page' => $this->load->view('backend/bootadmin/main', ['urls' => $urls], TRUE)
+                'page' => $this->load->view('backend/bootadmin/main', [
+                    'urls' => $urls,
+                    'surveys' => $surveys,
+                    'questions' => $questions,
+                    'ratings' => $ratings,
+                    'answered' => $questions ? round(100 * $answered / $questions) : '-',
+                    'surveys_avg' => $routes ? round($surveys / $routes, 1) : '-',
+                    'date_graph' => json_encode($date_graph),
+                    'activity' => $recent
+                ], TRUE)
             ];
 
             $this->load->view('backend/bootadmin', $data);
@@ -78,7 +139,7 @@ class Backend extends CI_Controller
     public function images($page = '', $id = -1)
     {
 
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model('dbimage');
 
@@ -163,7 +224,7 @@ class Backend extends CI_Controller
             $image_urls = [];
             foreach ($this->dbimage->get_ids() as $id) {
                 $image_urls[] = [
-                    'src' => base_url('index.php/image/get/' . $id),
+                    'src' => site_url('image/get/' . $id),
                     'delete' => $urls['images_delete'] . $id,
                 ];
             }
@@ -210,7 +271,7 @@ class Backend extends CI_Controller
 
     public function routes_add()
     {
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes']);
             $reset = false;
@@ -232,7 +293,7 @@ class Backend extends CI_Controller
                     return preg_match('~^[IVX]+[\+\-]?$~', $value) && self::get_numeric_grade($value) != 0;
                 }]]); // Todo put get_numeric_grade into helper
                 $this->form_validation->set_rules('color', 'Farbe', 'integer|required');
-                $this->form_validation->set_rules('setter-list', 'Schrauberauswahl', 'integer|required');
+                $this->form_validation->set_rules('setter-list', 'Schrauberauswahl', 'integer');
                 $this->form_validation->set_rules('setter-name', 'Schrauber', 'trim|max_length[127]');
                 $this->form_validation->set_rules('wall', 'Seil', 'integer|greater_than_equal_to[0]|less_than_equal_to[12]|required');
                 $this->form_validation->set_rules('image', 'Bild', 'max_length[127]|required');
@@ -294,8 +355,10 @@ class Backend extends CI_Controller
                         if ($this->routes->add_route($route)) {
                             $reset = true;
                             $alert = $this->alert('Die Route wurde gespeichert.', 'success');
-                        } else
+                        } else {
                             $alert = $this->alert('Es gab ein Problem beim Speichern der Route.', 'warning');
+                        }
+
 
                     }
 
@@ -307,7 +370,7 @@ class Backend extends CI_Controller
             $image_urls = [];
             foreach ($this->dbimage->get_ids() as $id) {
                 $image_urls[] = [
-                    'src' => base_url('index.php/image/get/' . $id),
+                    'src' => site_url('image/get/' . $id),
                     'id' => $id
                 ];
             }
@@ -345,13 +408,139 @@ class Backend extends CI_Controller
     public function routes_manage($id = -1)
     {
 
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes']);
             $urls = $this->get_urls();
 
-            if ($route = $this->routes->get_routes($id)) {
+            if (count($this->routes->get_routes($id)) > 0) {
                 // Show edit route form
+                if ($this->input->post('edit_route') != null && count($this->routes->get_routes($this->input->post('id') ?? -1)) > 0) {
+
+                    // Validate and save input
+                    $this->load->library('form_validation');
+
+                    $alert = '';
+
+                    $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable" role="alert">', '<button type="button" class="close" data-dismiss="alert" aria-label="Schließen">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>');
+
+                    // Set rules
+                    $this->form_validation->set_rules('id', 'ID', 'integer|greater_than[0]|required');
+                    $this->form_validation->set_rules('name', 'Name', 'trim|max_length[127]');
+                    $this->form_validation->set_rules('grade', 'Grad', [['roman', function ($value) {
+                        return preg_match('~^[IVX]+[\+\-]?$~', $value) && self::get_numeric_grade($value) != 0;
+                    }]]); // Todo put get_numeric_grade into helper
+                    $this->form_validation->set_rules('color', 'Farbe', 'integer|required');
+                    $this->form_validation->set_rules('setter-list', 'Schrauberauswahl', 'integer|required');
+                    $this->form_validation->set_rules('setter-name', 'Schrauber', 'trim|max_length[127]');
+                    $this->form_validation->set_rules('wall', 'Seil', 'integer|greater_than_equal_to[0]|less_than_equal_to[12]|required');
+                    $this->form_validation->set_rules('image', 'Bild', 'max_length[127]|required');
+
+                    $this->form_validation->set_message('required', 'Das Feld <strong>{field}</strong> muss ausgefüllt werden.');
+                    $this->form_validation->set_message('max_length', 'Die maximale Länge für <strong>{field}</strong> beträgt <i>{param}</i> Zeichen.');
+                    $this->form_validation->set_message('integer', 'Die Eingabe für <strong>{field}</strong> ist ungültig.');
+                    $this->form_validation->set_message('greater_than', 'Dies ist keine gültige {field}.');
+                    $this->form_validation->set_message('greater_than_equal_to', 'Dies ist kein gültiges {field}.');
+                    $this->form_validation->set_message('less_than_equal_to', 'Dies ist kein gültiges {field}.');
+                    $this->form_validation->set_message('roman', 'Dies ist kein gültiger {field}.');
+
+                    // Validate syntax
+                    if ($valid = $this->form_validation->run()) {
+
+                        $route = new Route();
+                        $route->id = $this->input->post('id');
+                        $route->name = $this->input->post('name');
+                        $route->image = $this->input->post('image');
+                        $route->color = $this->colors->get_color($this->input->post('color'))->id;
+                        $route->wall = $this->input->post('wall');
+                        $route->grade = $this->input->post('grade');
+
+                        // Validate logic
+                        if (!$this->dbimage->is_image($route->image)) {
+                            $valid = FALSE;
+                            $alert .= $this->alert('Dieses Bild existiert nicht.', 'danger');
+                        }
+                        if ($route->color == NULL) {
+                            $valid = FALSE;
+                            $alert .= $this->alert('Diese Farbe existiert nicht.', 'danger');
+                        }
+
+                        if (!$this->input->post('setter-name')) {
+                            if (!$this->setters->get_setter($this->input->post('setter-list'))) {
+                                $valid = FALSE;
+                                $alert .= $this->alert('Dieser Schrauber existiert nicht.', 'danger');
+                            } else {
+                                $route->setter = $this->input->post('setter-list');
+                            }
+                        } else {
+                            if (!$this->setters->get_setter($this->input->post('setter-name'))) {
+
+                                $setter = new Setter();
+                                $setter->id = null;
+                                $setter->name = $this->input->post('setter-name');
+
+                                if (!$this->setters->add_setter($setter)) {
+                                    $alert .= $this->alert('Dieser Schrauber konnte nicht hinzugefügt werden.', 'warning');
+                                } else {
+                                    $route->setter = $this->setters->get_setter($this->input->post('setter-name'))->id;
+                                }
+                            } else {
+                                $route->setter = $this->setters->get_setter($this->input->post('setter-name'))->id;
+                            }
+                        }
+
+                        if ($valid) {
+
+                            $alert .= $this->routes->save($route) ? $this->alert('Die Änderungen wurden gespeichert.', 'success') : $this->alert('Es gab ein Problem beim Speichern der Änderungen.', 'warning');
+
+                        }
+                    }
+
+                }
+
+                // Show settings for route
+
+                $route = $this->routes->get_routes($id)[0];
+                $urls = $this->get_urls();
+
+                $image_urls = [];
+                foreach ($this->dbimage->get_ids() as $id) {
+                    $image_urls[] = [
+                        'src' => site_url('image/get/' . $id),
+                        'id' => $id
+                    ];
+                }
+
+                $data = [
+                    'styles' => [
+                        base_url('resources/css/datatables.min.css'),
+                        base_url('resources/css/bootadmin.min.css'),
+                        base_url('resources/css/backend.css')
+                    ],
+                    'scripts' => [
+                        base_url('resources/js/datatables.min.js'),
+                        base_url('resources/js/bootadmin.min.js'),
+                        base_url('resources/js/backend.js')
+                    ],
+                    'topbar' => $this->load->view('backend/bootadmin/topbar', ['username' => $this->auth->getUser()->name, 'urls' => $urls], TRUE),
+                    'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'routes/add', 'urls' => $urls], TRUE),
+                    'page' => $this->load->view('backend/bootadmin/routes_edit', [
+                        'urls' => $urls,
+                        'form' => form_open(),
+                        'alert' => $alert ?? '',
+                        'colors' => $this->colors->get_colors(),
+                        'setters' => $this->setters->get_setters(),
+                        'images' => $image_urls,
+                        'route' => $route,
+                        'valid' => $valid ?? ''
+                    ], TRUE)
+                ];
+
+                $this->load->view('backend/bootadmin', $data);
+
             } else {
                 // Show overview
                 $routes = $this->routes->get_routes(NULL, false, true);
@@ -386,7 +575,7 @@ class Backend extends CI_Controller
 
     public function survey()
     {
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['colors', 'setters', 'dbimage', 'routes', 'forms']); // todo: do we need all of those?
 
@@ -399,12 +588,9 @@ class Backend extends CI_Controller
                     $alert = $this->alert('Die gesendeten Daten sind ungültig.', 'danger');
                 } else {
 
-                    $max_version = $this->forms->max_version();
-
+                    $max_version = max($this->forms->max_version(), 1);
                     $update = [];
-
                     $count = 0;
-
                     foreach ($data as $element) {
                         $elem = new AnonymousElement();
                         foreach ($element as $key => $value) {
@@ -417,7 +603,8 @@ class Backend extends CI_Controller
 
                             $update[] = [
                                 'id' => $elem->id,
-                                'version' => -1
+                                'version' => -1,
+                                'index' => NULL
                             ];
 
                         } else {
@@ -468,7 +655,7 @@ class Backend extends CI_Controller
                 'sidebar' => $this->load->view('backend/bootadmin/sidebar', ['active' => 'survey', 'urls' => $urls], TRUE),
                 'page' => $this->load->view('backend/bootadmin/survey', [
                     'urls' => $urls,
-                    'hidden_form' => form_open('backend/survey', ['class' => 'hidden', 'id' => 'hidden_form']),
+                    'hidden_form' => form_open('', ['class' => 'hidden', 'id' => 'hidden_form']),
                     'alert' => isset($alert) ? $alert : '',
                     'formelements' => $formelements
                 ], TRUE)
@@ -481,7 +668,7 @@ class Backend extends CI_Controller
 
     public function evaluation($route = null)
     {
-        if ($this->check_login()) {
+        if ($this->auth->pageAccess(__CLASS__, __FUNCTION__)) {
 
             $this->load->model(['feedback', 'forms']);
             $urls = $this->get_urls();
@@ -498,6 +685,7 @@ class Backend extends CI_Controller
 
                 $stats = [];
                 $names = [];
+                $ids = [];
                 // todo: more efficient database request
                 foreach ($overview as $route) {
                     $feedback = $this->feedback->get_feedback($route->id);
@@ -506,6 +694,7 @@ class Backend extends CI_Controller
                     $this->statistics->run();
                     $stats[] = $this->statistics->get();
                     $names[] = $route->name;
+                    $ids[] = $route->id;
                 }
 
                 $data = [
@@ -526,7 +715,8 @@ class Backend extends CI_Controller
                         'alert' => isset($alert) ? $alert : '',
                         'routes' => $overview,
                         'statistics' => $stats,
-                        'names' => $names
+                        'names' => $names,
+                        'ids' => $ids
                     ], TRUE)
                 ];
 
@@ -553,6 +743,14 @@ class Backend extends CI_Controller
                     $total += $fb->total;
                     $data[] = json_decode($fb->data);
                 }
+                $min_date = min(array_keys($dates));
+                $max_date = max(array_keys($dates));
+
+                for ($i = $min_date; $i < $max_date; $i++) {
+                    if ( ! isset($dates[$i]))
+                        $dates[$i] = 0;
+                }
+                ksort($dates);
 
                 // Statistics
                 $this->statistics->set($data);
@@ -598,42 +796,10 @@ class Backend extends CI_Controller
             }
         }
     }
-    
-    /**
-     * @param bool $return_only Default false. If true, the method won't redirect on to the login page
-     * @return bool Is logged in?
-     */
-    private function check_login($return_only = false)
-    {
-
-        // todo change it in production
-        return true;
-
-//        if ( ! $this->session->userdata('login' ) === TRUE) {
-//
-//            $this->output->set_status_header(302, 'Found');
-//            $this->output->set_header('Location: ' . base_url('index.php/verwaltung/login'));
-//
-//            return false;
-//
-//        }
-//
-//        return true;
-
-    }
-
-    /**
-     * Is user logged in?
-     *
-     * @return bool Log in status
-     */
-    public static function isLogin() { // todo: put this in a helper
-        return (new Backend())->check_login(true);
-    }
 
     public function get_urls()
     {
-        $base = base_url('index.php/verwaltung/');
+        $base = site_url('verwaltung/');
         return [
             'login' => $base . 'login',
             'logout' => $base . 'logout',

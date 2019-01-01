@@ -33,8 +33,13 @@ class Routes extends CI_Model
         return $query->result('Models\Route');
     }
 
+    public function count()
+    {
+        return $this->db->count_all('routes');
+    }
+
     /**
-     * Save a route to persistent memory
+     * Save a route to persistent memory (If it already exists this action will fail)
      * @param Route $route The Route object
      * @return bool Was saving successful
      */
@@ -43,6 +48,17 @@ class Routes extends CI_Model
         if ($route->id <= 0)
             return false;
         $this->db->insert('routes', $route);
+        return (bool) $this->db->affected_rows();
+    }
+
+    /**
+     * Save a route to persistent memory (It may already exist there and will be overwritten in this case)
+     * @param Route $route The route subject (needs resolved setter and color names)
+     * @return bool Was saving successful
+     */
+    public function save($route)
+    {
+        $this->db->replace('routes', $route);
         return (bool) $this->db->affected_rows();
     }
 }

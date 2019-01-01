@@ -14,12 +14,12 @@ if ( ! function_exists('statistics_get_total')) { // todo: remove this
 
 
     case 'options':
-        usort($options, function ($a, $b) {return $a['value'] <=> $b['value'];});
+        usort($options, function ($a, $b) {return $b['value'] <=> $a['value'];});
         $total = statistics_get_total($options); ?>
         <?php if (count($options) == 2):?>
 
-            <strong><?= $options[0]['key'] ?></strong>: <?= printf('%.2f%%', 100*$options[0]['value']/$total) ?><br>
-            <strong><?= $options[1]['key'] ?></strong>: <?= printf('%.2f%%', 100*$options[0]['value']/$total) ?><br>
+            <strong><?= $options[0]['key'] ?></strong>: <?= round(100*$options[0]['value']/$total) ?>%<br>
+            <strong><?= $options[1]['key'] ?></strong>: <?= round(100*$options[1]['value']/$total) ?>%<br>
         <?php else: ?>
             <?php foreach ($options as $i => $option): if ($i > 4) break;?>
                 <strong><?= $option['key'] ?></strong>: <?= printf('%.2f%%', 100*$option['value']/$total) ?><br>
@@ -34,9 +34,13 @@ if ( ! function_exists('statistics_get_total')) { // todo: remove this
             $v = ['min','max','mean','median'];
             return array_search($a, $v) <=> array_search($b, $v);
         }); ?>
-
-        <strong>Minimum/Maximum:</strong> <?= $numbers[0]['value']; ?> / <?= $numbers[1]['value']; ?><br>
-        <strong>Mittelwert/Median:</strong> <?= $numbers[2]['value']; ?> / <?= $numbers[3]['value']; ?><br>
+        <div class="row">
+            <div class="col"><span>Minimum:</span> <?= $numbers[0]['value']; ?><br></div>
+            <div class="col"><span>Median:</span> <?= $numbers[3]['value']; ?><br></div>
+            <div class="w-100"></div>
+            <div class="col"><span>Maximum:</span> <?= $numbers[1]['value']; ?><br></div>
+            <div class="col"><span>Mittelwert:</span> <?= $numbers[2]['value']; ?><br></div>
+        </div>
     <?php break; ?>
 
 

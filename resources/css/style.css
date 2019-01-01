@@ -44,7 +44,6 @@ a:focus {
     width: 100%;
     height: 1px;
     border-bottom: 1px dashed #ddd;
-    margin: 40px 0;
 }
 
 /* ---------------------------------------------------
@@ -76,8 +75,28 @@ a:focus {
     width: 400px;
 }
 
+#dismiss {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #7386D5;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#dismiss:hover {
+    background: #fff;
+    color: #7386D5;
+}
+
 #sidebar.wide.active {
-    margin-left: -400px;
+    margin-left: 0;
 }
 
 #sidebar .sidebar-header {
@@ -89,20 +108,9 @@ a:focus {
     margin: 20px;
 }
 
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
 #sidebarCollapse {
-    margin-left: auto;
+    font-size: 1em;
+    margin-top: 0.6rem;
 }
 
 /* ---------------------------------------------------
@@ -154,6 +162,7 @@ a[data-toggle="collapse"] {
     padding: 0;
     margin: 0;
     -webkit-filter: blur(2px);
+    background-size: cover;
 }
 
 .route > .content {
@@ -170,6 +179,9 @@ a[data-toggle="collapse"] {
 .route > .content .info {
     font-weight: 700;
     color: #6d7fcc;
+    min-width: 16px;
+    width: auto;
+    text-align: center;
 }
 
 .route > .name {
@@ -229,7 +241,7 @@ a[data-toggle="collapse"] {
 }
 
 .circle-blue {
-    background-color: #3c40c6;
+    background-color: #3659c6;
 }
 
 .circle-white {
@@ -385,6 +397,21 @@ button[disabled] {
 
 .starrating > input:hover ~ label {
     color: #ffca08;
+}
+.form-check-input {
+    margin-top: .35rem;
+}
+.form-check-input.check_before {
+    margin-left: .5rem;
+}
+.form-check-input.check_after {
+    margin-left: 0;
+}
+.form-check-label.check_after {
+    margin-left: 1.2rem;
+}
+.radio_input {
+    margin-left: 2rem;
 }
 
 /* ---------------------------------------------------

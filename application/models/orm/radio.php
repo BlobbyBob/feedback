@@ -43,10 +43,9 @@ class Radio extends Formelement
         if (isset($data->labels) && (is_array($data->labels) || is_object($data->labels))) {
             foreach ($data->labels as $key => $val) {
                 if (is_string($val))
-                    $labels[$key] = $val;
+                    $this->labels[$key] = $val;
             }
         }
-
     }
 
     /**
@@ -59,7 +58,8 @@ class Radio extends Formelement
             'id' => $this->id,
             'label' => $this->main_label,
             'special' => 'radio',
-            'options' => $this->labels
+            'options' => $this->labels,
+            'type' => ''
         ];
         return $data;
     }
@@ -96,13 +96,13 @@ class Radio extends Formelement
                 'type' => "text",
                 'name' => "labels[]",
                 'value' => $label,
-                'attr' => 'placeholder="Beschriftung"',
-                'small' => '<a class="remove-radio">Radio Button löschen</a>'
+                'attr' => 'placeholder="Beschriftung"'
             ];
         }
         $subsettings[] = [
             'type' => "button",
             'title' => "Radio Button hinzufügen",
+            'name' => '',
             'class' => "add-radio"
         ];
         $settings = [

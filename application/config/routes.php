@@ -58,6 +58,7 @@ $route['verwaltung/bilder/loesche/(:num)'] = 'backend/images/delete/$1';
 $route['verwaltung/bilder/geloescht/(:num)'] = 'backend/images/delete_confirm/$1';
 $route['verwaltung/routen/hinzufuegen'] = 'backend/routes_add';
 $route['verwaltung/routen/verwalten'] = 'backend/routes_manage';
+$route['verwaltung/routen/(:num)'] = 'backend/routes_manage/$1';
 $route['verwaltung/umfrage'] = 'backend/survey';
 $route['verwaltung/evaluation'] = 'backend/evaluation';
 $route['verwaltung/evaluation/(:num)'] = 'backend/evaluation/$1';

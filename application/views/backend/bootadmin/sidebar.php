@@ -13,5 +13,6 @@
         </li>
         <li<?php if ($active == 'survey'): ?> class="active"<?php endif; ?>><a href="<?php echo $urls['survey']; ?>"><i class="fa fa-fw fa-align-left"></i> Umfrage</a></li>
         <li<?php if ($active == 'evaluation'): ?> class="active"<?php endif; ?>><a href="<?php echo $urls['evaluation']; ?>"><i class="fa fa-fw fa-chart-bar"></i> Ergebnisse</a></li>
+        <li><a href="<?php echo base_url() ?>" target="_blank"><i class="fas fa-fw fa-external-link-alt"></i> Seite öffnen</a></li>
     </ul>
 </div>
