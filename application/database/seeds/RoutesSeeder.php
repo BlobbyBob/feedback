@@ -18,7 +18,7 @@ class RoutesSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
-                'name' => 'Route A',
+                'name' => '',
                 'grade' => 'VI+',
                 'color' => 1,
                 'setter' => 1,

@@ -10,6 +10,7 @@ class Feedback_model_test extends UnitTestCase
         $CI =& get_instance();
         $CI->load->library('Seeder');
         $CI->seeder->call('FeedbackSeeder');
+        $CI->seeder->call('RoutesSeeder');
     }
 
     public function setUp()

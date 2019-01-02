@@ -22,13 +22,13 @@ class Forms extends CI_Model
     }
 
     /**
-     * Output all form elements of the latest form
+     * Get all form elements of the latest form
      * @return Formelement[]
      */
     public function get_form()
     {
         /** @var CI_DB_result $query */
-        $query = $this->db->query("SELECT * FROM formelements WHERE version=(SELECT MAX(version) FROM formelements) ORDER BY `index` ASC");
+        $query = $this->db->query("SELECT * FROM ".$this->db->dbprefix('formelements')." WHERE version=".$this->max_version()." ORDER BY `index` ASC");
         $elements = [];
         foreach ($query->result() as $row) {
             $elements[] = Formelement::create($row);
@@ -36,9 +36,14 @@ class Forms extends CI_Model
         return $elements;
     }
 
+    /**
+     * Get all form elements of a certain type
+     * @param string $type
+     * @return Formelement[]
+     */
     public function get_type($type)
     {
-        $query = $this->db->query("SELECT * FROM formelements WHERE version=(SELECT MAX(version) FROM formelements) AND type='" . $this->db->escape_str($type) . "' ORDER BY `index` ASC");
+        $query = $this->db->query("SELECT * FROM ".$this->db->dbprefix('formelements')." WHERE version=".$this->max_version()." AND type='" . $this->db->escape_str($type) . "' ORDER BY `index` ASC");
         $elements = [];
         foreach ($query->result() as $row) {
             $elements[] = Formelement::create($row);
@@ -58,7 +63,7 @@ class Forms extends CI_Model
         $formelement = new $class(new stdClass());
         $obj = $formelement->export();
         $obj->id = null;
-        $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM formelements");
+        $query = $this->db->query("SELECT MAX(`index`) AS `index`, MAX(`version`) AS `version` FROM ".$this->db->dbprefix('formelements'));
         $result = $query->result()[0];
         $obj->index = $result->index + 1;
         $obj->version = 0;
@@ -98,7 +103,7 @@ class Forms extends CI_Model
      */
     public function update($data)
     {
-        return $this->db->update_batch('formelements', $data, 'id');
+        return (int) $this->db->update_batch('formelements', $data, 'id');
     }
 
     /**
@@ -115,7 +120,7 @@ class Forms extends CI_Model
     }
 
     /**
-     * Delete all formelements, that were added, but not saved
+     * Delete all formelements, that were added, but not saved (where version equals 0)
      *
      * @return void
      */
@@ -132,7 +137,7 @@ class Forms extends CI_Model
      */
     public function max_version()
     {
-        return $this->db->query("SELECT MAX(version) as version FROM formelements")->result()[0]->version;
+        return (int) $this->db->query("SELECT MAX(version) as version FROM ".$this->db->dbprefix('formelements'))->result()[0]->version;
     }
 
 }
