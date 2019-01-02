@@ -207,4 +207,39 @@ class Forms_model_test extends UnitTestCase
         $this->assertEquals(1, $this->obj->update($data), $name);
     }
 
+    /**
+     * @depends testGetForm
+     */
+    public function testGetFormElements()
+    {
+        $name = 'Forms::get_form_elements()';
+
+        $data = [[
+            'ids' => [],
+            'count' => 0
+        ],[
+            'ids' => [-1, -2, -3],
+            'count' => 0
+        ],[
+            'ids' => [$this->obj->get_form()[0]->id, $this->obj->get_form()[1]->id, $this->obj->get_form()[2]->id],
+            'count' => 3
+        ]];
+
+        foreach ($data as $test) {
+            $this->assertIsArray($this->obj->get_form_elements($test['ids']), $name);
+            $this->assertCount($test['count'], $this->obj->get_form_elements($test['ids']), $name);
+
+            if ($test['count'] > 0) {
+                $ids = [];
+                foreach ($this->obj->get_form_elements($test['ids']) as $elem) {
+                    $this->assertInstanceOf('\Models\Formelement', $elem, $name);
+                    $ids[] = $elem->id;
+                }
+                sort($ids);
+                sort($test['ids']);
+                $this->assertEquals($test['ids'], $ids, $name);
+            }
+        }
+    }
+
 }
