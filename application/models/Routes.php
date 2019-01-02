@@ -14,9 +14,11 @@ class Routes extends CI_Model
      * Get all the saved routes
      * @param int|null $id The ID of the route, NULL will fetch all
      * @param bool $random Whether the order should be random. Default: true
+     * @param int $seed for random generator
+     * @param bool $german Should the color names shall be german
      * @return Models\Route[]
      */
-    public function get_routes($id = NULL, $random = TRUE, $german = FALSE)
+    public function get_routes($id = NULL, $random = TRUE, $seed = NULL, $german = FALSE)
     {
         $this->db->select('routes.id AS id, routes.name AS name, routes.grade AS grade,
                            color.' . ($german ? 'german' : 'name') . ' AS color, setter.name AS setter, routes.wall AS wall, routes.image AS image', FALSE);
@@ -24,8 +26,11 @@ class Routes extends CI_Model
         $this->db->join('setter', 'routes.setter = setter.id', 'left outer');
         if (!is_null($id))
             $this->db->where('routes.id', $id);
-        if ($random)
-            $this->db->order_by('id', 'RANDOM');
+        if ($random) {
+            if (is_null($seed))
+                $seed = 'id';
+            $this->db->order_by($seed, 'RANDOM');
+        }
 
         /** @var CI_DB_result $query */
         $query = $this->db->get('routes');

@@ -29,7 +29,7 @@ class Routes_model_test extends UnitTestCase
         $this->assertInstanceOf('Models\Route', $this->obj->get_routes()[0], $name);
 
         $this->assertEquals($this->obj->get_routes(null, false), $this->obj->get_routes(null, false), $name);
-        $this->assertNotEquals($this->obj->get_routes(null, true), $this->obj->get_routes(null, true), $name); // todo: change to deterministic behaviour
+        $this->assertNotEquals($this->obj->get_routes(null, true, 1), $this->obj->get_routes(null, true, 2), $name);
 
         foreach (RoutesSeeder::getData() as $data) {
             $route = new stdClass();
